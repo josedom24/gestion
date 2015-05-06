@@ -47,3 +47,25 @@ class Departamentos(models.Model):
 	class Meta:
 		verbose_name="Departamento"
 		verbose_name_plural="Departamentos"
+
+class Profesores(models.Model):
+	Nombre = models.CharField(max_length=20)
+	Apellidos = models.CharField(max_length=30)
+	Telefono = models.CharField(max_length=9,blank=True)
+	Movil = models.CharField(max_length=9,blank=True)
+	Email = models.EmailField()
+	Departamento = models.ForeignKey(Departamentos)
+	Baja = models.BooleanField(default=False)
+	Ce = models.BooleanField(default=False,verbose_name="Consejo Escolar")
+	Etcp = models.BooleanField(default=False)
+	Tic = models.BooleanField(default=False)
+	Bil = models.BooleanField(default=False,verbose_name="Bilingüe")
+	Tutor = models.ForeignKey(Cursos)
+	
+
+	def __unicode__(self):
+		return self.Nombre+" "+self.Apellidos
+
+	class Meta:
+		verbose_name="Profesor"
+		verbose_name_plural="Profesores"
