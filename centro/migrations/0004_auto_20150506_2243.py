@@ -7,10 +7,20 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('centro', '0006_remove_cursos_tutor'),
+        ('centro', '0003_profesores'),
     ]
 
     operations = [
+        migrations.RemoveField(
+            model_name='profesores',
+            name='Tutor',
+        ),
+        migrations.AddField(
+            model_name='cursos',
+            name='Profesores',
+            field=models.ManyToManyField(to='centro.Profesores'),
+            preserve_default=True,
+        ),
         migrations.AddField(
             model_name='cursos',
             name='Tutor',
