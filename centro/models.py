@@ -36,3 +36,14 @@ class Alumnos(models.Model):
 	class Meta:
 		verbose_name="Alumno"
 		verbose_name_plural="Alumnos"
+
+class Departamentos(models.Model):
+	Abr = models.CharField(max_length=4)
+	Nombre = models.CharField(max_length=30)
+
+	def __unicode__(self):
+		return self.Nombre
+
+	class Meta:
+		verbose_name="Departamento"
+		verbose_name_plural="Departamentos"
