@@ -39,7 +39,7 @@ class Profesores(models.Model):
 class Cursos(models.Model):
 	
 	Curso = models.CharField(max_length=30)
-	Tutor = models.OneToOneField(Profesores, related_name='Tutor_de',default=0)
+	Tutor = models.OneToOneField(Profesores, related_name='Tutor_de',default=None)
 	Profesores = models.ManyToManyField(Profesores)
 
 
