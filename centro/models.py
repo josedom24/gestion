@@ -33,10 +33,6 @@ class Alumnos(models.Model):
 	def __unicode__(self):
 		return self.DNI+" - "+self.Nombre 
 
-	def get_absolute_url(self):
-		return reverse('server_edit', kwargs={'pk': self.pk})
-
-
 	class Meta:
 		verbose_name="Alumno"
 		verbose_name_plural="Alumnos"
