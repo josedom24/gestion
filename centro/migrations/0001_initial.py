@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
                 ('Provincia', models.CharField(max_length=30)),
                 ('Ap1tutor', models.CharField(max_length=20, verbose_name=b'Apellido 1 Tutor')),
                 ('Ap2tutor', models.CharField(max_length=20, verbose_name=b'Apellido 2 Tutor')),
-                ('Nomtutor', models.CharField(max_length=20, verbose_name=b'Nombre Tutor')),
+                ('Nomtutor', models.CharField(max_length=20, verbose_name=b'Nombre tutor')),
                 ('Telefono1', models.CharField(max_length=12, blank=True)),
                 ('Telefono2', models.CharField(max_length=12, blank=True)),
                 ('Obs', models.TextField(verbose_name=b'Observaciones', blank=True)),

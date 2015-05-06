@@ -25,7 +25,7 @@ class Alumnos(models.Model):
 	Unidad = models.ForeignKey(Cursos)
 	Ap1tutor = models.CharField(max_length=20,verbose_name="Apellido 1 Tutor")
 	Ap2tutor = models.CharField(max_length=20,verbose_name="Apellido 2 Tutor")
-	Nomtutor = models.CharField(max_length=20,verbose_name="Nombre Tutor")
+	Nomtutor = models.CharField(max_length=20,verbose_name="Nombre tutor")
 	Telefono1 = models.CharField(max_length=12,blank=True)
 	Telefono2 = models.CharField(max_length=12,blank=True)
 	Obs=models.TextField(blank=True,verbose_name="Observaciones")
