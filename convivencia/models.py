@@ -24,6 +24,7 @@ class FaltasGraves(models.Model):
 		verbose_name="Falta Grave"
 		verbose_name_plural="Faltas Graves"
 
+
 class Amonestaciones(models.Model):
 	hora = (
 		('1','Primera'),
@@ -40,8 +41,8 @@ class Amonestaciones(models.Model):
 	Hora = models.CharField(max_length=1,choices=hora,default='1')
 	Comentario=models.TextField(blank=True)
 	Profesor = models.ForeignKey(Profesores)
-	FaltasLeves = models.ManyToManyField(FaltasLeves)
-	FaltasGrave = models.ManyToManyField(FaltasGraves)
+	FaltasLeves = models.ManyToManyField(FaltasLeves,verbose_name="Faltas Leves")
+	FaltasGraves = models.ManyToManyField(FaltasGraves,verbose_name="Faltas Graves")
 
 	def __unicode__(self):
 		return self.IdAlumnos.Nombre 
@@ -50,3 +51,53 @@ class Amonestaciones(models.Model):
 		verbose_name="Amonestación"
 		verbose_name_plural="Amonestaciones"
 
+
+class SancionesLeves(models.Model):
+	Sancion = models.CharField(max_length=100)
+		
+	def __unicode__(self):
+		return self.Sancion
+
+	class Meta:
+		verbose_name="Sanción Leve"
+		verbose_name_plural="Sanciones Leves"
+
+class SancionesGraves(models.Model):
+	Sancion = models.CharField(max_length=100)
+		
+	def __unicode__(self):
+		return self.Sancion
+
+	class Meta:
+		verbose_name="Sanción Grave"
+		verbose_name_plural="Sanciones Graves"
+
+class SancionesOtras(models.Model):
+	Sancion = models.CharField(max_length=100)
+		
+	def __unicode__(self):
+		return self.Sancion
+
+	class Meta:
+		verbose_name="Otra Sanción"
+		verbose_name_plural="Otras Sanciones"
+
+
+
+class Sanciones(models.Model):
+	
+	IdAlumno = models.ForeignKey(Alumnos)
+	Fecha = models.DateField()
+	Fecha_fin = models.DateField(verbose_name="Fecha finalización")
+	Comentario=models.TextField(blank=True)
+	
+	SancionesLeves = models.ManyToManyField(SancionesLeves,verbose_name="Sanciones Leves")
+	SancionesGraves = models.ManyToManyField(SancionesGraves,verbose_name="Sanciones Graves")
+	SancionesOtras= models.ManyToManyField(SancionesOtras,verbose_name="Otras Sanciones")
+
+	def __unicode__(self):
+		return self.IdAlumnos.Nombre 
+
+	class Meta:
+		verbose_name="Sanción"
+		verbose_name_plural="Sanciones"
