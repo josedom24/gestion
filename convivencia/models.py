@@ -8,7 +8,7 @@ class FaltasLeves(models.Model):
 	Falta = models.CharField(max_length=100)
 		
 	def __unicode__(self):
-		return self.IdAlumnos.Falta
+		return self.Falta
 
 	class Meta:
 		verbose_name="Falta Leve"
@@ -18,7 +18,7 @@ class FaltasGraves(models.Model):
 	Falta = models.CharField(max_length=100)
 		
 	def __unicode__(self):
-		return self.IdAlumnos.Falta
+		return self.Falta
 
 	class Meta:
 		verbose_name="Falta Grave"
@@ -40,7 +40,8 @@ class Amonestaciones(models.Model):
 	Hora = models.CharField(max_length=1,choices=hora,default='1')
 	Comentario=models.TextField(blank=True)
 	Profesor = models.ForeignKey(Profesores)
-	
+	FaltasLeves = models.ManyToManyField(FaltasLeves)
+	FaltasGrave = models.ManyToManyField(FaltasGraves)
 
 	def __unicode__(self):
 		return self.IdAlumnos.Nombre 
