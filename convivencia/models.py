@@ -45,7 +45,7 @@ class Amonestaciones(models.Model):
 	FaltasGraves = models.ManyToManyField(FaltasGraves,verbose_name="Faltas Graves")
 
 	def __unicode__(self):
-		return self.IdAlumnos.Nombre 
+		return self.IdAlumno.Nombre 
 
 	class Meta:
 		verbose_name="Amonestación"
