@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}IES Gonzalo Nazareno{% endblock %}</title>
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->    
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>    
+    <script>
+        function initMenu() {
+          $('#menu ul').hide(); // Hide the submenu
+          if ($('#menu li').has('ul')) $('#menu ul').prev().addClass('expandable'); // Expand/collapse a submenu when it exists  
+          $('.expandable').click(
+            function() {
+                $(this).next().slideToggle();
+                $(this).toggleClass('expanded');
+              }
+            );
+          }
+        
+        // When document ready, call initMenu() function 
+        $(document).ready(function() {initMenu();});    
+    </script>
+    <link href='http://fonts.googleapis.com/css?family=Luckiest+Guy' rel='stylesheet' type='text/css'> 
+    <link href='/static/css/style.css' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+    
+<header> 
+    <hgroup class="clearfix"> 
+        <h1><a href="#">IES <span>Gonzalo Nazareno</span></a></h1> 
+        <h2>Gestión 0.9</h2> 
+    </hgroup>
+</header>   
+
+<div id="main" class="clearfix">
+
+    <aside>
+        {% block lateral %}{% endblock %}
+        <nav>
+            <ul id="menu">
+                <li><a href="#">Home</a></li>
+                <li>
+                    <a href="#">Categories</a>
+                    <ul>                
+                        <li><a href="#">Css</a></li>
+                        <li><a href="#">Graphic Design</a></li>
+                        <li><a href="#">Tools</a></li>
+                        <li><a href="#">Web design</a></li>                      
+                    </ul>        
+                </li>
+                <li>
+                    <a href="#">Work</a>
+                    <ul>
+                        <li><a href="#">Websites</a></li>
+                        <li><a href="#">Logos and icons</a></li>
+                        <li><a href="#">User Interfaces</a></li>
+                        <li><a href="#">Other stuff</a></li>                
+                    </ul>
+                </li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>                   
+            </ul>
+        </nav>
+    </aside>
+    
+    <div id="content">
+        <article>
+            <section>
+              {% block content %}{% endblock %}
+            </section>
+        </article>
+        
+    </div>
+</div>
+
+<footer class="clearfix">
+    JDMR 2015
+    
+</footer>
+
+</body>
+</html>
