@@ -14,14 +14,16 @@
 <div class="Tabla" >
 <table>
 	<tr>
+		<td>N.</td>
 		<td>Nombre</td>
 		<td>Cuenta</td>
 		<td>Amonestación</td>
 		<td>Sanción</td>
 	</tr>
 	
-    {% for alum,num_faltas in alumnos %}
+    {% for alum,num_faltas,n in alumnos %}
     <tr>
+    	<td>{{n}}</td>
     	<td>{{alum.Nombre}}</td>
     	<td>{{num_faltas}}</td>
     	

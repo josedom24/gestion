@@ -17,7 +17,7 @@ def index(request):
 		primer_id=Cursos.objects.order_by('Curso').first().id
 	lista_alumnos = Alumnos.objects.filter(Unidad__id=primer_id)
 	form = UnidadForm({'Unidad':primer_id})
-	lista=zip(lista_alumnos,contar_faltas(lista_alumnos))
+	lista=zip(lista_alumnos,contar_faltas(lista_alumnos),range(1,len(lista_alumnos)))
 	context={'alumnos':lista,'form':form}
 	return render(request, 'centro/centro.html',context)
 
