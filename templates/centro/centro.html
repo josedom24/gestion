@@ -8,14 +8,28 @@
 <form action="/centro/" method="post">
     {% csrf_token %}
     {{ form }}
-    <input type="submit" value="Submit" />
+    <input type="submit" value="Buscar" />
 <br/><br/>
 {% if alumnos %}
-    <ul>
-    {% for alum in alumnos %}
-        <li>{{alum.Nombre}}</li>
+<div class="Tabla" >
+<table>
+	<tr>
+		<td>Nombre</td>
+		<td>Cuenta</td>
+		<td>Amonestación</td>
+		<td>Sanción</td>
+	</tr>
+	
+    {% for alum,num_faltas in alumnos %}
+    <tr>
+    	<td>{{alum.Nombre}}</td>
+    	<td>{{num_faltas}}</td>
+    	
+    	<td><a href="/convivencia/amonestacion/{{alum.id}}">Amonestación</a></td>
+    	<td><a href="/convivencia/sancion/{{alum.id}}">Sanción</a></td>
+    </tr>
     {% endfor %}
-    </ul>
+    </table>
 {% else %}
     <p>No hay alumnos</p>
 {% endif %}

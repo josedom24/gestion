@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
 from centro.models import Alumnos,AltaAlumnos,Cursos
+from convivencia.models import Amonestaciones,Sanciones
 from centro.forms import UnidadForm
 from django.contrib.auth import logout
 from django.shortcuts import redirect
@@ -10,10 +11,25 @@ from django.core.exceptions import ObjectDoesNotExist
 
 
 def index(request):
-	lista_alumnos = Alumnos.objects.filter(Unidad__id=122)
-	form = UnidadForm()
-	context={'alumnos':lista_alumnos,'form':form}
+	if request.method == 'POST':
+		primer_id=request.POST.get("Unidad")
+	else:
+		primer_id=Cursos.objects.order_by('Curso').first().id
+	lista_alumnos = Alumnos.objects.filter(Unidad__id=primer_id)
+	form = UnidadForm({'Unidad':primer_id})
+	lista=zip(lista_alumnos,contar_faltas(lista_alumnos))
+	context={'alumnos':lista,'form':form}
 	return render(request, 'centro/centro.html',context)
+
+def contar_faltas(lista_alumnos):
+	contar=[]
+	for alum in lista_alumnos:
+		am=str(len(Amonestaciones.objects.filter(IdAlumno_id=alum.id)))
+		sa=str(len(Sanciones.objects.filter(IdAlumno_id=alum.id)))
+		contar.append(am+"/"+sa)
+	return contar
+
+
 
 def logout_view(request):
     logout(request)
