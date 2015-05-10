@@ -86,12 +86,23 @@ if ON_PAAS:
         
 else:
     # stock django, local development.
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+     #DATABASES = {
+ #        'default': {
+ #            'ENGINE': 'django.db.backends.sqlite3',
+ #            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+ #        }
+ #    }
+      DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.mysql',
+                'NAME':     'gestion',
+                'USER':     'root',
+                'PASSWORD': 'asdasd',
+                'HOST':     '192.168.0.14',
+                'PORT':     '3306',
+            }
         }
-    }
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
@@ -106,6 +117,7 @@ USE_L10N = True
 USE_TZ = True
 
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 STATIC_URL = '/static/'

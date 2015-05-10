@@ -37,35 +37,7 @@
 
 <div id="main" class="clearfix">
 
-    <aside>
-        
-        <nav>
-            <ul id="menu">
-                <li><a href="#">Home</a></li>
-                <li>
-                    <a href="#">Categories</a>
-                    <ul>                
-                        <li><a href="#">Css</a></li>
-                        <li><a href="#">Graphic Design</a></li>
-                        <li><a href="#">Tools</a></li>
-                        <li><a href="#">Web design</a></li>                      
-                    </ul>        
-                </li>
-                <li>
-                    <a href="#">Work</a>
-                    <ul>
-                        <li><a href="#">Websites</a></li>
-                        <li><a href="#">Logos and icons</a></li>
-                        <li><a href="#">User Interfaces</a></li>
-                        <li><a href="#">Other stuff</a></li>                
-                    </ul>
-                </li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>                   
-            </ul>
-        </nav>
-    </aside>
-    
+    {% block menu %}{% endblock %}
     <div id="content">
         <article>
             <section>

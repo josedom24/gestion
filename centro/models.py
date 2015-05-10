@@ -39,8 +39,8 @@ class Profesores(models.Model):
 class Cursos(models.Model):
 	
 	Curso = models.CharField(max_length=30)
-	Tutor = models.OneToOneField(Profesores, related_name='Tutor_de',default=None)
-	Profesores = models.ManyToManyField(Profesores)
+	Tutor = models.OneToOneField(Profesores, related_name='Tutor_de',default=None,blank=True)
+	Profesores = models.ManyToManyField(Profesores,blank=True)
 
 
 	def __unicode__(self):
@@ -52,7 +52,7 @@ class Cursos(models.Model):
 
 class Alumnos(models.Model):
 	Nombre = models.CharField(max_length=50)
-	DNI = models.CharField(max_length=9)
+	DNI = models.CharField(max_length=10)
 	Direccion = models.CharField(max_length=60)
 	CodPostal = models.CharField(max_length=5,verbose_name="Código postal")
 	Localidad = models.CharField(max_length=30)
@@ -72,3 +72,13 @@ class Alumnos(models.Model):
 	class Meta:
 		verbose_name="Alumno"
 		verbose_name_plural="Alumnos"
+
+class AltaAlumnos(models.Model):
+	Fichero=models.FileField(upload_to='alta')
+
+	def __unicode__(self):
+		return self.Fichero.url
+
+	class Meta:
+		verbose_name="Alta Alumnos"
+		verbose_name_plural="Alta Alumnos"

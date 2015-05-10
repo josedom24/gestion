@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block menu %}
+    <aside>
+        
+            
+            {% if user.is_authenticated %}
+            <div id="menu">
+                <h1>Hola, {{user.username}}</h1>
+
+                <a href="/centro/logout">Desconectar</a>
+                <br/>
+            </div>
+                <nav>
+                <ul id="menu">
+                    <li><a href="/centro">Alumnos</a></li>
+                    <li>
+                        <a href="#">Listados</a>
+                        <ul>                
+                            <li><a href="#">Listado 1</a></li>
+                        </ul>        
+                    </li>
+                    <li><a href="/admin">Administración</a></li>
+                    
+                </ul>
+                </nav>
+            
+            {% else %}
+                <div id="menu">
+                <a href="/admin/login/?next=/centro/">Inicio</a>
+                <br/>
+
+            {% endif %}
+            
+        
+    </aside>
+{% endblock %}
