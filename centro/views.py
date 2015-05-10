@@ -14,7 +14,9 @@ def index(request):
 	if request.method == 'POST':
 		primer_id=request.POST.get("Unidad")
 	else:
-		primer_id=Cursos.objects.order_by('Curso').first().id
+		primer_id=request.session.get('Unidad', Cursos.objects.order_by('Curso').first().id)
+	request.session['Unidad']=primer_id
+		
 	lista_alumnos = Alumnos.objects.filter(Unidad__id=primer_id)
 	form = UnidadForm({'Unidad':primer_id})
 	lista=zip(lista_alumnos,contar_faltas(lista_alumnos),range(1,len(lista_alumnos)))
