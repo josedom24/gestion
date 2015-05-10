@@ -1,0 +1,23 @@
+{% extends "base_menu.html" %}
+
+{% block title %}Centro{% endblock %}
+
+{% block content %}
+<h2>Amonestaciones</h2>
+
+<form action="/convivenica/amonestacion" method="post">
+    {% csrf_token %}
+    <div class="Tabla" >
+    <table>
+        <tr>
+            <td>Alumno</td><td>{{alum.Nombre}}</td>
+        </tr>
+    {{ form }}
+    
+</table>
+</div>
+<br/><input type="submit" value="Guardar" />
+</form>
+<br/><br/>
+
+{% endblock %}
