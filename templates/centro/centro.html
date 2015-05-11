@@ -16,9 +16,11 @@
 	<tr>
 		<td>N.</td>
 		<td>Nombre</td>
-		<td>Cuenta</td>
-		<td>Amonestación</td>
-		<td>Sanción</td>
+		<td>A/S/C</td>
+		<td>A</td>
+		<td>S</td>
+        <td>C</td>
+        <td>H</td>
 	</tr>
 	
     {% for alum,num_faltas,n in alumnos %}
@@ -27,8 +29,10 @@
     	<td>{{alum.Nombre}}</td>
     	<td>{{num_faltas}}</td>
     	
-    	<td><a href="/convivencia/amonestacion/{{alum.id}}">Amonestación</a></td>
-    	<td><a href="/convivencia/sancion/{{alum.id}}">Sanción</a></td>
+    	<td><a href="/convivencia/amonestacion/{{alum.id}}"><img src="/static/img/amon.png"/></a></td>
+    	<td><a href="/convivencia/sancion/{{alum.id}}"><img src="/static/img/sans.png"/></a></td>
+        <td><a href="/convivencia/citacion/{{alum.id}}"><img src="/static/img/cit.png"/></a></td>
+        <td><a href="/convivencia/historial/{{alum.id}}"><img src="/static/img/hist.png"/></a></td>
     </tr>
     {% endfor %}
     </table>

@@ -9,7 +9,7 @@
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>    
     <script>
         function initMenu() {
-          $('#menu ul').hide(); // Hide the submenu
+          //$('#menu ul').hide(); // Hide the submenu
           if ($('#menu li').has('ul')) $('#menu ul').prev().addClass('expandable'); // Expand/collapse a submenu when it exists  
           $('.expandable').click(
             function() {

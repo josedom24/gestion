@@ -3,7 +3,7 @@
 {% block title %}Centro{% endblock %}
 
 {% block content %}
-<h2>Amonestaciones</h2>
+<h2>Sanciones</h2>
 {% if form.errors and error%}
     {% for field in form %}
     	<div class="alert alert-error">
@@ -17,7 +17,7 @@
 <br/>
 {% endif %}
 
-<form action="/convivencia/amonestacion/{{alum.id}}" method="post">
+<form action="/convivencia/sancion/{{alum.id}}" method="post">
     {% csrf_token %}
     <div class="Tabla" >
     <table>

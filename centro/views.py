@@ -8,8 +8,8 @@ from django.shortcuts import redirect
 from django.conf import settings
 import datetime
 from django.core.exceptions import ObjectDoesNotExist
-
-
+from django.contrib.auth.decorators import login_required
+@login_required(login_url='/admin/login/')
 def index(request):
 	if request.method == 'POST':
 		primer_id=request.POST.get("Unidad")
@@ -19,7 +19,7 @@ def index(request):
 		
 	lista_alumnos = Alumnos.objects.filter(Unidad__id=primer_id)
 	form = UnidadForm({'Unidad':primer_id})
-	lista=zip(lista_alumnos,contar_faltas(lista_alumnos),range(1,len(lista_alumnos)))
+	lista=zip(lista_alumnos,contar_faltas(lista_alumnos),range(1,len(lista_alumnos)+1))
 	context={'alumnos':lista,'form':form}
 	return render(request, 'centro/centro.html',context)
 
@@ -32,11 +32,11 @@ def contar_faltas(lista_alumnos):
 	return contar
 
 
-
+@login_required(login_url='/admin/login/')
 def logout_view(request):
     logout(request)
-    return redirect('/centro/')
-
+    return redirect('/')
+@login_required(login_url='/admin/login/')
 def alta(request):
 	ficheros= AltaAlumnos.objects.all()
 	if len(ficheros)>1:
@@ -75,13 +75,6 @@ def alta(request):
     		new_alum.Unidad=c
     		new_alum.save()
     	
-
-
-
-		
-
 	context={'msg':'Empezamos el alta másiva','fich':cont}
-	
-
 	return render(request, 'centro/alta.html',context)
 

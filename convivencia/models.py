@@ -41,8 +41,8 @@ class Amonestaciones(models.Model):
 	Hora = models.CharField(max_length=1,choices=hora,default='1')
 	Comentario=models.TextField(blank=True)
 	Profesor = models.ForeignKey(Profesores)
-	FaltasLeves = models.ManyToManyField(FaltasLeves,verbose_name="Faltas Leves")
-	FaltasGraves = models.ManyToManyField(FaltasGraves,verbose_name="Faltas Graves")
+	FaltasLeves = models.ManyToManyField(FaltasLeves,verbose_name="Faltas Leves",blank=True)
+	FaltasGraves = models.ManyToManyField(FaltasGraves,verbose_name="Faltas Graves",blank=True)
 
 	def __unicode__(self):
 		return self.IdAlumno.Nombre 
@@ -91,12 +91,12 @@ class Sanciones(models.Model):
 	Fecha_fin = models.DateField(verbose_name="Fecha finalización")
 	Comentario=models.TextField(blank=True)
 	
-	SancionesLeves = models.ManyToManyField(SancionesLeves,verbose_name="Sanciones Leves")
-	SancionesGraves = models.ManyToManyField(SancionesGraves,verbose_name="Sanciones Graves")
-	SancionesOtras= models.ManyToManyField(SancionesOtras,verbose_name="Otras Sanciones")
+	SancionesLeves = models.ManyToManyField(SancionesLeves,verbose_name="Sanciones Leves",blank=True)
+	SancionesGraves = models.ManyToManyField(SancionesGraves,verbose_name="Sanciones Graves",blank=True)
+	SancionesOtras= models.ManyToManyField(SancionesOtras,verbose_name="Otras Sanciones",blank=True)
 
 	def __unicode__(self):
-		return self.IdAlumnos.Nombre 
+		return self.IdAlumno.Nombre 
 
 	class Meta:
 		verbose_name="Sanción"

@@ -12,7 +12,13 @@
             </div>
                 <nav>
                 <ul id="menu">
-                    <li><a href="/centro">Alumnos</a></li>
+                    <li><a href="#">Alumnos</a>
+                        <ul>                
+                            <li><a href="/centro">Gestión</a></li>
+                        </ul>
+
+                    </li>
+
                     <li>
                         <a href="#">Listados</a>
                         <ul>                
@@ -26,7 +32,7 @@
             
             {% else %}
                 <div id="menu">
-                <a href="/admin/login/?next=/centro/">Inicio</a>
+                <a href="/admin/login/?next=/">Inicio</a>
                 <br/>
 
             {% endif %}

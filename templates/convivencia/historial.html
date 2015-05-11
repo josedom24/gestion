@@ -1,0 +1,33 @@
+{% extends "base_menu.html" %}
+
+{% block title %}Centro{% endblock %}
+
+{% block content %}
+<h2>Historial Alumno</h2>
+<h2>{{alum.Nombre}} ({{alum.Unidad}})</h2>
+
+{% if historial %}
+<div class="Tabla" >
+<table>
+	<tr></tr>
+	
+    {% for h,t,n in historial %}
+    <tr>
+        <td>{{ n }}</td>
+        <td>{{ t }}</td>
+
+        <td>{{h.Fecha|date:"d/m/Y"}}
+        {% if h.Fecha_fin %}
+            <br/>{{h.Fecha_fin|date:"d/m/Y"}}
+        {% endif%}
+        </td>
+    	<td>{{h.Comentario}}</td>
+        <td><a href="convivencia/parte/{{t}}/{{h.id}}"><img src="/static/img/hide.gif"/></a></td>
+    </tr>
+    {% endfor %}
+    </table>
+</div>
+{% else %}
+    <p>No hay historial para este alumno</p>
+{% endif %}
+{% endblock %}
