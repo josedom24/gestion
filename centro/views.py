@@ -9,6 +9,7 @@ from django.conf import settings
 import datetime
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
+from funciones import funciones
 @login_required(login_url='/admin/login/')
 def index(request):
 	if request.method == 'POST':
@@ -19,17 +20,9 @@ def index(request):
 		
 	lista_alumnos = Alumnos.objects.filter(Unidad__id=primer_id)
 	form = UnidadForm({'Unidad':primer_id})
-	lista=zip(lista_alumnos,contar_faltas(lista_alumnos),range(1,len(lista_alumnos)+1))
+	lista=zip(lista_alumnos,funciones.ContarFaltas(lista_alumnos.values("id")),range(1,len(lista_alumnos)+1))
 	context={'alumnos':lista,'form':form}
 	return render(request, 'centro/centro.html',context)
-
-def contar_faltas(lista_alumnos):
-	contar=[]
-	for alum in lista_alumnos:
-		am=str(len(Amonestaciones.objects.filter(IdAlumno_id=alum.id)))
-		sa=str(len(Sanciones.objects.filter(IdAlumno_id=alum.id)))
-		contar.append(am+"/"+sa)
-	return contar
 
 
 @login_required(login_url='/admin/login/')

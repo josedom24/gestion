@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'centro',
     'convivencia',
+    'registro',
 )
 
 MIDDLEWARE_CLASSES = (

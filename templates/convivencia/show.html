@@ -1,0 +1,44 @@
+{% extends "base_menu.html" %}
+
+{% block title %}Centro{% endblock %}
+
+{% block content %}
+{% if tipo = 'a' %}
+    <h2>Resumen Amonestaciones</h2>
+{% endif%}
+{% if tipo = 's' %}
+    <h2>Resumen Sanciones</h2>
+{% endif%}
+<h2>{{fecha|date:"d - F - Y"}}</h2>
+
+{% if datos %}
+<div class="Tabla" >
+<table>
+	<tr>
+        <td>N.</td>
+        <td>Alumno</td>
+        <td>Unidad</td>
+        <td>A/S</td>  
+        {% if tipo = 's' %}
+            <td>Carta</td>
+        {% endif%}  
+    </tr>
+	
+    {% for n,h,contar in datos %}
+    <tr>
+        <td>{{ n }}</td>
+        <td>{{h.IdAlumno.Nombre}}</td>
+    	<td>{{h.IdAlumno.Unidad}}</td>
+        <td>{{contar}}</td>
+        {% if tipo = 's' %}
+            <td><img src="/static/img/report.gif"/></td>
+        {% endif%}
+        
+    </tr>
+    {% endfor %}
+    </table>
+</div>
+{% else %}
+    <p>No hay resumen de amonestaciones/sanciones.</p>
+{% endif %}
+{% endblock %}

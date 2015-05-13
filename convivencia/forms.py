@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django import forms
 from django.forms import ModelForm
 from convivencia.models import Amonestaciones,FaltasGraves,FaltasLeves,Sanciones,SancionesOtras,SancionesLeves,SancionesGraves
@@ -31,3 +32,7 @@ class SancionForm(forms.ModelForm):
             'SancionesOtras': CheckboxSelectMultiple(choices=SancionesOtras.objects.order_by('id')),
 
         }
+
+class TipoResumen(forms.Form):
+	CHOICES=[('a','Amonestación'),('s','Sanción')]
+	tipo = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect())
