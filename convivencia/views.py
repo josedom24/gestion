@@ -51,7 +51,7 @@ def historial(request,alum_id):
 	return render(request, 'convivencia/historial.html',context)
 
 @login_required(login_url='/admin/login/')
-def historial(request,mes,ano):
+def resumen(request,mes,ano):
 	c = calendar.HTMLCalendar(calendar.MONDAY)
 	calhtml=c.formatmonth(int(ano),int(mes))
 	fecha=[mes,ano]
