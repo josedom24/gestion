@@ -4,6 +4,9 @@ from convivencia.forms import AmonestacionForm,SancionForm
 from centro.models import Alumnos
 from convivencia.models import Amonestaciones,Sanciones
 import time,calendar
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
+
 # Create your views here.
 from django.contrib.auth.decorators import login_required
 @login_required(login_url='/admin/login/')
@@ -54,8 +57,11 @@ def historial(request,alum_id):
 def resumen(request,mes,ano):
 	c = calendar.HTMLCalendar(calendar.MONDAY)
 	calhtml=c.formatmonth(int(ano),int(mes))
-	fecha=mes+" "+ano
-	context={'calhtml':calhtml,"fecha":fecha}
+	mes_actual=datetime(ano,mes,1)
+	mes_ant=mes_actual+relativedelta(months=-1)
+	mes_prox=mes_actual+relativedelta(months=1)
+
+	context={'calhtml':calhtml,fechas:[mes_actual,mes_ant,mes_prox]}
 	return render(request, 'convivencia/resumen.html',context)
 
 

@@ -4,7 +4,8 @@
 
 {% block content %}
 <h2>Resumen</h2>
-<h2>{{fecha}} </h2>
+<h2>{{fechas[0]|date: "M" - {{fechas[0]|date: "Y"}}</h2>
+
 
 {% autoescape off %}
 <div class="Tabla" >
