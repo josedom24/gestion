@@ -58,10 +58,14 @@ def resumen(request,mes,ano):
 	c = calendar.HTMLCalendar(calendar.MONDAY)
 	calhtml=c.formatmonth(int(ano),int(mes))
 	mes_actual=datetime(ano,mes,1)
-	mes_ant=mes_actual+relativedelta(months=-1)
-	mes_prox=mes_actual+relativedelta(months=1)
+	mes_ant=AddMonth(mes_actual,-1)
+	mes_prox=AddMonth(mes_actual,1)
 
 	context={'calhtml':calhtml,fechas:[mes_actual,mes_ant,mes_prox]}
 	return render(request, 'convivencia/resumen.html',context)
 
 
+def AddMonths(d,x):
+    newmonth = ((( d.month - 1) + x ) % 12 ) + 1
+    newyear  = d.year + ((( d.month - 1) + x ) / 12 ) 
+    return datetime.date( newyear, newmonth, d.day)
