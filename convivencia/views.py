@@ -5,7 +5,7 @@ from centro.models import Alumnos
 from convivencia.models import Amonestaciones,Sanciones
 import time,calendar
 from datetime import datetime
-from dateutil.relativedelta import relativedelta
+
 
 # Create your views here.
 from django.contrib.auth.decorators import login_required
