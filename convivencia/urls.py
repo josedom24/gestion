@@ -6,6 +6,7 @@ urlpatterns = [
 	url(r'^amonestacion/(?P<alum_id>[0-9]+)$', views.amonestacion),
 	url(r'^sancion/(?P<alum_id>[0-9]+)$', views.sancion),
 	url(r'^historial/(?P<alum_id>[0-9]+)$', views.historial),
+	url(r'^resumen/(?P<mes>[0-9]+)/(?P<ano>[0-9]+)$', views.resumen),
     #url(r'^$', views.index, name='index'),
 
 ]

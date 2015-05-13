@@ -3,7 +3,7 @@ from django.shortcuts import render,redirect
 from convivencia.forms import AmonestacionForm,SancionForm
 from centro.models import Alumnos
 from convivencia.models import Amonestaciones,Sanciones
-import time
+import time,calendar
 # Create your views here.
 from django.contrib.auth.decorators import login_required
 @login_required(login_url='/admin/login/')
@@ -49,4 +49,13 @@ def historial(request,alum_id):
 	hist=zip(historial,tipo,range(1,len(historial)+1))
 	context={'alum':alum,'historial':hist}
 	return render(request, 'convivencia/historial.html',context)
+
+@login_required(login_url='/admin/login/')
+def historial(request,mes,ano):
+	c = calendar.HTMLCalendar(calendar.MONDAY)
+	calhtml=c.formatmonth(int(ano)int(mes))
+	fecha=[mes,ano]
+	context={'caltml':caltml,"fecha":fecha}
+	return render(request, 'convivencia/resumen.html',context)
+
 
