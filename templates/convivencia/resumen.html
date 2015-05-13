@@ -6,8 +6,9 @@
 <h2>Resumen</h2>
 <h2>{{fecha}} </h2>
 
-
+{% autoescape off %}
 <div class="Tabla" >
     {{calhtml}}
 </div>
+{% endautoescape %}
 {%endblock %}
