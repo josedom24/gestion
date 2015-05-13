@@ -54,7 +54,7 @@ def historial(request,alum_id):
 def resumen(request,mes,ano):
 	c = calendar.HTMLCalendar(calendar.MONDAY)
 	calhtml=c.formatmonth(int(ano),int(mes))
-	fecha=[mes,ano]
+	fecha=mes+" "+ano
 	context={'caltml':caltml,"fecha":fecha}
 	return render(request, 'convivencia/resumen.html',context)
 
