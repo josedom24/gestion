@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render,redirect
-from convivencia.forms import AmonestacionForm,SancionForm,TipoResumen
+from convivencia.forms import AmonestacionForm,SancionForm,TipoResumen,CitacionForm
 from centro.models import Alumnos
-from convivencia.models import Amonestaciones,Sanciones
+from convivencia.models import Amonestaciones,Sanciones,Citaciones
 import time,calendar
 from datetime import datetime
 # Create your views here.
@@ -39,11 +39,27 @@ def sancion(request,alum_id):
 	return render(request, 'convivencia/sancion.html',context)
 
 @login_required(login_url='/admin/login/')
+def citacion(request,alum_id):
+	alum=Alumnos.objects.get(pk=alum_id)
+	if request.method=='POST':
+		form = CitacionForm(request.POST)
+		error=True
+		if form.is_valid():
+			form.save()
+			return redirect('/centro/')
+	else:
+		form = CitacionForm({'IdAlumno':alum.id,'Fecha':time.strftime("%d/%m/%Y")})
+		error=False
+	context={'alum':alum,'form':form,'error':error}
+	return render(request, 'convivencia/citacion.html',context)
+
+@login_required(login_url='/admin/login/')
 def historial(request,alum_id):
 	alum=Alumnos.objects.get(pk=alum_id)
 	amon=Amonestaciones.objects.filter(IdAlumno_id=alum_id).order_by('Fecha')
 	sanc=Sanciones.objects.filter(IdAlumno_id=alum_id).order_by("Fecha")
-	historial=list(amon)+list(sanc)
+	cit=Citaciones.objects.filter(IdAlumno_id=alum_id).order_by("Fecha")
+	historial=list(amon)+list(sanc)+list(cit)
 	historial=sorted(historial, key=lambda x: x.Fecha, reverse=False)
 	tipo=[]
 	for h in historial:
@@ -70,6 +86,8 @@ def resumen(request,mes,ano,tipo):
 		datos=Amonestaciones.objects.filter(Fecha__year=ano).filter(Fecha__month=mes)
 	if tipo=="s":
 		datos=Sanciones.objects.filter(Fecha__year=ano).filter(Fecha__month=mes)
+	if tipo=="c":
+		datos=Citaciones.objects.filter(Fecha__year=ano).filter(Fecha__month=mes)
 
 	ult_dia=calendar.monthrange(int(ano),int(mes))[1]
 	dic_fechas=datos.values("Fecha")
@@ -102,6 +120,8 @@ def show(request,dia,mes,ano,tipo):
 		datos=Amonestaciones.objects.filter(Fecha=fecha)
 	if tipo=="s":
 		datos=Sanciones.objects.filter(Fecha=fecha)
+	if tipo=="c":
+		datos=Citaciones.objects.filter(Fecha=fecha)
 	datos=zip(range(1,len(datos)+1),datos,funciones.ContarFaltas(datos.values("IdAlumno")))
 	context={'datos':datos,'tipo':tipo,'fecha':fecha}
 	return render(request, 'convivencia/show.html',context)

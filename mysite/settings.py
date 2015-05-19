@@ -39,6 +39,8 @@ INSTALLED_APPS = (
     'centro',
     'convivencia',
     'registro',
+    'impresora',
+    'tinymce',
 )
 
 MIDDLEWARE_CLASSES = (

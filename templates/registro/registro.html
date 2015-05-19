@@ -1,0 +1,93 @@
+{% extends "base_menu.html" %}
+
+{% block title %}Centro{% endblock %}
+
+{% block content %}
+{{dict}}
+{% if tipo = 'e' %}
+    <h2>Registro de Entrada</h2>
+{% endif%}
+{% if tipo = 's' %}
+    <h2>Registro de Salida</h2>
+{% endif%}
+
+{% if form.errors and error%}
+    {% for field in form %}
+        <div class="alert alert-error">
+        {% for error in field.errors %}
+        
+                <strong>{{field.name}}: {{ error|escape }}</strong>
+        
+        {% endfor %}
+        </div>
+    {% endfor %}
+<br/>
+{% endif %}
+
+<form action="/registro/{{tipo}}" method="get">
+    {% csrf_token %}
+    <div class="Tabla" >
+    <table>
+        <tr>
+            <td></td><td></td>
+        </tr>
+    <tr><td>Fechas:</td><td>{{ form.Desde }}-{{form.Hasta }}</td></tr>
+    <tr><td>Procedencia: {{ form.Procedencia }}</td>
+        <td>Remitente: {{ form.Remitente }}</td>
+    </tr>
+    <tr><td>Documento: {{ form.Documento }}</td><td>Contenido:{{form.Contenido}}</td></tr>
+    
+</table>
+</div>
+<br/><input type="submit" value="Buscar" />
+</form>
+<br/><br/>
+{% if reg %}
+<div class="Tabla" >
+<table>
+    <tr>
+        <td>N.</td>
+        <td>Fecha</td>
+        <td>Procedencia</td>
+        <td>Remitente</td>
+        <td>Doc.</td>
+        <td>Contenido</td>
+        
+    </tr>
+    
+    {% for r in reg %}
+    <tr>
+        <td>{{r.N}}</td>
+        <td>{{r.Fecha|date:"d/m/Y"}}</td>
+        <td>{{r.Idp}}</td>
+        <td>{{r.Idr}}</td>
+        <td>{{r.Idc}}</td>
+        <td>{{r.Contenido}}</td>
+        
+        
+    </tr>
+    {% endfor %}
+    </table>
+</div>
+<br/>
+<div class="pagination">
+    <span class="step-links">
+        {% if reg.has_previous %}
+            <a href="?page={{ reg.previous_page_number }}{{busqueda}}"><img src="/static/img/prev.png"/></a>
+        {% endif %}
+
+        <span class="current">
+             <strong>{{ reg.number }} / {{ reg.paginator.num_pages }}</strong>
+        </span>
+
+        {% if reg.has_next %}
+            <a href="?page={{ reg.next_page_number }}{{busqueda}}"><img src="/static/img/next.png"/></a>
+        {% endif %}
+    </span>
+</div>
+
+{% else %}
+    <p>No hay registros</p>
+{% endif %}
+
+{% endblock %}

@@ -21,7 +21,9 @@
             <br/>{{h.Fecha_fin|date:"d/m/Y"}}
         {% endif%}
         </td>
+        {% autoescape off %}
     	<td>{{h.Comentario}}</td>
+        {% endautoescape %}
         <td><a href="convivencia/parte/{{t}}/{{h.id}}"><img src="/static/img/hide.gif"/></a></td>
     </tr>
     {% endfor %}

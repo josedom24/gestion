@@ -101,3 +101,17 @@ class Sanciones(models.Model):
 	class Meta:
 		verbose_name="Sanción"
 		verbose_name_plural="Sanciones"
+
+
+class Citaciones(models.Model):
+	
+	IdAlumno = models.ForeignKey(Alumnos)
+	Fecha = models.DateField()
+	Comentario=models.TextField(blank=True)
+	
+	def __unicode__(self):
+		return self.IdAlumno.Nombre 
+
+	class Meta:
+		verbose_name="Citación"
+		verbose_name_plural="Citaciones"

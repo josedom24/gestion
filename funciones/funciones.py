@@ -1,4 +1,4 @@
-from convivencia.models import Amonestaciones,Sanciones
+from convivencia.models import Amonestaciones,Sanciones,Citaciones
 from datetime import datetime
 def ContarFaltas(lista_id):
 	contar=[]
@@ -6,7 +6,8 @@ def ContarFaltas(lista_id):
 
 		am=str(len(Amonestaciones.objects.filter(IdAlumno_id=alum.values()[0])))
 		sa=str(len(Sanciones.objects.filter(IdAlumno_id=alum.values()[0])))
-		contar.append(am+"/"+sa)
+		ci=str(len(Citaciones.objects.filter(IdAlumno_id=alum.values()[0])))
+		contar.append(am+"/"+sa+"/"+ci)
 	return contar
 
 def AddMonths(d,x):

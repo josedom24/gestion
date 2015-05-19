@@ -8,6 +8,9 @@ class RegistroAdmin(admin.ModelAdmin):
       
     search_fields = ['Contenido']
 
+    class Media:
+        js = ('/static/js/tinymce/tinymce.min.js','/static/js/tinymce/tinymce.conf.js',)
+
 admin.site.register(Procedencia)
 admin.site.register(Remitente)
 admin.site.register(ClaseDocumento)
