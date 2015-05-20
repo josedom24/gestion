@@ -99,7 +99,7 @@ def resumen(request,mes,ano,tipo):
 	for dia in xrange(1,int(ult_dia)+1):
 		fecha=datetime(int(ano),int(mes),dia)
 		if fecha.date() in fechas:
-			calhtml=calhtml.replace(str(dia),'<a href="/convivencia/show/%s/%s/%s/%s"><strong>%s</strong></a>'%(tipo,mes,ano,dia,dia))
+			calhtml=calhtml.replace(">"+str(dia)+"<",'><a href="/convivencia/show/%s/%s/%s/%s"><strong>%s</strong></a><'%(tipo,mes,ano,dia,dia))
 
 	form=TipoResumen(initial={'tipo':tipo})
 	
