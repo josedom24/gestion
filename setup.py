@@ -6,5 +6,5 @@ setup(name='django 1.7 on Red Hat Openshift',
     author='',
     author_email='',
     url='https://github.com/jfmatth/openshift-django17',
-    install_requires=['django-tinymce'],
+    install_requires=['django-tinymce','django-easy-pdf','xhtml2pdf>=0.0.6','reportlab>=2.7,<3'],
 )
