@@ -17,17 +17,19 @@
 		<td>N.</td>
 		<td>Nombre</td>
 		<td>A/S/C</td>
+        <td>Acum.</td>
 		<td>A</td>
 		<td>S</td>
         <td>C</td>
         <td>H</td>
 	</tr>
 	
-    {% for alum,num_faltas,n in alumnos %}
+    {% for alum,num_faltas,acum,n in alumnos %}
     <tr>
     	<td>{{n}}</td>
     	<td>{{alum.Nombre}}</td>
     	<td>{{num_faltas}}</td>
+        <td>{{acum}}</td>
     	
     	<td><a href="/convivencia/amonestacion/{{alum.id}}"><img src="/static/img/amon.png"/></a></td>
     	<td><a href="/convivencia/sancion/{{alum.id}}"><img src="/static/img/sans.png"/></a></td>

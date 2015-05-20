@@ -61,6 +61,7 @@ def historial(request,alum_id):
 	cit=Citaciones.objects.filter(IdAlumno_id=alum_id).order_by("Fecha")
 	historial=list(amon)+list(sanc)+list(cit)
 	historial=sorted(historial, key=lambda x: x.Fecha, reverse=False)
+	
 	tipo=[]
 	for h in historial:
 		tipo.append(str(type(h)).split(".")[2][0])

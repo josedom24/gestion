@@ -20,7 +20,7 @@ def index(request):
 		
 	lista_alumnos = Alumnos.objects.filter(Unidad__id=primer_id)
 	form = UnidadForm({'Unidad':primer_id})
-	lista=zip(lista_alumnos,funciones.ContarFaltas(lista_alumnos.values("id")),range(1,len(lista_alumnos)+1))
+	lista=zip(lista_alumnos,funciones.ContarFaltas(lista_alumnos.values("id")),funciones.ContarAmonestacionesAcumuladas(lista_alumnos.values("id")),range(1,len(lista_alumnos)+1))
 	context={'alumnos':lista,'form':form}
 	return render(request, 'centro/centro.html',context)
 

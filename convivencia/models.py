@@ -89,6 +89,8 @@ class Sanciones(models.Model):
 	IdAlumno = models.ForeignKey(Alumnos)
 	Fecha = models.DateField()
 	Fecha_fin = models.DateField(verbose_name="Fecha finalización")
+	Fecha_incorporacion = models.DateField(verbose_name="Fecha incorporación")
+	Sancion=models.CharField(max_length=100)
 	Comentario=models.TextField(blank=True)
 	
 	SancionesLeves = models.ManyToManyField(SancionesLeves,verbose_name="Sanciones Leves",blank=True)

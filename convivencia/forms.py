@@ -29,6 +29,8 @@ class SancionForm(forms.ModelForm):
 			'IdAlumno':HiddenInput(),
 			'Fecha':DateInput(),
 			'Fecha_fin':DateInput(),
+			'Fecha_incorporacion':DateInput(),
+			'Sancion':forms.forms.TextInput(attrs={'size': '67'}),
 			#'Comentario': Textarea(attrs={'cols': 90, 'rows': 15}),
 			'Comentario': TinyMCE(),
             'SancionesLeves': CheckboxSelectMultiple(choices=SancionesLeves.objects.order_by('id')),

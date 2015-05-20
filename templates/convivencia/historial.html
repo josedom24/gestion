@@ -22,7 +22,13 @@
         {% endif%}
         </td>
         {% autoescape off %}
-    	<td>{{h.Comentario}}</td>
+    	<td>
+            {% if h.Sancion %}
+            <br/>Sanción: {{h.Sancion}}<hr/>
+            {% endif%}
+        
+
+            {{h.Comentario}}</td>
         {% endautoescape %}
         <td><a href="convivencia/parte/{{t}}/{{h.id}}"><img src="/static/img/hide.gif"/></a></td>
     </tr>
