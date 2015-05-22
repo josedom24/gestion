@@ -427,3 +427,27 @@
 .Tabla tr:first-child td:last-child{
   border-width:0px 0px 1px 1px;
 }
+
+div.btn
+{
+  align:left;
+}
+.btn {
+  float:right;
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 20px;
+  background: #542a29;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+  
+}
+
+.btn:hover {
+  float:right;
+  background: #c87070;
+  text-decoration: none;
+}

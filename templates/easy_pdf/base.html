@@ -13,17 +13,26 @@
             <style type="text/css">
                 @page {
                     size: {{ pagesize|default:"A4" }};
-                    margin-left: 2.5cm;
-                    margin-right: 2.5cm;
-                    margin-top: 2.5cm;
+                    @frame content {
+                   
+                    -pdf-frame-content: content;
+                    margin-left: 2cm;
+                    margin-right: 2cm;
+                    margin-top: 2cm;
                     margin-bottom: 2cm;
+                    -pdf-frame-border: 0; 
+
+                    }
+
 
                     @frame header {
                         -pdf-frame-content: page-header;
-                        margin-top: 0.7cm;
-                        margin-right: 2mm;
-                        margin-bottom: 0cm;
-                        margin-left: 1.2cm;
+                        top: 1cm;
+                        margin-left: 1cm;
+                        margin-right: 1cm;
+                        height: 1cm;
+                        -pdf-frame-border: 0; 
+
                     }
 
                     @frame footer {
@@ -40,9 +49,11 @@
     {% endblock %}
 </head>
 <body>
-    <div>
+    <div id="page-header">
         {%block page_header%}
         {%endblock%}
+    </div>
+    <div id="content">
 
         {%block content%}
         {%endblock%}
@@ -53,6 +64,7 @@
             {% comment %}
                 <pdf:pagenumber />
             {% endcomment %}
+
         {%endblock%}
     </div>
 </body>

@@ -52,7 +52,19 @@
     </tr>
     {% endfor %}
     </table>
+
 </div>
+<br/>
+<br/>
+    {% if tipo = 'a' %}
+        <a class="btn" href="/impresora/carta/amonestaciones/{{fecha|date:"m"}}/{{fecha|date:"Y"}}/{{fecha|date:"d"}}">Cartas</a>
+    {% endif%}    
+    {% if tipo = 'c' %}
+        <a class="btn" href="/impresora/carta/citaciones/{{fecha|date:"m"}}/{{fecha|date:"Y"}}/{{fecha|date:"d"}}">Cartas</a>
+    {% endif%}    
+<br/>
+<br/>
+
 {% else %}
     <p>No hay resumen de amonestaciones/sanciones/amonestaciones.</p>
 {% endif %}

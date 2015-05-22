@@ -15,9 +15,10 @@ def ContarAmonestacionesAcumuladasAlumno(id):
 	sa=Sanciones.objects.filter(IdAlumno_id=id).order_by('Fecha').last()
 	if sa:
 		am=Amonestaciones.objects.filter(IdAlumno_id=id).filter(Fecha__gte=sa.Fecha)
-		return(str(len(am)))
 	else:
-		return("0")
+		am=Amonestaciones.objects.filter(IdAlumno_id=id)
+	return(str(len(am)))
+	
 
 def ContarAmonestacionesAcumuladas(lista_id):
 	contar=[]
