@@ -1,19 +1,16 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from registro.models import Procedencia,Remitente,ClaseDocumento,Registro
 from datetime import datetime
 from registro.forms import RegistroForm,BuscarRegistroForm
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from funciones import funciones
+import time
 # Create your views here.
 
 @login_required(login_url='/admin/login/')
 def registro(request,tipo):
-	hoy=datetime.now()
-	if hoy.month>=9:
-		curso=str(hoy.year)+"-"+str(hoy.year+1)
-	else:
-		curso=str(hoy.year-1)+'-'+str(hoy.year)
-
+	curso=funciones.CalcularCurso()
 	dict={'Tipo':tipo,'Curso':curso}
 
 
@@ -61,6 +58,34 @@ def registro(request,tipo):
 
 	context={'reg':contacts,'tipo':tipo,'curso':curso,'form':form,'error':error,'busqueda':'&'+request.GET.urlencode()}
 	return render(request, 'registro/registro.html',context)
+
+
+@login_required(login_url='/admin/login/')
+def add(request,tipo):
+	
+	if request.method=='POST':
+		N=request.POST.get('N')
+		curso=request.POST.get('curso')
+		form = RegistroForm(request.POST)
+		error=True
+		if form.is_valid():
+			form.save()
+			return redirect('/registro/'+tipo)
+	else:
+		curso=funciones.CalcularCurso()
+		dict={'Tipo':tipo,'Curso':curso}
+		reg=Registro.objects.filter(**dict).order_by("-N").first()
+		if reg.N>1:
+			N=reg.N+1
+		else:
+			N=reg.N
+		form = RegistroForm({'N':N,'Curso':curso,'Tipo':tipo,'Fecha':time.strftime("%d/%m/%Y")})
+		error=False
+	context={'N':N,'curso':curso,'tipo':tipo,'form':form,'error':error}
+	return render(request, 'registro/add.html',context)
+
+
+
 
 
 

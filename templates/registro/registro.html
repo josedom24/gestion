@@ -3,13 +3,17 @@
 {% block title %}Centro{% endblock %}
 
 {% block content %}
-{{dict}}
+
+<a class="btn" href="/registro/add/{{tipo}}">Nuevo</a>
+<br/>
+<br/>
 {% if tipo = 'e' %}
-    <h2>Registro de Entrada</h2>
+    <h2>Registro de Entrada ({{curso}})</h2>
 {% endif%}
 {% if tipo = 's' %}
-    <h2>Registro de Salida</h2>
+    <h2>Registro de Salida ({{curso}})</h2>
 {% endif%}
+
 
 {% if form.errors and error%}
     {% for field in form %}

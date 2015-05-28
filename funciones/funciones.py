@@ -30,3 +30,11 @@ def AddMonths(d,x):
     newmonth = ((( d.month - 1) + x ) % 12 ) + 1
     newyear  = d.year + ((( d.month - 1) + x ) / 12 ) 
     return datetime( newyear, newmonth, d.day)
+
+def CalcularCurso():
+	hoy=datetime.now()
+	if hoy.month>=9:
+		curso=str(hoy.year)+"-"+str(hoy.year+1)
+	else:
+		curso=str(hoy.year-1)+'-'+str(hoy.year)
+	return curso

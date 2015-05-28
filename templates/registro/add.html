@@ -1,0 +1,40 @@
+{% extends "base_menu.html" %}
+
+{% block title %}Registro{% endblock %}
+
+{% block content %}
+{% if tipo = 'e' %}
+    <h2>Nuevo registro de Entrada ({{curso}})</h2>
+{% endif%}
+{% if tipo = 's' %}
+    <h2>Nuevo registro de Salida ({{curso}})</h2>
+{% endif%}
+{% if form.errors and error%}
+    {% for field in form %}
+    	<div class="alert alert-error">
+        {% for error in field.errors %}
+        
+                <strong>{{field.name}}: {{ error|escape }}</strong>
+        
+        {% endfor %}
+        </div>
+    {% endfor %}
+<br/>
+{% endif %}
+
+<form action="/registro/add/{{tipo}}/" method="post">
+    {% csrf_token %}
+    <div class="Tabla" >
+    <table>
+        <tr>
+            <td>Número:</td><td>{{N}}</td>
+        </tr>
+    {{ form }}
+    
+</table>
+</div>
+<br/><input type="submit" value="Guardar" />
+</form>
+<br/><br/>
+
+{% endblock %}
