@@ -10,6 +10,7 @@
 
                     size: {{ pagesize|default:"A4" }};
                     @frame content {
+                    top:4cm;
                    
                     -pdf-frame-content: content;
                     margin-left: 2cm;
@@ -19,7 +20,23 @@
                     -pdf-frame-border:1; 
 
                     }
-                    
+                     @frame header {
+                        -pdf-frame-content: header;
+                        top: 1cm;
+                        margin-left: 2cm;
+                        margin-right: 2cm;
+                        height: 7cm;
+                        -pdf-frame-border: 0; 
+
+                    }
+                    @frame footer {
+                        -pdf-frame-content: page-footer;
+                        bottom: 0cm;
+                        margin-left: 2cm;
+                        margin-right: 2cm;
+                        height: 1cm;
+                        -pdf-frame-border:1; 
+                    }
                  
                     
              }
@@ -33,10 +50,11 @@
         
         table{
 
-            margin: 0cm;
+            
+            -pdf-keep-in-frame-mode: shrink;
         }
         td{
-            padding: 3px 0px 1px 0px;
+            padding: 3px 3px 1px 3px;
             margin:0px 0px 0px 0px;
 
         }
@@ -49,31 +67,75 @@
     </style>
 </head>
 <body>
-<div id="content">
+<div id="header">
 <h1>IES Gonzalo Nazareno</h1>
 <p>C/Las Botijas,10<br/>
 41710 - Dos Hermanas (Sevilla)</br/>
 Tfno: 955839911 - Fax: 955839915</p>
 <center><h1>{{ title|default:"" }}</h1></center>
 <h4>Fecha:{{fecha|date:"d/m/Y"}}</h4>
+</div> 
+
+<div id="content">
+{% autoescape off %}
 
 
-
-<table align="center" width="94%" border="0.1">
-	<tr>
-        {% for a,h in header %}
-        <td align="left">{{h}}</td>
-        {% endfor %}
-    </tr>
-    {%for c in content%}
+<table  align="center" border="0.1">
     <tr>
-        <td align="char">{{c.IdAlumno.Nombre}}</td>
         
+        <td align="left">hola</td>
         
     </tr>
-    {% endfor %}
+    
+    <tr>
+        <td>adios</td>
+   </tr>
+    
 </table>
-</div>  
+
+</div>
+
+<div id="page-footer">
+            <pdf:pagenumber/>/<pdf:pagecount>
+        
+    </div>
+
+
+
+<div id="header">
+<h1>IES Gonzalo Nazareno</h1>
+<p>C/Las Botijas,10<br/>
+41710 - Dos Hermanas (Sevilla)</br/>
+Tfno: 955839911 - Fax: 955839915</p>
+<center><h1>{{ title|default:"" }}</h1></center>
+<h4>Fecha:{{fecha|date:"d/m/Y"}}</h4>
+</div> 
+
+<div id="content">
+
+
+<table  align="center" border="0.1">
+    <tr>
+        
+        <td align="left">hola2</td>
+        
+    </tr>
+    
+    <tr>
+        <td>adios2</td>
+   </tr>
+    
+</table>
+
+{% endautoescape %}
+</div> 
+
+<div id="page-footer">
+            <pdf:pagenumber/>/<pdf:pagecount>
+        
+    </div>
+
+
 </body>
 </html>
 

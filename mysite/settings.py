@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'registro',
     'impresora',
     'tinymce',
+    
 )
 
 MIDDLEWARE_CLASSES = (
