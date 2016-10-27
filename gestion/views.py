@@ -6,16 +6,22 @@ from django.contrib.auth import authenticate,login
 
 # Create your views here.
 def index(request):
-	context={}
+	context={'next':"/"}
+	if request.GET.has_key("next"):
+		context={'next':request.GET["next"]}
 	if request.method=="POST":
 		user = authenticate(username=request.POST["username"], password=request.POST["password"])
 		if user is None:
 			context={'error':True}
 		else:
 			login(request, user)
+			if request.POST.has_key("next"):
+				return redirect(request.POST["next"])
+	
+	
 	return render(request, 'index.html',context)
 
-@login_required(login_url='/admin/login/')
+@login_required(login_url='/')
 def salir(request):
     logout(request)
     return redirect('/')

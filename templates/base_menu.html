@@ -11,6 +11,7 @@
                     
                     
                     <a class="btn btn-default" href="/centro/alumnos" role="button">Alumnos</a>
+                    <a class="btn btn-default" href="/centro/profesores" role="button">Profesores</a>
                     
                     
                     <a class="btn btn-default" href="/logout" role="button">Desconectar</a>
@@ -28,6 +29,7 @@
                       <input type="text" name="username" id="inputText" class="form-control" placeholder="Usuario" required autofocus>
                       <label for="inputPassword" class="sr-only">Password</label>
                       <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                      <input type="hidden" name="next" value="{{next}}">
                       <!--<div class="checkbox">
                               <label>
                                 <input type="checkbox" value="remember-me"> Recuérdame

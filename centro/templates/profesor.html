@@ -1,0 +1,48 @@
+{% extends "base_menu.html" %}
+
+{% block content %}
+<h3>Búsqueda</h3>
+ <form action="/centro/profesores" method="post" class="form-hotizontal">
+        {% csrf_token %}
+        <div class="form-group">
+              <div class="col-xs-5">
+                {{ form.as_p }}
+            </div>
+        </div>
+        <button  type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+    <hr/>
+    <!--<a href="/usuarios/add"><button type="submit" class="btn btn-primary">Nuevo usuario</button></a>
+    <a href="/usuarios/tipo"><button type="submit" class="btn btn-primary">Asignar Tipo</button></a>-->
+
+ <br/><h2>Gestión de profesores {{departamento}}</h2>
+
+<table class="table table-bordered">
+    <tr><td>N.</td><td>Nombre</td><td>Teléfono</td><td>Movil</td><td>Tutor</td><td>Dep.</td><td>CE</td><td>ETCP</td><td>Bil</td></tr>
+    
+    {%for prof,cont in profesores %}
+    
+    <tr>
+      <td>{{cont}}</td>
+      
+        
+        
+      <td>{{prof.Apellidos}},{{prof.Nombre}}</td>
+      <td>{{prof.Telefono}}</td>
+      <td>{{prof.Movil}}</td>
+      <td>curso</td>
+      <td>{{prof.Departamento.Abr}}</td>
+      
+      <td><a href="/profecurso{{operacion}}"><span class="glyphicon glyphicon-user" style="color:{{color}}" aria-hidden="true"></span></a></td>
+         
+         {% endfor %}
+      
+
+      
+    </tr>
+    % end
+    </table>
+
+
+
+{% endblock %}

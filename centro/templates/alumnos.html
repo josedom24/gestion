@@ -1,0 +1,42 @@
+{% extends "base_menu.html" %}
+
+{% block content %}
+<h3>Búsqueda</h3>
+ <form action="/centro/alumnos" method="post" class="form-hotizontal">
+        {% csrf_token %}
+        <div class="form-group">
+              <div class="col-xs-4">
+                {{ form.as_p }}
+            </div>
+        </div>
+        <button  type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+    <hr/>
+    <!--<a href="/usuarios/add"><button type="submit" class="btn btn-primary">Nuevo usuario</button></a>
+    <a href="/usuarios/tipo"><button type="submit" class="btn btn-primary">Asignar Tipo</button></a>-->
+
+ <br/><h2>Alumnos - {{curso}}</h2>
+
+<table class="table table-bordered">
+    <tr><td>N.</td><td>Alumno</td><td>A/S</td><td>A</td><td>S</td><td>Hist.</td></tr>
+    
+    {% for alum,cont in alumnos%}
+    
+    <tr>
+      <td>{{cont}}</td>
+      
+        
+        
+      <td>{{alum.Nombre}}</td>
+      
+      <td></td>
+      <td><a href="centro/alumnos/amonestacion/{{alum.id}}"><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span></a></td>
+      <td><a href="centro/alumnos/sancion/{{alum.id}}"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span></a></td>
+      <td><a href="centro/alumnos/historial/{{alum.id}}"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a></td>
+      
+    </tr>
+    {% endfor %}
+    </table>
+
+
+{% endblock %}
