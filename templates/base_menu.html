@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block menu %}
+    <aside>
+        
+            
+            {% if user.is_authenticated %}
+            <br/>
+                <div class="center-block btn-group-vertical" role="group" aria-label="...">
+                    <p class="text-center"><strong>Bienvenid@ {{user.username}}</strong></p>
+                    <p class="text-center"><strong>Menú</strong></p>
+                    
+                    
+                    <a class="btn btn-default" href="/centro/alumnos" role="button">Alumnos</a>
+                    
+                    
+                    <a class="btn btn-default" href="/logout" role="button">Desconectar</a>
+                </div>
+
+            
+            {% else %}
+                <form action="/" method="post" class="form-signin">
+                    {% csrf_token %}
+                     <h4 class="form-signin-heading">Login</h4>
+                      {% if error %}
+                          <h3 class="bg-danger">Error en login.</h3>
+                      {% endif%}
+                      <label for="inputEmail" class="sr-only">Usuario</label>
+                      <input type="text" name="username" id="inputText" class="form-control" placeholder="Usuario" required autofocus>
+                      <label for="inputPassword" class="sr-only">Password</label>
+                      <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                      <!--<div class="checkbox">
+                              <label>
+                                <input type="checkbox" value="remember-me"> Recuérdame
+                              </label>
+                            </div>-->
+                      <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
+                    </form>
+
+            {% endif %}
+            
+        
+    </aside>
+{% endblock %}
