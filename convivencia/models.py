@@ -39,7 +39,7 @@ class Sanciones(models.Model):
 	IdAlumno = models.ForeignKey(Alumnos)
 	Fecha = models.DateField()
 	Fecha_fin = models.DateField(verbose_name="Fecha finalización")
-	Sancion=models.CharField(max_length=100)
+	Sancion=models.CharField(max_length=100,blank=True)
 	Comentario=models.TextField(blank=True)
 	
 

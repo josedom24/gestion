@@ -21,6 +21,7 @@ from gestion.views import index,salir
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^centro/', include('centro.urls')),
+    url(r'^convivencia/', include('convivencia.urls')),
     url(r'^$',index),
     url(r'^logout/$',salir),
 

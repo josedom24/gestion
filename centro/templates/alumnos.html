@@ -23,7 +23,7 @@
 <table class="table table-bordered">
     <tr><td>N.</td><td>Alumno</td><td>A/S</td><td>A</td><td>S</td><td>Hist.</td></tr>
     
-    {% for alum,cont in alumnos%}
+    {% for cont,alum,acum in alumnos%}
     
     <tr>
       <td>{{cont}}</td>
@@ -32,10 +32,10 @@
         
       <td>{{alum.Nombre}}</td>
       
-      <td></td>
-      <td><a href="centro/alumnos/amonestacion/{{alum.id}}"><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span></a></td>
-      <td><a href="centro/alumnos/sancion/{{alum.id}}"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span></a></td>
-      <td><a href="centro/alumnos/historial/{{alum.id}}"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a></td>
+      <td>{{acum}}</td>
+      <td><a href="/convivencia/amonestacion/{{alum.id}}"><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></a></td>
+      <td><a href="/convivencia/sancion/{{alum.id}}"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></a></td>
+      <td><a href="/convivencia/historial/{{alum.id}}"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></a></td>
       
     </tr>
     {% endfor %}
