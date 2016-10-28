@@ -11,9 +11,13 @@
                     
                     
                     <a class="btn btn-default" href="/centro/alumnos" role="button">Alumnos</a>
+                    {% if menu_alumnos%}
+                    <a class="btn btn-default" href="/convivencia/resumen/amonestacion" role="button">Resumen de amonestaciones</a>
+                    <a class="btn btn-default" href="/convivencia/resumen/sancion" role="button">Resumen de sanciones</a>
+                    {%endif%}
                     <a class="btn btn-default" href="/centro/profesores" role="button">Profesores</a>
                     
-                    
+                    <a class="btn btn-default" href="/admin" role="button">Administración</a>
                     <a class="btn btn-default" href="/logout" role="button">Desconectar</a>
                 </div>
 

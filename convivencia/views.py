@@ -1,9 +1,12 @@
+
+# -*- coding: utf-8 -*-
 from django.shortcuts import render,redirect
 from convivencia.forms import AmonestacionForm,SancionForm
 from centro.models import Alumnos
 from convivencia.models import Amonestaciones,Sanciones
 from django.contrib.auth.decorators import login_required
 import time,calendar
+from datetime import datetime
 
 # Create your views here.
 
@@ -34,5 +37,99 @@ def parte(request,tipo,alum_id):
 		else:
 			return redirect("/")
 		error=False
-	context={'alum':alum,'form':form,'titulo':titulo,'tipo':tipo}
+	context={'alum':alum,'form':form,'titulo':titulo,'tipo':tipo,'menu_alumnos':True}
 	return render(request, 'parte.html',context)
+
+
+
+@login_required(login_url='/')
+def historial(request,alum_id):
+	alum=Alumnos.objects.get(pk=alum_id)
+	amon=Amonestaciones.objects.filter(IdAlumno_id=alum_id).order_by('Fecha')
+	sanc=Sanciones.objects.filter(IdAlumno_id=alum_id).order_by("Fecha")
+	
+	historial=list(amon)+list(sanc)
+	historial=sorted(historial, key=lambda x: x.Fecha, reverse=False)
+	
+	tipo=[]
+	for h in historial:
+		if str(type(h)).split(".")[2][0]=="A":
+			tipo.append("Amonestación")
+		else:
+			tipo.append("Sanción")
+	hist=zip(historial,tipo,range(1,len(historial)+1))
+	context={'alum':alum,'historial':hist,'menu_alumnos':True}
+	return render(request, 'historial.html',context)
+
+
+@login_required(login_url='/')
+def resumen_hoy(request,tipo):
+	hoy=datetime.now()
+	return resumen(request,tipo,str(hoy.month),str(hoy.year))
+
+
+@login_required(login_url='/')
+def resumen(request,tipo,mes,ano):
+	if request.method=='POST':
+		tipo=request.POST.get('tipo')
+
+	c = calendar.HTMLCalendar(calendar.MONDAY)
+	calhtml=c.formatmonth(int(ano),int(mes))
+
+	if tipo=="amonestacion":
+		datos=Amonestaciones.objects.filter(Fecha__year=ano).filter(Fecha__month=mes)
+		titulo="Resumen de amonestaciones"
+	if tipo=="sancion":
+		datos=Sanciones.objects.filter(Fecha__year=ano).filter(Fecha__month=mes)
+		titulo="Resumen de sanciones"
+	
+	ult_dia=calendar.monthrange(int(ano),int(mes))[1]
+	dic_fechas=datos.values("Fecha")
+	fechas=[]
+	for f in dic_fechas:
+		fechas.append(f["Fecha"])
+
+	for dia in xrange(1,int(ult_dia)+1):
+		fecha=datetime(int(ano),int(mes),dia)
+		if fecha.date() in fechas:
+			calhtml=calhtml.replace(">"+str(dia)+"<",'><a href="/convivencia/show/%s/%s/%s/%s"><strong>%s</strong></a><'%(tipo,mes,ano,dia,dia))
+	calhtml=calhtml.replace('class="month"','class="table-condensed table-bordered table-striped"')
+	#form=TipoResumen(initial={'tipo':tipo})
+	
+	
+	mes_actual=datetime(int(ano),int(mes),1)
+	mes_ant=AddMonths(mes_actual,-1)
+	mes_prox=AddMonths(mes_actual,1)
+
+	context={'calhtml':calhtml,'fechas':[mes_actual,mes_ant,mes_prox],'titulo':titulo,'tipo':tipo,'menu_alumnos':True}
+	return render(request, 'resumen.html',context)
+
+def AddMonths(d,x):
+    newmonth = ((( d.month - 1) + x ) % 12 ) + 1
+    newyear  = d.year + ((( d.month - 1) + x ) / 12 ) 
+    return datetime( newyear, newmonth, d.day)
+
+@login_required(login_url='/')
+def show(request,tipo,mes,ano,dia):
+	fecha=datetime(int(ano),int(mes),int(dia))
+	if tipo=="amonestacion":
+		datos=Amonestaciones.objects.filter(Fecha=fecha)
+		titulo="Resumen de amonestaciones"
+	if tipo=="sancion":
+		datos=Sanciones.objects.filter(Fecha=fecha)
+		titulo="Resumen de sanciones"
+	
+	datos=zip(range(1,len(datos)+1),datos,ContarFaltas(datos.values("IdAlumno")))
+	context={'datos':datos,'tipo':tipo,'fecha':fecha,'titulo':titulo,'menu_alumnos':True}
+	context[tipo]=True
+	return render(request, 'show.html',context)
+
+def ContarFaltas(lista_id):
+	contar=[]
+	for alum in lista_id:
+
+		am=str(len(Amonestaciones.objects.filter(IdAlumno_id=alum.values()[0])))
+		sa=str(len(Sanciones.objects.filter(IdAlumno_id=alum.values()[0])))
+
+		contar.append(am+"/"+sa)
+	return contar
