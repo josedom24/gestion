@@ -36,8 +36,14 @@ def profesores(request):
 		lista_profesores = Profesores.objects.filter(Departamento__id=dep_id)
 		departamento=Departamentos.objects.get(id=dep_id).Nombre
 	form = DepartamentosForm({'Departamento':dep_id})
+	cursos=[]
+	for prof in lista_profesores:
+		try:
+			cursos.append(Cursos.objects.get(Tutor=prof.id).Curso)
+		except Exception, e:
+			cursos.append("")
 	#lista=zip(lista_alumnos,funciones.ContarFaltas(lista_alumnos.values("id")),funciones.ContarAmonestacionesAcumuladas(lista_alumnos.values("id")),range(1,len(lista_alumnos)+1))
-	lista=zip(lista_profesores,range(1,len(lista_profesores)+1))
+	lista=zip(lista_profesores,range(1,len(lista_profesores)+1),cursos)
 	context={'profesores':lista,'form':form,"departamento":departamento}
 	return render(request, 'profesor.html',context)
 	

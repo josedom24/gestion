@@ -5,10 +5,11 @@
  <form action="/centro/profesores" method="post" class="form-hotizontal">
         {% csrf_token %}
         <div class="form-group">
-              <div class="col-xs-5">
+              <div class="col-xs-4">
                 {{ form.as_p }}
             </div>
         </div>
+        <br/>
         <button  type="submit" class="btn btn-primary">Buscar</button>
     </form>
     <hr/>
@@ -20,7 +21,7 @@
 <table class="table table-bordered">
     <tr><td>N.</td><td>Nombre</td><td>Teléfono</td><td>Movil</td><td>Tutor</td><td>Dep.</td><td>CE</td><td>ETCP</td><td>Bil</td></tr>
     
-    {%for prof,cont in profesores %}
+    {%for prof,cont,curso in profesores %}
     
     <tr>
       <td>{{cont}}</td>
@@ -30,7 +31,7 @@
       <td>{{prof.Apellidos}},{{prof.Nombre}}</td>
       <td>{{prof.Telefono}}</td>
       <td>{{prof.Movil}}</td>
-      <td>{{prof.}}</td>
+      <td>{{curso}}</td>
       <td>{{prof.Departamento.Abr}}</td>
       
       <td><a href="/profecurso{{operacion}}"><span class="glyphicon glyphicon-user" style="color:{{color}}" aria-hidden="true"></span></a></td>
