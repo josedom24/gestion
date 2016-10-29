@@ -58,7 +58,7 @@ def historial(request,alum_id):
 		else:
 			tipo.append("Sanción")
 	hist=zip(historial,tipo,range(1,len(historial)+1))
-	context={'alum':alum,'historial':hist,'menu_alumnos':True}
+	context={'alum':alum,'historial':hist,'menu_historial':True}
 	return render(request, 'historial.html',context)
 
 
@@ -101,7 +101,7 @@ def resumen(request,tipo,mes,ano):
 	mes_ant=AddMonths(mes_actual,-1)
 	mes_prox=AddMonths(mes_actual,1)
 
-	context={'calhtml':calhtml,'fechas':[mes_actual,mes_ant,mes_prox],'titulo':titulo,'tipo':tipo,'menu_alumnos':True}
+	context={'calhtml':calhtml,'fechas':[mes_actual,mes_ant,mes_prox],'titulo':titulo,'tipo':tipo,'menu_resumen':True}
 	return render(request, 'resumen.html',context)
 
 def AddMonths(d,x):
@@ -120,7 +120,7 @@ def show(request,tipo,mes,ano,dia):
 		titulo="Resumen de sanciones"
 	
 	datos=zip(range(1,len(datos)+1),datos,ContarFaltas(datos.values("IdAlumno")))
-	context={'datos':datos,'tipo':tipo,'fecha':fecha,'titulo':titulo,'menu_alumnos':True}
+	context={'datos':datos,'tipo':tipo,'fecha':fecha,'titulo':titulo,'menu_'+tipo:True}
 	context[tipo]=True
 	return render(request, 'show.html',context)
 

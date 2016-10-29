@@ -18,7 +18,7 @@ def alumnos(request):
 	form = UnidadForm({'Unidad':primer_id})
 	#lista=zip(lista_alumnos,funciones.ContarFaltas(lista_alumnos.values("id")),funciones.ContarAmonestacionesAcumuladas(lista_alumnos.values("id")),range(1,len(lista_alumnos)+1))
 	lista=zip(range(1,len(lista_alumnos)+1),lista_alumnos,ContarFaltas(lista_alumnos.values("id")))
-	context={'alumnos':lista,'form':form,'curso':Cursos.objects.get(id=primer_id).Curso,'menu_alumnos':True}
+	context={'alumnos':lista,'form':form,'curso':Cursos.objects.get(id=primer_id),'menu_alumnos':True}
 	return render(request, 'alumnos.html',context)
 
 

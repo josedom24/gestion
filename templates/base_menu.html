@@ -10,15 +10,29 @@
                     <p class="text-center"><strong>Menú</strong></p>
                     
                     
-                    <a class="btn btn-default" href="/centro/alumnos" role="button">Alumnos</a>
+                    <a class="btn btn-default btn-primary" href="/centro/alumnos" role="button">Alumnos</a>
+                    {% if menu_alumnos or menu_resumen%}
+                    <a class="btn btn-default btn-secundary" href="/convivencia/resumen/amonestacion" role="button">Resumen de amonestaciones</a>
+                    <a class="btn btn-default btn-secundary" href="/convivencia/resumen/sancion" role="button">Resumen de sanciones</a>
+                    {% endif%}
                     {% if menu_alumnos%}
-                    <a class="btn btn-default" href="/convivencia/resumen/amonestacion" role="button">Resumen de amonestaciones</a>
-                    <a class="btn btn-default" href="/convivencia/resumen/sancion" role="button">Resumen de sanciones</a>
+                    <a class="btn btn-default btn-secundary" href="/pdf/partes/{{curso.id}}" role="button">Imprimir {{curso.Curso}}</a>
                     {%endif%}
-                    <a class="btn btn-default" href="/centro/profesores" role="button">Profesores</a>
+                    {% if menu_historial%}
+                    <a class="btn btn-default btn-secundary" href="/pdf/historial/{{alum.id}}" role="button">Imprimir Historial</a>
+                    {%endif%}
+                    {% if menu_amonestacion%}
+                    <a class="btn btn-default btn-secundary" href="/pdf/amonestacion" role="button">Imprimir Amonestaciones</a>
+                    <a class="btn btn-default btn-secundary" href="/pdf/carta_amonestacion" role="button">Imprimir Cartas</a>
+                    {%endif%}
+                    {% if menu_sancion%}
+                    <a class="btn btn-default btn-secundary" href="/pdf/sancion" role="button">Imprimir Sanciones</a>
                     
-                    <a class="btn btn-default" href="/admin" role="button">Administración</a>
-                    <a class="btn btn-default" href="/logout" role="button">Desconectar</a>
+                    {%endif%}
+                    <a class="btn btn-default btn-primary" href="/centro/profesores" role="button">Profesores</a>
+                    
+                    <a class="btn btn-default btn-primary" href="/admin" role="button">Administración</a>
+                    <a class="btn btn-default btn-primary" href="/logout" role="button">Desconectar</a>
                 </div>
 
             

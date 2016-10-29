@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'centro.apps.CentroConfig',
     'convivencia.apps.ConvivenciaConfig',
+    'pdf.apps.PdfConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
