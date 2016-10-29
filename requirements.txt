@@ -1,0 +1,6 @@
+Django==1.10.2
+PyPDF2==1.26.0
+argparse==1.2.1
+html5lib==0.999999999
+wsgiref==0.1.2
+xhtml2pdf==0.0.6
