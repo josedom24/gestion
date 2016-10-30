@@ -38,9 +38,9 @@ class Registro(models.Model):
 	Fecha = models.DateField()
 	N=models.IntegerField()
 	Tipo = models.CharField(max_length=7)
-	Idp= models.ForeignKey(Procedencia)
-	Idr= models.ForeignKey(Remitente)
-	Idc= models.ForeignKey(ClaseDocumento)
+	Idp= models.ForeignKey(Procedencia,null=True)
+	Idr= models.ForeignKey(Remitente,null=True)
+	Idc= models.ForeignKey(ClaseDocumento,null=True)
 	Contenido=models.TextField(blank=True)
 
 	def __unicode__(self):
