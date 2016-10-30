@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^centro/', include('centro.urls')),
     url(r'^convivencia/', include('convivencia.urls')),
     url(r'^pdf/', include('pdf.urls')),
+    url(r'^registro/', include('registro.urls')),
     url(r'^$',index),
     url(r'^logout/$',salir),
 
