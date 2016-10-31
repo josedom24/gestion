@@ -39,8 +39,7 @@ campos=["Curso","Fecha","N","Tipo","Idp","Idr","Idc","Contenido"]
 
 file=open("datos/registro.txt","r")
 
-linea=file.readlines()[0]
-lista=linea.split("),(")
+lista=file.readlines()
 for linea in lista:
 	dato={}	
 	lista2=linea.split(",")
@@ -64,11 +63,11 @@ for linea in lista:
 		elif c=="Fecha" or c=="Tipo" or c=="Contenido" or c=="Curso":
 			try:
 				dato[c]=v.strip()
-				dato[c]=dato[c][1:-1]
+				dato[c]=dato[c]
 			except:
 				pass
 		else:
-			dato[c]="%s"% v.strip().decode("utf8")
+			dato[c]="%s"% v.strip()
 		
 	print dato
 	a=Registro(**dato)
