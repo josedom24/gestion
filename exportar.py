@@ -61,17 +61,18 @@ for linea in lista:
 				dato[c]=ClaseDocumento.objects.filter(id=v.strip())[0]
 			except:
 				dato[c]=None
-		elif c=="Fecha":
+		elif c=="Fecha" or c=="Tipo" or c=="Contenido" or c=="Curso":
 			try:
-				dato[c]=v.strip()[1:-1]
+				dato[c]=v.strip()
+				dato[c]=dato[c][1:-1]
 			except:
 				pass
 		else:
 			dato[c]="%s"% v.strip().decode("utf8")
 		
-	#print dato
-	#a=Registro(**dato)
-	#a.save()
+	print dato
+	a=Registro(**dato)
+	a.save()
 	
 
 

@@ -14,28 +14,28 @@ def registro(request,tipo):
 	dict={'Tipo':tipo,'Curso':curso}
 
 
-	if request.method=='GET':
+#	if request.method=='POST':
 		
-		form = BuscarRegistroForm(request.GET)
-		error=True
-		if form.is_valid():
-			datos=form.cleaned_data
-			if datos['Procedencia']!="" and datos['Procedencia']!=None:
-				dict["Idp"]=datos['Procedencia']
-			if datos['Remitente']!="" and datos['Remitente']!=None:
-				dict["Idr"]=datos['Remitente']
-			if datos['Documento']!="" and datos['Documento']!=None:
-				dict["Idc"]=datos['Documento']
-			if datos['Desde']!="" and datos['Desde']!=None:
-				dict["Fecha__gte"]=datos['Desde']
-			if datos['Hasta']!="" and datos['Hasta']!=None:
-				dict["Fecha__lte"]=datos['Hasta']
-			if datos['Contenido']!="" and datos['Contenido']!=None:
-				dict["Contenido__contains"]=datos['Contenido']
-			
-	else:
-		form = BuscarRegistroForm()
-		error=False
+#		form = BuscarRegistroForm(request.GET)
+#		error=True
+#		if form.is_valid():
+#			datos=form.cleaned_data
+#			if datos['Procedencia']!="" and datos['Procedencia']!=None:
+#				dict["Idp"]=datos['Procedencia']
+#			if datos['Remitente']!="" and datos['Remitente']!=None:
+#				dict["Idr"]=datos['Remitente']
+#			if datos['Documento']!="" and datos['Documento']!=None:
+#				dict["Idc"]=datos['Documento']
+#			if datos['Desde']!="" and datos['Desde']!=None:
+#				dict["Fecha__gte"]=datos['Desde']
+#			if datos['Hasta']!="" and datos['Hasta']!=None:
+#				dict["Fecha__lte"]=datos['Hasta']
+#			if datos['Contenido']!="" and datos['Contenido']!=None:
+#				dict["Contenido__contains"]=datos['Contenido']
+#			
+#	else:
+	form = BuscarRegistroForm()
+	error=False
 
 	
 	
