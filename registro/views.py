@@ -82,7 +82,7 @@ def add(request,tipo):
 			N=reg.N+1
 		else:
 			N=reg.N
-		form = RegistroForm({'N':N,'Curso':curso,'Tipo':tipo,'Fecha':time.strftime("%d/%m/%Y")})
+		form = RegistroForm({'N':N,'Curso':curso,'Tipo':tipo,'Fecha':time.strftime("%d/%m/%Y"),'Idp':1,'Idr':1,'Idc':1})
 		error=False
 	context={'N':N,'curso':curso,'tipo':tipo,'form':form,'error':error}
 	return render(request, 'add.html',context)

@@ -35,6 +35,11 @@
                     {% if menu_registro%}
                     <a class="btn btn-default btn-secundary" href="/registro/e" role="button">Registro de entrada</a>
                     <a class="btn btn-default btn-secundary" href="/registro/s" role="button">Registro de salida</a>
+                    {% if tipo == "e" %}
+                    <a class="btn btn-default btn-secundary" href="/registro/add/{{tipo}}" role="button">Nuevo registro de entrada</a>
+                    {% else%}
+                    <a class="btn btn-default btn-secundary" href="/registro/add/{{tipo}}" role="button">Nuevo registro de salida</a>
+                    {%endif%}
                     {%endif%}
                     <a class="btn btn-default btn-primary" href="/admin" role="button">Administración</a>
                     <a class="btn btn-default btn-primary" href="/logout" role="button">Desconectar</a>

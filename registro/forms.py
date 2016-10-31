@@ -6,9 +6,9 @@ from django.forms.widgets import HiddenInput,DateInput,Textarea,TextInput,Select
 from datetime import datetime
 
 class RegistroForm(forms.ModelForm):
-	Idp	= forms.ModelChoiceField(required=True,queryset=Procedencia.objects.all(),empty_label="",label="Procedencia")
-	Idr= forms.ModelChoiceField(required=True,queryset=Remitente.objects.all(), empty_label="",label="Remitente")
-	Idc= forms.ModelChoiceField(required=True,queryset=ClaseDocumento.objects.all(), empty_label="",label="Documento")
+	Idp	= forms.ModelChoiceField(queryset=Procedencia.objects.all(),empty_label=None,label="Procedencia",widget=forms.Select(attrs={'class': "form-control"}))
+	Idr= forms.ModelChoiceField(queryset=Remitente.objects.all(), empty_label=None,label="Remitente",widget=forms.Select(attrs={'class': "form-control"}))
+	Idc= forms.ModelChoiceField(queryset=ClaseDocumento.objects.all(), empty_label=None,label="Documento",widget=forms.Select(attrs={'class': "form-control"}))
 	class Meta:
 		model = Registro
 		fields = "__all__"
@@ -19,7 +19,7 @@ class RegistroForm(forms.ModelForm):
 			'Curso':HiddenInput(),
 			'N':HiddenInput(),
 			'Tipo':HiddenInput(),
-			'Fecha':DateInput(),
+			'Fecha':DateInput(attrs={'class': "form-control"}),
 			'Contenido': Textarea(attrs={'cols': 90, 'rows': 15}),
 			
 			

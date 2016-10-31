@@ -57,7 +57,22 @@
 
 {% if reg %}
 <div class="row">
+<div class="pagination">
+    <span class="step-links">   
+        Páginas: 
+        {% if reg.has_previous %}
+            <a href="?page={{ reg.previous_page_number }}{{busqueda}}"><i class="glyphicon glyphicon-chevron-left"></i></a>
+        {% endif %}
 
+        <span class="current">
+             <strong>{{ reg.number }} / {{ reg.paginator.num_pages }}</strong>
+        </span>
+
+        {% if reg.has_next %}
+            <a href="?page={{ reg.next_page_number }}{{busqueda}}"><i class="glyphicon glyphicon-chevron-right"></i></a>
+        {% endif %}
+    </span>
+</div>
 <table class="table table-bordered">
     <tr>
         <td>N.</td>
@@ -84,21 +99,7 @@
     </table>
 
 <br/>
-<div class="pagination">
-    <span class="step-links">
-        {% if reg.has_previous %}
-            <a href="?page={{ reg.previous_page_number }}{{busqueda}}"><i class="glyphicon glyphicon-chevron-left"></i></a>
-        {% endif %}
 
-        <span class="current">
-             <strong>{{ reg.number }} / {{ reg.paginator.num_pages }}</strong>
-        </span>
-
-        {% if reg.has_next %}
-            <a href="?page={{ reg.next_page_number }}{{busqueda}}"><i class="glyphicon glyphicon-chevron-right"></i></a>
-        {% endif %}
-    </span>
-</div>
 </div>
 {% else %}
     <p>No hay registros</p>
