@@ -33,9 +33,21 @@
       <td>{{prof.Movil}}</td>
       <td>{{curso}}</td>
       <td>{{prof.Departamento.Abr}}</td>
-      
-      <td><a href="/profecurso{{operacion}}"><span class="glyphicon glyphicon-user" style="color:{{color}}" aria-hidden="true"></span></a></td>
-         
+      {% if prof.Ce %}
+        <td><a href="/centro/profesores/change/Ce/{{prof.id}}/off"><span class="glyphicon glyphicon-user" style="color:green" aria-hidden="true"></span></a></td>
+      {% else %}
+        <td><a href="/centro/profesores/change/Ce/{{prof.id}}/on"><span class="glyphicon glyphicon-user" style="color:red" aria-hidden="true"></span></a></td>
+      {% endif %}
+      {% if prof.Etcp %}
+        <td><a href="/centro/profesores/change/Etcp/{{prof.id}}/off"><span class="glyphicon glyphicon-user" style="color:green" aria-hidden="true"></span></a></td>
+      {% else %}
+        <td><a href="/centro/profesores/change/Etcp/{{prof.id}}/on"><span class="glyphicon glyphicon-user" style="color:red" aria-hidden="true"></span></a></td>
+      {% endif %}
+      {% if prof.Bil %}
+        <td><a href="/centro/profesores/change/Bil/{{prof.id}}/off"><span class="glyphicon glyphicon-user" style="color:green" aria-hidden="true"></span></a></td>
+      {% else %}
+        <td><a href="/centro/profesores/change/Bil/{{prof.id}}/on"><span class="glyphicon glyphicon-user" style="color:red" aria-hidden="true"></span></a></td>
+      {% endif %}
          {% endfor %}
       
 

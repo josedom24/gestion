@@ -9,13 +9,13 @@
                     <p class="text-center"><strong>Bienvenid@ {{user.username}}</strong></p>
                     <p class="text-center"><strong>Menú</strong></p>
                     
-                    {% if user.groups.first.name == "jefatura de estudios" %}
+                    {% if user.groups.first.name == "jefatura de estudios" or user.groups.last.name == "jefatura de estudios" %}
                     <a class="btn btn-default btn-primary" href="/centro/alumnos" role="button">Alumnos</a>
                     {% if menu_alumnos or menu_resumen%}
                     <a class="btn btn-default btn-secundary" href="/convivencia/resumen/amonestacion" role="button">Resumen de amonestaciones</a>
                     <a class="btn btn-default btn-secundary" href="/convivencia/resumen/sancion" role="button">Resumen de sanciones</a>
                     {% endif%}
-                    {% if menu_alumnos%}
+                    {% if menu_alumnos and curso %}
                     <a class="btn btn-default btn-secundary" href="/pdf/partes/{{curso.id}}" role="button">Imprimir {{curso.Curso}}</a>
                     {%endif%}
                     {% if menu_historial%}
@@ -32,7 +32,7 @@
 
                     <a class="btn btn-default btn-primary" href="/centro/profesores" role="button">Profesores</a>
                     {%endif%}
-                    {% if user.groups.first.name == "secretaria" %}
+                    {% if user.groups.first.name == "secretaria" or user.groups.last.name == "secretaria" %}
                     <a class="btn btn-default btn-primary" href="/registro/e" role="button">Secretaría</a>
                     {% if menu_registro%}
                     <a class="btn btn-default btn-secundary" href="/registro/e" role="button">Registro de entrada</a>

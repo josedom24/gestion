@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required,user_passes_test
 from django.http import HttpResponse
 from centro.models import Alumnos,Cursos,Departamentos,Profesores
@@ -53,6 +53,18 @@ def profesores(request):
 	lista=zip(lista_profesores,range(1,len(lista_profesores)+1),cursos)
 	context={'profesores':lista,'form':form,"departamento":departamento}
 	return render(request, 'profesor.html',context)
+
+@login_required(login_url='/')
+@user_passes_test(group_check_je,login_url='/')
+def profesores_change(request,campo,codigo,operacion):
+	
+	dato={}
+	dato[campo]=True if operacion=="on" else False
+	Profesores.objects.filter(id=codigo).update(**dato)
+	
+	return redirect("/centro/profesores")
+
+
 	
 def ContarFaltas(lista_id):
 	contar=[]
