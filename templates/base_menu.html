@@ -9,7 +9,7 @@
                     <p class="text-center"><strong>Bienvenid@ {{user.username}}</strong></p>
                     <p class="text-center"><strong>Menú</strong></p>
                     
-                    
+                    {% if user.groups.first.name == "jefatura de estudios" %}
                     <a class="btn btn-default btn-primary" href="/centro/alumnos" role="button">Alumnos</a>
                     {% if menu_alumnos or menu_resumen%}
                     <a class="btn btn-default btn-secundary" href="/convivencia/resumen/amonestacion" role="button">Resumen de amonestaciones</a>
@@ -31,6 +31,8 @@
                     {%endif%}
 
                     <a class="btn btn-default btn-primary" href="/centro/profesores" role="button">Profesores</a>
+                    {%endif%}
+                    {% if user.groups.first.name == "secretaria" %}
                     <a class="btn btn-default btn-primary" href="/registro/e" role="button">Secretaría</a>
                     {% if menu_registro%}
                     <a class="btn btn-default btn-secundary" href="/registro/e" role="button">Registro de entrada</a>
@@ -39,6 +41,7 @@
                     <a class="btn btn-default btn-secundary" href="/registro/add/{{tipo}}" role="button">Nuevo registro de entrada</a>
                     {% else%}
                     <a class="btn btn-default btn-secundary" href="/registro/add/{{tipo}}" role="button">Nuevo registro de salida</a>
+                    {%endif%}
                     {%endif%}
                     {%endif%}
                     <a class="btn btn-default btn-primary" href="/admin" role="button">Administración</a>

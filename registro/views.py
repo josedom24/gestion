@@ -2,13 +2,15 @@ from django.shortcuts import render,redirect
 from registro.models import Procedencia,Remitente,ClaseDocumento,Registro
 from datetime import datetime
 from registro.forms import RegistroForm,BuscarRegistroForm
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required,user_passes_test
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from centro.views import group_check_sec
 
 import time
 # Create your views here.
 
 @login_required(login_url='/')
+@user_passes_test(group_check_sec,login_url='/')
 def registro(request,tipo):
 	curso=CalcularCurso()
 	
@@ -64,6 +66,7 @@ def registro(request,tipo):
 
 
 @login_required(login_url='/')
+@user_passes_test(group_check_sec,login_url='/')
 def add(request,tipo):
 	
 	if request.method=='POST':

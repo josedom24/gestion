@@ -17,12 +17,20 @@ class PorfesoresAdmin(admin.ModelAdmin):
     list_display = ["Nombre",'Apellidos','Email','Departamento']
      
     search_fields = ['Nombre','Apellidos']
+
+class CursosAdmin(admin.ModelAdmin):
+    #date_hierarchy = 'Fecha_nacimiento'
+    actions_selection_counter=False
+    
+    list_display = ["Curso",'Tutor']
+     
+    search_fields = ['Curso']
    
 
     # Register your models here.
 admin.site.site_header="Gonzalo Nazareno"
 admin.site.index_title="Gestión amonestaciones"
-admin.site.register(Cursos)
+admin.site.register(Cursos,CursosAdmin)
 admin.site.register(Alumnos,AlumnosAdmin)
 admin.site.register(Departamentos)
 admin.site.register(Profesores,PorfesoresAdmin)

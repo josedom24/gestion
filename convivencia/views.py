@@ -3,14 +3,16 @@
 from django.shortcuts import render,redirect
 from convivencia.forms import AmonestacionForm,SancionForm
 from centro.models import Alumnos
+from centro.views import group_check_je
 from convivencia.models import Amonestaciones,Sanciones
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required,user_passes_test
 import time,calendar
 from datetime import datetime
 
 # Create your views here.
 
 @login_required(login_url='/')
+@user_passes_test(group_check_je,login_url='/')
 def parte(request,tipo,alum_id):
 	alum=Alumnos.objects.get(pk=alum_id)
 	if request.method=='POST':
@@ -43,6 +45,7 @@ def parte(request,tipo,alum_id):
 
 
 @login_required(login_url='/')
+@user_passes_test(group_check_je,login_url='/')
 def historial(request,alum_id):
 	alum=Alumnos.objects.get(pk=alum_id)
 	amon=Amonestaciones.objects.filter(IdAlumno_id=alum_id).order_by('Fecha')
@@ -63,12 +66,14 @@ def historial(request,alum_id):
 
 
 @login_required(login_url='/')
+@user_passes_test(group_check_je,login_url='/')
 def resumen_hoy(request,tipo):
 	hoy=datetime.now()
 	return resumen(request,tipo,str(hoy.month),str(hoy.year))
 
 
 @login_required(login_url='/')
+@user_passes_test(group_check_je,login_url='/')
 def resumen(request,tipo,mes,ano):
 	if request.method=='POST':
 		tipo=request.POST.get('tipo')
@@ -110,6 +115,7 @@ def AddMonths(d,x):
     return datetime( newyear, newmonth, d.day)
 
 @login_required(login_url='/')
+@user_passes_test(group_check_je,login_url='/')
 def show(request,tipo,mes,ano,dia):
 	fecha=datetime(int(ano),int(mes),int(dia))
 	if tipo=="amonestacion":

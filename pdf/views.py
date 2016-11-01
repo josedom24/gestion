@@ -7,13 +7,13 @@ from django.template import Context
 from django.template.loader import get_template
 
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required,user_passes_test
 
 from xhtml2pdf import pisa
 from cStringIO import StringIO
 from centro.models import Alumnos,Cursos
 from convivencia.models import Amonestaciones,Sanciones
-from centro.views import ContarFaltas
+from centro.views import ContarFaltas,group_check_je
 
 from datetime import datetime
 
@@ -22,6 +22,7 @@ from datetime import datetime
 
 
 @login_required(login_url='/')
+@user_passes_test(group_check_je,login_url='/')
 def imprimir_partes(request,curso):
 	lista_alumnos = Alumnos.objects.filter(Unidad__id=curso)
 	lista=zip(range(1,len(lista_alumnos)+1),lista_alumnos,ContarFaltas(lista_alumnos.values("id")))
@@ -31,6 +32,7 @@ def imprimir_partes(request,curso):
 
 
 @login_required(login_url='/')
+@user_passes_test(group_check_je,login_url='/')
 def imprimir_show(request,tipo,mes,ano,dia):
 	fecha=datetime(int(ano),int(mes),int(dia))
 	if tipo=="amonestacion":
@@ -45,6 +47,7 @@ def imprimir_show(request,tipo,mes,ano,dia):
 	return imprimir("pdf_resumen.html",data,"resumen_"+tipo+".pdf")	
 
 @login_required(login_url='/')
+@user_passes_test(group_check_je,login_url='/')
 def carta_amonestacion(request,mes,ano,dia):
 	info={}
 	contenido=""
@@ -66,6 +69,7 @@ def carta_amonestacion(request,mes,ano,dia):
 
 
 @login_required(login_url='/')
+@user_passes_test(group_check_je,login_url='/')
 def carta_sancion(request,identificador):
 	info2={}
 	contenido=""

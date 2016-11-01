@@ -1,17 +1,26 @@
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required,user_passes_test
 from django.http import HttpResponse
 from centro.models import Alumnos,Cursos,Departamentos,Profesores
 from convivencia.models import Amonestaciones,Sanciones
 from centro.forms import UnidadForm,DepartamentosForm
 
+
+
+def group_check_je(user):
+    return user.groups.filter(name__in=['jefatura de estudios'])
+def group_check_sec(user):
+    return user.groups.filter(name__in=['secretaria'])
+
 # Create your views here.
 @login_required(login_url='/')
+@user_passes_test(group_check_je,login_url='/')
 def alumnos(request):
 	if request.method == 'POST':
 		primer_id=request.POST.get("Unidad")
 	else:
 		primer_id=request.session.get('Unidad', Cursos.objects.order_by('Curso').first().id)
+
 	request.session['Unidad']=primer_id
 		
 	lista_alumnos = Alumnos.objects.filter(Unidad__id=primer_id)
@@ -23,6 +32,7 @@ def alumnos(request):
 
 
 @login_required(login_url='/')
+@user_passes_test(group_check_je,login_url='/')
 def profesores(request):
 	if request.method == 'POST':
 		dep_id=request.POST.get("Departamento")
@@ -31,10 +41,10 @@ def profesores(request):
 	request.session['Departamento']=dep_id
 		
 	if dep_id=="":
-		lista_profesores = Profesores.objects.all()
+		lista_profesores = Profesores.objects.all().order_by("Apellidos")
 		departamento=""
 	else:
-		lista_profesores = Profesores.objects.filter(Departamento__id=dep_id)
+		lista_profesores = Profesores.objects.filter(Departamento__id=dep_id).order_by("Apellidos")
 		departamento=Departamentos.objects.get(id=dep_id).Nombre
 	form = DepartamentosForm({'Departamento':dep_id})
 	cursos=Tutorias(lista_profesores.values("id"))

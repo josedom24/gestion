@@ -20,7 +20,7 @@ class Remitente(models.Model):
 		return self.Remitente
 
 	class Meta:
-		verbose_name="Temitente"
+		verbose_name="Remitente"
 		verbose_name_plural="Remitentes"
 
 class ClaseDocumento(models.Model):
