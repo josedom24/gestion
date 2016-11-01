@@ -6,7 +6,7 @@ from django.forms.widgets import CheckboxSelectMultiple,HiddenInput,DateInput,Te
 
 
 class AmonestacionForm(forms.ModelForm):
-	Profesor = ModelChoiceField(Profesores.objects.all(), empty_label=None)
+	Profesor = ModelChoiceField(Profesores.objects.all().order_by("Apellidos"), empty_label=None)
 	class Meta:
 		model = Amonestaciones
 		fields = "__all__"
