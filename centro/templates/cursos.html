@@ -1,0 +1,32 @@
+{% extends "base_menu.html" %}
+
+
+{% block content %}
+<h2>Cursos</h2>
+ 
+<table class="table table-bordered">
+    <tr><td>Curso</td><td>Tutor</td><td>Equipo Educativo</td></tr>
+    
+    {% for curso in cursos%}
+    
+    <tr>
+      <td><a href="/centro/alumnos/{{curso.id}}">{{curso.Curso}}</a></td>
+      
+        
+        
+      <td>{{curso.Tutor}}</td>
+      
+      <td>
+        <ul>
+        {% for prof in curso.EquipoEducativo.all %}
+        <li>{{prof}}</li>
+        {% endfor %}
+      </ul>
+      
+      
+    </tr>
+    {% endfor %}
+    </table>
+
+
+{% endblock %}
