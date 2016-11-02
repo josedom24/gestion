@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^convivencia/', include('convivencia.urls')),
     url(r'^pdf/', include('pdf.urls')),
     url(r'^registro/', include('registro.urls')),
+    #url(r'^correo/', include('correo.urls')),
     url(r'^$',index),
     url(r'^logout/$',salir),
 

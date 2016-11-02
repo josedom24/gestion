@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
+from django import forms
+from django.db import models
 from centro.models import Cursos,Alumnos,Departamentos,Profesores
+from django.contrib.admin.widgets import FilteredSelectMultiple
 # Register your models here.
 class AlumnosAdmin(admin.ModelAdmin):
     #date_hierarchy = 'Fecha_nacimiento'
@@ -25,6 +28,10 @@ class CursosAdmin(admin.ModelAdmin):
     list_display = ["Curso",'Tutor']
      
     search_fields = ['Curso']
+
+    formfield_overrides = {
+        models.ManyToManyField: {'widget': FilteredSelectMultiple("Profesores", is_stacked=False)},
+    }
    
 
     # Register your models here.
