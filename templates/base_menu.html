@@ -11,6 +11,7 @@
                     
                     {% if user.groups.first.name == "jefatura de estudios" or user.groups.last.name == "jefatura de estudios" %}
                     <a class="btn btn-default btn-primary" href="/centro/alumnos" role="button">Alumnos</a>
+                    <a class="btn btn-default btn-primary" href="/centro/cursos" role="button">Cursos</a>
                     {% if menu_alumnos or menu_resumen%}
                     <a class="btn btn-default btn-secundary" href="/convivencia/resumen/amonestacion" role="button">Resumen de amonestaciones</a>
                     <a class="btn btn-default btn-secundary" href="/convivencia/resumen/sancion" role="button">Resumen de sanciones</a>

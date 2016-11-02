@@ -43,7 +43,7 @@ class Cursos(models.Model):
 	
 	Curso = models.CharField(max_length=30)
 	Tutor = models.ForeignKey(Profesores, related_name='Tutor_de',blank=True,null=True,on_delete=models.SET_NULL)
-	EquipoEducativo=models.ManyToManyField(Profesores, verbose_name="Equipo Educativo",blank=True,null=True)
+	EquipoEducativo=models.ManyToManyField(Profesores, verbose_name="Equipo Educativo",blank=True)
 
 	def __unicode__(self):
 		return self.Curso

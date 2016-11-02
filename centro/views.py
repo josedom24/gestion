@@ -18,6 +18,7 @@ def group_check_sec(user):
 def alumnos(request):
 	if request.method == 'POST':
 		primer_id=request.POST.get("Unidad")
+		print primer_id
 	else:
 		primer_id=request.session.get('Unidad', Cursos.objects.order_by('Curso').first().id)
 
@@ -29,6 +30,15 @@ def alumnos(request):
 	lista=zip(range(1,len(lista_alumnos)+1),lista_alumnos,ContarFaltas(lista_alumnos.values("id")))
 	context={'alumnos':lista,'form':form,'curso':Cursos.objects.get(id=primer_id),'menu_alumnos':True}
 	return render(request, 'alumnos.html',context)
+
+
+@login_required(login_url='/')
+@user_passes_test(group_check_je,login_url='/')
+def alumnos_curso(request,curso):
+	request.POST = request.POST.copy()
+	request.POST["Unidad"]=curso
+	request.method="POST"
+	return alumnos(request)
 
 
 @login_required(login_url='/')
@@ -84,3 +94,15 @@ def Tutorias(lista_id):
 		except Exception, e:
 			cursos.append("")
 	return cursos
+
+
+@login_required(login_url='/')
+@user_passes_test(group_check_je,login_url='/')
+def cursos(request):
+	
+	lista_cursos = Cursos.objects.all().order_by("Curso")
+	
+	
+	
+	context={'cursos':lista_cursos,'menu_cursos':True}
+	return render(request, 'cursos.html',context)
