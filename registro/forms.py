@@ -2,7 +2,7 @@
 from django import forms
 from django.forms import ModelForm
 from registro.models import Procedencia,Remitente,ClaseDocumento,Registro
-from django.forms.widgets import HiddenInput,DateInput,Textarea,TextInput,Select
+from django.forms.widgets import HiddenInput,DateInput,Textarea,TextInput,Select,SelectDateWidget
 from datetime import datetime
 
 class RegistroForm(forms.ModelForm):
@@ -19,7 +19,7 @@ class RegistroForm(forms.ModelForm):
 			'Curso':HiddenInput(),
 			'N':HiddenInput(),
 			'Tipo':HiddenInput(),
-			'Fecha':DateInput(attrs={'class': "form-control"}),
+			'Fecha':SelectDateWidget(),
 			'Contenido': Textarea(attrs={'cols': 90, 'rows': 15}),
 			
 			
@@ -28,15 +28,14 @@ class RegistroForm(forms.ModelForm):
 
         }
 class BuscarRegistroForm(forms.Form):
-	Hasta=forms.DateField(required=False)
-	Desde=forms.DateField(required=False)
+	Hasta=forms.DateField(required=False,widget=SelectDateWidget())
+	Desde=forms.DateField(required=False,widget=SelectDateWidget())
 	Curso= forms.ChoiceField(choices=(),widget=forms.Select(attrs={'class': "form-control"}))
 	Procedencia= forms.ModelChoiceField(required=False,queryset=Procedencia.objects.all(),empty_label="",widget=forms.Select(attrs={'class': "form-control"}))
 
 	Remitente= forms.ModelChoiceField(required=False,queryset=Remitente.objects.all(), empty_label="",widget=forms.Select(attrs={'class': "form-control"}))
 	Documento= forms.ModelChoiceField(required=False,queryset=ClaseDocumento.objects.all(), empty_label="",widget=forms.Select(attrs={'class': "form-control"}))
 	Contenido=forms.CharField(required=False,widget=forms.TextInput(attrs={'size': '40'}))
-
 	def __init__(self, *args, **kwargs):
 		super(BuscarRegistroForm, self).__init__(*args, **kwargs)
 		choices = [(pt, pt) for pt in Registro.objects.values("Curso").distinct().values_list("Curso", flat=True).distinct()]

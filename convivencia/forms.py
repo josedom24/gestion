@@ -2,7 +2,9 @@ from django import forms
 from django.forms import ModelForm,ModelChoiceField
 from convivencia.models import Amonestaciones,Sanciones
 from centro.models import Profesores
-from django.forms.widgets import CheckboxSelectMultiple,HiddenInput,DateInput,Textarea,TextInput,Select
+from django.forms.widgets import CheckboxSelectMultiple,HiddenInput,DateInput,Textarea,TextInput,Select,SelectDateWidget
+from django.contrib.admin.widgets import AdminDateWidget 
+
 
 
 class AmonestacionForm(forms.ModelForm):
@@ -12,7 +14,7 @@ class AmonestacionForm(forms.ModelForm):
 		fields = "__all__"
 		widgets = {
 			'IdAlumno':HiddenInput(),
-			'Fecha':DateInput(),
+			'Fecha':SelectDateWidget(),
 			'Comentario': Textarea(attrs={'cols': 90, 'rows': 15}),
 			
 			#'Comentario': TinyMCE(),
@@ -25,8 +27,8 @@ class SancionForm(forms.ModelForm):
 		fields = "__all__"
 		widgets = {
 			'IdAlumno':HiddenInput(),
-			'Fecha':DateInput(),
-			'Fecha_fin':DateInput(),
+			'Fecha':SelectDateWidget(),
+			'Fecha_fin':SelectDateWidget(),
 			
 			'Sancion':TextInput(attrs={'size': '67'}),
 			'Comentario': Textarea(attrs={'cols': 90, 'rows': 15}),
