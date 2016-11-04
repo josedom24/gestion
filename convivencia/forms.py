@@ -15,7 +15,7 @@ class AmonestacionForm(forms.ModelForm):
 		widgets = {
 			'IdAlumno':HiddenInput(),
 			'Fecha':SelectDateWidget(),
-			'Comentario': Textarea(attrs={'cols': 90, 'rows': 15}),
+                        'Comentario': Textarea(attrs={'cols': 80, 'rows': 15}),
 			
 			#'Comentario': TinyMCE(),
 
@@ -31,7 +31,7 @@ class SancionForm(forms.ModelForm):
 			'Fecha_fin':SelectDateWidget(),
 			
 			'Sancion':TextInput(attrs={'size': '67'}),
-			'Comentario': Textarea(attrs={'cols': 90, 'rows': 15}),
+			'Comentario': Textarea(attrs={'cols': 80, 'rows': 15}),
 			#'Comentario': TinyMCE(),
             
         }

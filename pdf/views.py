@@ -14,7 +14,6 @@ from cStringIO import StringIO
 from centro.models import Alumnos,Cursos
 from convivencia.models import Amonestaciones,Sanciones
 from centro.views import ContarFaltas,group_check_je
-
 from datetime import datetime
 
 
@@ -26,7 +25,7 @@ from datetime import datetime
 def imprimir_partes(request,curso):
 	lista_alumnos = Alumnos.objects.filter(Unidad__id=curso)
 	lista=zip(range(1,len(lista_alumnos)+1),lista_alumnos,ContarFaltas(lista_alumnos.values("id")))
-	data={'alumnos':lista,'curso':Cursos.objects.get(id=curso)}
+        data={'alumnos':lista,'curso':Cursos.objects.get(id=curso)}
 	# Render html content through html template with context
 	return imprimir("pdf_partes.html",data,"partes.pdf")
 
@@ -53,15 +52,20 @@ def carta_amonestacion(request,mes,ano,dia):
 	contenido=""
 	fecha2=datetime(int(ano),int(mes),int(dia))
 	info["fecha"]="%s/%s/%s"%(dia,mes,ano)
-	info["amonestaciones"]=Amonestaciones.objects.filter(Fecha=fecha2)
+        lista_alumnos=set(Amonestaciones.objects.filter(Fecha=fecha2).values_list("IdAlumno"))
+        info["amonestaciones"]=[]
+        for alum in lista_alumnos:
+            info["amonestaciones"].append(Alumnos.objects.get(id=alum[0]))
+       
+        print info["amonestaciones"]
 
 	for i in info["amonestaciones"]:
 		info2={}
 		info2["amonestacion"]=i
-		info2["num_amon"]=str(len(Amonestaciones.objects.filter(IdAlumno_id=i.IdAlumno_id)))
+                info2["num_amon"]=str(len(Amonestaciones.objects.filter(IdAlumno_id=i.id)))
 		template = get_template("pdf_contenido_carta_amonestacion.html")
 		contenido=contenido+ template.render(Context(info2))
-		if i.id!=info["amonestaciones"].last().id:
+		if i.id!=info["amonestaciones"][-1].id:
 			contenido=contenido+"<pdf:nextpage>"
 	info["contenido"]=contenido
 	return imprimir("pdf_carta.html",info,"carta_amonestacion"+".pdf")	
