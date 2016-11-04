@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     
-	{{ form.media }}
     <meta name="description" content="">
     <meta name="author" content="">
     <!--<link rel="icon" href="../../favicon.ico">-->
@@ -33,6 +32,11 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   
+	{{ form.media }}
+	
+
+          {% block js_selected %}{% endblock %}
+  
   </head>
 
 
@@ -49,10 +53,10 @@
 
       <!-- Jumbotron -->
       <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-9">
           {% block content %}{% endblock %}
         </div>
-<div class="col-md-4">
+<div class="col-md-3">
   {% block menu %}{% endblock %}
   
   </div>

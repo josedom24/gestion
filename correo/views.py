@@ -1,9 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from correo.models import Correos
 from django.contrib.auth.decorators import login_required,user_passes_test
 from centro.views import group_check_je
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from correo.forms import CorreoForm
+from convivencia.models import Profesores
+from django.core.mail import send_mail
 import time
 # Create your views here.
 
@@ -36,9 +38,23 @@ def new_correo(request):
         form = CorreoForm(request.POST)
         if form.is_valid():
             form.save()
+            correos=[]
+            print request.POST
+            for prof in request.POST["Destinatarios"]:
+                correos.append(Profesores.objects.get(id=prof).Email)
+
+
+            send_mail(
+                   request.POST["Asunto"],
+                   request.POST["Contenido"],
+                 #  '41011038.edu@juntadeandalucia.es',
+                   'josedom24@gmail.com',
+                   correos,
+                   fail_silently=False,
+                  )
             return redirect('/correo/list')
     else:
-        form = CorreoForm({'Fecha':time.strftime("%d/%m/%Y")})
+        form = CorreoForm({'Destinatarios':Profesores.objects.filter(Departamento=17),'Fecha':time.strftime("%d/%m/%Y")})
        	context={'form':form,'menu_correos':True}
         return render(request, 'add_correos.html',context)
 
