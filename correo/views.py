@@ -13,7 +13,7 @@ import time
 @login_required(login_url='/')
 @user_passes_test(group_check_je,login_url='/')
 def list_correo(request):
-    reg=Correos.objects.all()
+    reg=Correos.objects.all().order_by("-id")
     paginator = Paginator(reg, 10)
     page = request.GET.get('page')
     try:
