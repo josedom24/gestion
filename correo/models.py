@@ -6,9 +6,9 @@ from django.db import models
 class Correos(models.Model):
 	
 	Fecha = models.DateField()
-	Asunto = models.CharField(max_length=100)
+	Asunto = models.CharField(max_length=100, blank=True)
+	Destinatarios=models.ManyToManyField(Profesores, verbose_name="Destinatarios", blank=True)
 	Contenido=models.TextField(blank=True)
-	Destinatarios=models.ManyToManyField(Profesores, verbose_name="Destinatarios")
 
 	def __unicode__(self):
 		return str(self.Fecha)+self.Asunto

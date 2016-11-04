@@ -3,8 +3,10 @@ from correo.models import Correos
 from django.contrib.auth.decorators import login_required,user_passes_test
 from centro.views import group_check_je
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
+from correo.forms import CorreoForm
+import time
 # Create your views here.
+
 
 @login_required(login_url='/')
 @user_passes_test(group_check_je,login_url='/')
@@ -30,4 +32,13 @@ def list_correo(request):
 @login_required(login_url='/')
 @user_passes_test(group_check_je,login_url='/')
 def new_correo(request):
-    pass
+    if request.method=='POST':
+        form = CorreoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/correo/list')
+    else:
+        form = CorreoForm({'Fecha':time.strftime("%d/%m/%Y")})
+       	context={'form':form,'menu_correos':True}
+        return render(request, 'add_correos.html',context)
+
