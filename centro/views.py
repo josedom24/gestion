@@ -18,7 +18,6 @@ def group_check_sec(user):
 def alumnos(request):
 	if request.method == 'POST':
 		primer_id=request.POST.get("Unidad")
-		print primer_id
 	else:
 		primer_id=request.session.get('Unidad', Cursos.objects.order_by('Curso').first().id)
 
@@ -46,17 +45,21 @@ def alumnos_curso(request,curso):
 def profesores(request):
 	if request.method == 'POST':
 		dep_id=request.POST.get("Departamento")
+                area_id=request.POST.get("Areas")
+                if area_id!=request.session.get("Areas",""):
+                    dep_id=""
 	else:
 		dep_id=request.session.get('Departamento', "")
+                area_id=request.session.get("Areas","")
+	request.session['Areas']=area_id
 	request.session['Departamento']=dep_id
-		
-	if dep_id=="":
+        form=DepartamentosForm({'Areas':area_id,'Departamento':dep_id})
+        if dep_id=="":
 		lista_profesores = Profesores.objects.all().order_by("Apellidos")
 		departamento=""
 	else:
 		lista_profesores = Profesores.objects.filter(Departamento__id=dep_id).order_by("Apellidos")
 		departamento=Departamentos.objects.get(id=dep_id).Nombre
-	form = DepartamentosForm({'Departamento':dep_id})
 	cursos=Tutorias(lista_profesores.values("id"))
 	
 	#lista=zip(lista_alumnos,funciones.ContarFaltas(lista_alumnos.values("id")),funciones.ContarAmonestacionesAcumuladas(lista_alumnos.values("id")),range(1,len(lista_alumnos)+1))

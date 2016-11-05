@@ -17,6 +17,21 @@ class Departamentos(models.Model):
 		verbose_name="Departamento"
 		verbose_name_plural="Departamentos"
 
+
+class Areas(models.Model):
+	   
+	Nombre = models.CharField(max_length=30)
+        Departamentos=models.ManyToManyField(Departamentos,blank=True)
+
+	def __unicode__(self):
+		return self.Nombre
+
+	class Meta:
+		verbose_name="Área"
+                verbose_name_plural="Áreas"
+
+
+
 class Profesores(models.Model):
 	Nombre = models.CharField(max_length=20)
 	Apellidos = models.CharField(max_length=30)
