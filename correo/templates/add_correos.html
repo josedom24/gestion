@@ -8,6 +8,12 @@
 {% block content %}
 <h3>Correo</h3>
 <form action="/correo/new" method="post">
+
+    {% csrf_token %}
+    {{ form2.as_p}}
+    
+</form>
+<form action="/correo/new" method="post">
     {% csrf_token %}
     {{ form.as_p}}
     
