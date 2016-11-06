@@ -89,3 +89,6 @@ class Alumnos(models.Model):
 	class Meta:
 		verbose_name="Alumno"
 		verbose_name_plural="Alumnos"
+
+
+

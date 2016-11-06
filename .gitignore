@@ -1,6 +1,7 @@
 db.sqlite3
 *.pyc
 *.swp
+*.cfg
 .project
 .pydevproject
 vpython27

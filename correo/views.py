@@ -47,8 +47,8 @@ def new_correo(request):
             send_mail(
                    request.POST["Asunto"],
                    request.POST["Contenido"],
-                 #  '41011038.edu@juntadeandalucia.es',
-                   'josedom24@gmail.com',
+                   '41011038.edu@juntadeandalucia.es',
+                 #  'josedom24@gmail.com',
                    correos,
                    fail_silently=False,
                   )
