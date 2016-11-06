@@ -35,11 +35,11 @@ def list_correo(request):
 @login_required(login_url='/')
 @user_passes_test(group_check_je,login_url='/')
 def new_correo(request):
-    if request.method=='POST' and len(request.POST)==2:
+    if request.method=='POST' and not request.POST.has_key("correo"):
         form2 = BuscarDestinatariosForm(request.POST)
-        form = CorreoForm({'Destinatarios':SelectProfes(int(request.POST.get("Profesores"))),'Fecha':time.strftime("%d/%m/%Y")})
+        form = CorreoForm({'Asunto':request.POST.get("Asunto"),'Contenido':request.POST.get("Contenido"),'Destinatarios':SelectProfes(int(request.POST.get("Profesores"))),'Fecha':time.strftime("%d/%m/%Y")})
 
-    elif request.method=='POST' and len(request.POST)>2:
+    elif request.method=='POST' and request.POST.has_key("correo"):
         form2 = BuscarDestinatariosForm(request.POST.get("Profesores")) 
         form = CorreoForm(request.POST)
         if form.is_valid():
@@ -59,7 +59,6 @@ def new_correo(request):
                   )
             return redirect('/correo/list')
     else:
-        print "else"
         form = CorreoForm({'Destinatarios':Profesores.objects.none(),'Fecha':time.strftime("%d/%m/%Y")})
         form2 = BuscarDestinatariosForm()
     context={'form2':form2,'form':form,'menu_correos':True}
