@@ -20,13 +20,14 @@ class RegistroForm(forms.ModelForm):
 			'N':HiddenInput(),
 			'Tipo':HiddenInput(),
 			'Fecha':SelectDateWidget(),
-			'Contenido': Textarea(attrs={'cols': 90, 'rows': 15}),
-			
-			
-			
-            
-
-        }
+        		'Contenido': Textarea(attrs={'cols': 95, 'rows': 15}),
+	                 }
+        def __init__(self, *args, **kwargs):
+		super(RegistroForm, self).__init__(*args, **kwargs)
+                if args[0]["Tipo"]=="s":
+                    self.fields["Idp"].label="Destino"
+                    self.fields["Idr"].label="Destinatario"
+		
 class BuscarRegistroForm(forms.Form):
 	Hasta=forms.DateField(required=False,widget=SelectDateWidget())
 	Desde=forms.DateField(required=False,widget=SelectDateWidget())
@@ -46,4 +47,3 @@ class BuscarRegistroForm(forms.Form):
 			self.fields['Curso'].initial=str(hoy.year)+"-"+str(hoy.year+1)
 		else:
 			self.fields['Curso'].initial=str(hoy.year-1)+'-'+str(hoy.year)
-		

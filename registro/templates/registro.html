@@ -36,10 +36,27 @@
             {{ form.Desde }}-{{form.Hasta }}
         </div>
         <div class="col-xs-6">
-       <label>Procedencia:</label> {{ form.Procedencia }}
+		{% if tipo == 'e' %}
+
+		<label>Procedencia:</label> 
+	
+	{% else%}
+		
+		<label>Destino:</label>
+
+	{% endif%}	
+       
+       {{ form.Procedencia }}
          </div>
          <div class="col-xs-6">
-       <label>Remitente:</label> {{ form.Remitente }}
+
+	{% if tipo == 'e' %}
+       
+	<label>Remitente:</label> 
+       {%else%}
+       <label>Destinatario:</label>
+       {% endif %}
+       {{ form.Remitente }}
          </div>
          <div class="col-xs-6">
     <label>Documento:</label> {{ form.Documento }}
@@ -76,8 +93,17 @@
     <tr>
         <td>N.</td>
         <td>Fecha</td>
-        <td>Procedencia</td>
+        
+	{% if tipo == "e" %}
+	
+	<td>Procedencia</td>
         <td>Remitente</td>
+	
+	{%else%}
+	
+	<td>Destino</td>
+	<td>Destinatario</td>
+	{%endif%}
         <td>Doc.</td>
         <td>Contenido</td>
         
