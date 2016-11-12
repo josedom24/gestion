@@ -32,6 +32,10 @@
       margin-bottom: 5px;
       margin-top: 2px;
     }
+    body
+    {
+	    font-size:110%;
+    }
    
     </style>
 </head>
@@ -53,20 +57,21 @@
  <div id="footer_content"><pdf:pagenumber> / <pdf:pagecount>
     </div>
     
- <h3>Resumen de Amonestaciones/Sanciones</h3>
- <h4>Fecha: {{fecha|date:"d/m/Y"}} - Curso: {{curso}}</h4>
- <h4>Tutor: {{curso.Tutor}}</h4>
- <table width="50%" border="0.2" cellspacing="0" cellpadding="4">
-      <tr><td width="10%">N.</td><td>Nombre</td><td width="15%">A/S</td></tr>
+ <h3>Listado de profesores</h3>
+ <h4>Fecha: {{fecha|date:"d/m/Y"}} </h4>
+ <table width="100%" border="0.2" cellspacing="0" cellpadding="4">
+	 <tr><td>Nombre</td><td>Teléfono</td><td>Móvil</td><td>Email</td><td>Dep.</td></tr>
     
     
-    {% for cont,alum,acum in alumnos%}
+    {% for prof in profesores%}
     
     <tr>
-      <td width="10%">{{cont}}</td>
-      <td>{{alum.Nombre}}</td>
-      <td width="15%">{{acum }}</td>
-      
+	 <td>{{prof.Apellidos}},{{prof.Nombre}} </td>
+	 <td width="14%">{{prof.Telefono}}</td>
+	 <td width="14%">{{prof.Movil}}</td>
+      	 <td>{{prof.Email}}</td>
+         <td width="10%">{{prof.Departamento.Abr}}</td>
+   
       
     </tr>
     {% endfor%}

@@ -32,6 +32,9 @@
                     <a class="btn btn-default btn-primary" href="/centro/cursos" role="button">Cursos</a>
 
                     <a class="btn btn-default btn-primary" href="/centro/profesores" role="button">Profesores</a>
+		    {% if menu_profesor%}
+                    <a class="btn btn-default btn-secundary" href="/pdf/profesores">Imprimir lista de Profesores</a>
+		    {% endif%}
                     <a class="btn btn-default btn-primary" href="/correo/list" role="button">Correos</a>
 		    {% if menu_correos %}
 

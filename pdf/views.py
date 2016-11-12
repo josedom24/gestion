@@ -11,11 +11,10 @@ from django.contrib.auth.decorators import login_required,user_passes_test
 
 from xhtml2pdf import pisa
 from cStringIO import StringIO
-from centro.models import Alumnos,Cursos
+from centro.models import Alumnos,Cursos,Profesores
 from convivencia.models import Amonestaciones,Sanciones
 from centro.views import ContarFaltas,group_check_je
 from datetime import datetime
-
 
 # Create your views here.
 
@@ -25,7 +24,7 @@ from datetime import datetime
 def imprimir_partes(request,curso):
 	lista_alumnos = Alumnos.objects.filter(Unidad__id=curso)
 	lista=zip(range(1,len(lista_alumnos)+1),lista_alumnos,ContarFaltas(lista_alumnos.values("id")))
-        data={'alumnos':lista,'curso':Cursos.objects.get(id=curso)}
+        data={'alumnos':lista,'curso':Cursos.objects.get(id=curso),'fecha':datetime.now()}
 	# Render html content through html template with context
 	return imprimir("pdf_partes.html",data,"partes.pdf")
 
@@ -85,6 +84,13 @@ def carta_sancion(request,identificador):
 	return imprimir("pdf_carta.html",info,"carta_sancion"+".pdf")	
 
 
+@login_required(login_url='/')
+@user_passes_test(group_check_je,login_url='/')
+def imprimir_profesores(request):
+	lista_profesores = Profesores.objects.all().exclude(Apellidos="-").order_by("Apellidos")
+        data={'profesores':lista_profesores,'fecha':datetime.now()}
+	# Render html content through html template with context
+        return imprimir("pdf_profesores.html",data,"profesores.pdf")
 	
 def imprimir(temp,data,tittle):
 	template = get_template(temp)

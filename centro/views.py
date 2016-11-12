@@ -64,7 +64,7 @@ def profesores(request):
 	
 	#lista=zip(lista_alumnos,funciones.ContarFaltas(lista_alumnos.values("id")),funciones.ContarAmonestacionesAcumuladas(lista_alumnos.values("id")),range(1,len(lista_alumnos)+1))
 	lista=zip(lista_profesores,range(1,len(lista_profesores)+1),cursos)
-	context={'profesores':lista,'form':form,"departamento":departamento}
+        context={'profesores':lista,'form':form,"departamento":departamento,'menu_profesor':True}
 	return render(request, 'profesor.html',context)
 
 @login_required(login_url='/')
