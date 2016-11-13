@@ -88,9 +88,9 @@ def carta_sancion(request,identificador):
 @user_passes_test(group_check_je,login_url='/')
 def imprimir_profesores(request):
 	lista_profesores = Profesores.objects.all().exclude(Apellidos="-").order_by("Apellidos")
-        data={'profesores':lista_profesores,'fecha':datetime.now()}
+        data={'profesores':lista_profesores,'fecha':datetime.now(),"resto":len(lista_profesores) % 3}
 	# Render html content through html template with context
-        return imprimir("pdf_profesores.html",data,"profesores.pdf")
+	return imprimir("pdf_"+request.path.split("/")[2]+".html",data,request.path.split("/")[2]+".pdf")
 	
 def imprimir(temp,data,tittle):
 	template = get_template(temp)
