@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import datetime
 import os
 
@@ -28,6 +29,25 @@ def imprimir_partes(request,curso):
 	# Render html content through html template with context
 	return imprimir("pdf_partes.html",data,"partes.pdf")
 
+@login_required(login_url='/')
+@user_passes_test(group_check_je,login_url='/')
+def imprimir_historial(request,alum_id):
+	alum=Alumnos.objects.get(pk=alum_id)
+	amon=Amonestaciones.objects.filter(IdAlumno_id=alum_id).order_by('Fecha')
+	sanc=Sanciones.objects.filter(IdAlumno_id=alum_id).order_by("Fecha")
+	
+	historial=list(amon)+list(sanc)
+	historial=sorted(historial, key=lambda x: x.Fecha, reverse=False)
+	
+	tipo=[]
+	for h in historial:
+		if str(type(h)).split(".")[2][0]=="A":
+			tipo.append("A")
+		else:
+                    tipo.append("S")
+	hist=zip(historial,tipo,range(1,len(historial)+1))
+	data={'alum':alum,'historial':hist}
+	return imprimir("pdf_historial.html",data,"historial.pdf")
 
 @login_required(login_url='/')
 @user_passes_test(group_check_je,login_url='/')
