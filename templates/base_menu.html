@@ -49,8 +49,10 @@
                     <a class="btn btn-default btn-secundary" href="/registro/s" role="button">Registro de salida</a>
                     {% if tipo == "e" %}
                     <a class="btn btn-default btn-secundary" href="/registro/add/{{tipo}}" role="button">Nuevo registro de entrada</a>
+                    <a class="btn btn-default btn-secundary" href="/pdf/registro/{{tipo}}/{{curso}}" role="button">Imprimir registro entrada({{curso}})</a>
                     {% else%}
                     <a class="btn btn-default btn-secundary" href="/registro/add/{{tipo}}" role="button">Nuevo registro de salida</a>
+                    <a class="btn btn-default btn-secundary" href="/pdf/registro/{{tipo}}/{{curso}}" role="button">Imprimir registro salida({{curso}})</a>
                     {%endif%}
                     {%endif%}
                     {%endif%}

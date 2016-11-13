@@ -10,4 +10,5 @@ urlpatterns = [
 	url(r'^carta_sancion/(?P<identificador>[0-9]+)$', views.carta_sancion),
         url(r'^profesores$', views.imprimir_profesores),
         url(r'^claustro$', views.imprimir_profesores),
+        url(r'^registro/(?P<tipo>[\w-])/(?P<curso>\d{4}-\d{4})$', views.imprimir_registro),
 ]

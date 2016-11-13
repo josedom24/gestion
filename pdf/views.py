@@ -14,7 +14,8 @@ from xhtml2pdf import pisa
 from cStringIO import StringIO
 from centro.models import Alumnos,Cursos,Profesores
 from convivencia.models import Amonestaciones,Sanciones
-from centro.views import ContarFaltas,group_check_je
+from registro.models import Registro 
+from centro.views import ContarFaltas,group_check_je,group_check_sec
 from datetime import datetime
 
 # Create your views here.
@@ -76,7 +77,6 @@ def carta_amonestacion(request,mes,ano,dia):
         for alum in lista_alumnos:
             info["amonestaciones"].append(Alumnos.objects.get(id=alum[0]))
        
-        print info["amonestaciones"]
 
 	for i in info["amonestaciones"]:
 		info2={}
@@ -111,7 +111,19 @@ def imprimir_profesores(request):
         data={'profesores':lista_profesores,'fecha':datetime.now(),"resto":len(lista_profesores) % 3}
 	# Render html content through html template with context
 	return imprimir("pdf_"+request.path.split("/")[2]+".html",data,request.path.split("/")[2]+".pdf")
+
+@login_required(login_url='/')
+@user_passes_test(group_check_sec,login_url='/')
+def imprimir_registro(request,tipo,curso):
 	
+	dict={'Tipo':tipo,'Curso':curso}
+
+	reg=Registro.objects.filter(**dict).order_by("-N")
+	data={'reg':reg,'tipo':tipo,'curso':curso}
+	return imprimir("pdf_registro.html",data,"registro_"+tipo+"_"+curso+".pdf")
+
+
+
 def imprimir(temp,data,tittle):
 	template = get_template(temp)
 	pdf_data = template.render(Context(data))

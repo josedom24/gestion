@@ -30,6 +30,7 @@ def registro(request,tipo):
 				dict["Idp"]=datos['Procedencia']
 			if datos['Curso']!="" and datos['Curso']!=None:
 				dict["Curso"]=datos['Curso']
+                                curso=datos['Curso']
 			if datos['Remitente']!="" and datos['Remitente']!=None:
 				dict["Idr"]=datos['Remitente']
 			if datos['Documento']!="" and datos['Documento']!=None:
