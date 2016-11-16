@@ -32,6 +32,16 @@ def imprimir_partes(request,curso):
 
 @login_required(login_url='/')
 @user_passes_test(group_check_je,login_url='/')
+def imprimir_faltas(request,curso):
+        print "ssss"
+	lista_alumnos = Alumnos.objects.filter(Unidad__id=curso)
+        data={'alumnos':lista_alumnos,'curso':Cursos.objects.get(id=curso),'cont':range(0,30)}
+	# Render html content through html template with context
+	return imprimir("pdf_faltas.html",data,"faltas.pdf")
+
+
+@login_required(login_url='/')
+@user_passes_test(group_check_je,login_url='/')
 def imprimir_historial(request,alum_id):
 	alum=Alumnos.objects.get(pk=alum_id)
 	amon=Amonestaciones.objects.filter(IdAlumno_id=alum_id).order_by('Fecha')

@@ -17,6 +17,7 @@
                     {% endif%}
                     {% if menu_alumnos and curso %}
                     <a class="btn btn-default btn-secundary" href="/pdf/partes/{{curso.id}}" role="button">Imprimir {{curso.Curso}}</a>
+                    <a class="btn btn-default btn-secundary" href="/pdf/faltas/{{curso.id}}" role="button">Control de Faltas {{curso.Curso}}</a>
                     {%endif%}
                     {% if menu_historial%}
                     <a class="btn btn-default btn-secundary" href="/pdf/historial/{{alum.id}}" role="button">Imprimir Historial</a>
