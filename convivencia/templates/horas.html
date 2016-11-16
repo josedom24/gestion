@@ -1,0 +1,16 @@
+{% extends "base_menu.html" %}
+
+{% block title %}Centro{% endblock %}
+
+{% block content %}
+<h3>Resumen de amonestaciones por horas</h3>
+<table class="table table-bordered">
+    {% for h,c in horas %}
+<tr>
+    <td>{{h}}</td>
+    <td>{{c}}</td>
+</tr>
+{% endfor %}
+</table>
+
+{% endblock %}

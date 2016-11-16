@@ -130,6 +130,18 @@ def show(request,tipo,mes,ano,dia):
 	context[tipo]=True
 	return render(request, 'show.html',context)
 
+@login_required(login_url='/')
+@user_passes_test(group_check_je,login_url='/')
+def horas(request):
+    lista=[]
+    horas=["Primera","Segunda","Tercera","Recreo","Cuarta","Quinta","Sexta"]
+    for i in xrange(1,8):
+        lista.append(Amonestaciones.objects.filter(Hora=i).count())
+    context={'horas':zip(horas,lista),'menu_alumnos':True}
+    return render(request,'horas.html',context)
+	
+
+
 def ContarFaltas(lista_id):
 	contar=[]
 	for alum in lista_id:
