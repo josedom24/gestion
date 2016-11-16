@@ -6,9 +6,9 @@ from django.forms.widgets import HiddenInput,DateInput,Textarea,TextInput,Select
 from datetime import datetime
 
 class RegistroForm(forms.ModelForm):
-	Idp	= forms.ModelChoiceField(queryset=Procedencia.objects.all(),empty_label=None,label="Procedencia",widget=forms.Select(attrs={'class': "form-control"}))
-	Idr= forms.ModelChoiceField(queryset=Remitente.objects.all(), empty_label=None,label="Remitente",widget=forms.Select(attrs={'class': "form-control"}))
-	Idc= forms.ModelChoiceField(queryset=ClaseDocumento.objects.all(), empty_label=None,label="Documento",widget=forms.Select(attrs={'class': "form-control"}))
+	Idp	= forms.ModelChoiceField(queryset=Procedencia.objects.all().order_by("Procedencia"),empty_label=None,label="Procedencia",widget=forms.Select(attrs={'class': "form-control"}))
+	Idr= forms.ModelChoiceField(queryset=Remitente.objects.all().order_by("Remitente"), empty_label=None,label="Remitente",widget=forms.Select(attrs={'class': "form-control"}))
+	Idc= forms.ModelChoiceField(queryset=ClaseDocumento.objects.all().order_by("ClaseDocumento"), empty_label=None,label="Documento",widget=forms.Select(attrs={'class': "form-control"}))
 	class Meta:
 		model = Registro
 		fields = "__all__"
@@ -32,10 +32,10 @@ class BuscarRegistroForm(forms.Form):
 	Hasta=forms.DateField(required=False,widget=SelectDateWidget())
 	Desde=forms.DateField(required=False,widget=SelectDateWidget())
 	Curso= forms.ChoiceField(choices=(),widget=forms.Select(attrs={'class': "form-control"}))
-	Procedencia= forms.ModelChoiceField(required=False,queryset=Procedencia.objects.all(),empty_label="",widget=forms.Select(attrs={'class': "form-control"}))
+	Procedencia= forms.ModelChoiceField(required=False,queryset=Procedencia.objects.all().order_by("Procedencia"),empty_label="",widget=forms.Select(attrs={'class': "form-control"}))
 
-	Remitente= forms.ModelChoiceField(required=False,queryset=Remitente.objects.all(), empty_label="",widget=forms.Select(attrs={'class': "form-control"}))
-	Documento= forms.ModelChoiceField(required=False,queryset=ClaseDocumento.objects.all(), empty_label="",widget=forms.Select(attrs={'class': "form-control"}))
+	Remitente= forms.ModelChoiceField(required=False,queryset=Remitente.objects.all().order_by("Remitente"), empty_label="",widget=forms.Select(attrs={'class': "form-control"}))
+	Documento= forms.ModelChoiceField(required=False,queryset=ClaseDocumento.objects.all().order_by("ClaseDocumento"), empty_label="",widget=forms.Select(attrs={'class': "form-control"}))
 	Contenido=forms.CharField(required=False,widget=forms.TextInput(attrs={'size': '40'}))
 	def __init__(self, *args, **kwargs):
 		super(BuscarRegistroForm, self).__init__(*args, **kwargs)

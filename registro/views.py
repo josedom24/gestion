@@ -19,13 +19,11 @@ def registro(request,tipo):
 	form = BuscarRegistroForm()
 	error=False
 	if request.method=='GET'and request.GET.has_key("Curso"):
-		print request.GET
 		form = BuscarRegistroForm(request.GET)
 		error=True
 
 		if form.is_valid():
 			datos=form.cleaned_data
-			print datos
 			if datos['Procedencia']!="" and datos['Procedencia']!=None:
 				dict["Idp"]=datos['Procedencia']
 			if datos['Curso']!="" and datos['Curso']!=None:
@@ -44,7 +42,6 @@ def registro(request,tipo):
 			
 
 		
-	print dict
 	reg=Registro.objects.filter(**dict).order_by("-N")
 	paginator = Paginator(reg, 10)
 	
