@@ -1,0 +1,16 @@
+{% extends "base_menu.html" %}
+
+{% block title %}Centro{% endblock %}
+
+{% block content %}
+<h3>Resumen de amonestaciones por profesores</h3>
+<table class="table table-bordered">
+    {% for l in lista %}
+<tr>
+    <td>{{l.Profesor}}</td>
+    <td>{{l.Profesor__count}}</td>
+</tr>
+{% endfor %}
+</table>
+
+{% endblock %}
