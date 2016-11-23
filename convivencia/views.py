@@ -2,12 +2,14 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render,redirect
 from convivencia.forms import AmonestacionForm,SancionForm
-from centro.models import Alumnos
+from centro.models import Alumnos,Profesores
 from centro.views import group_check_je
 from convivencia.models import Amonestaciones,Sanciones
 from django.contrib.auth.decorators import login_required,user_passes_test
 import time,calendar
 from datetime import datetime
+from operator import itemgetter
+from django.db.models import Count
 
 # Create your views here.
 
@@ -140,7 +142,19 @@ def horas(request):
     context={'horas':zip(horas,lista),'menu_alumnos':True}
     return render(request,'horas.html',context)
 	
+@login_required(login_url='/')
+@user_passes_test(group_check_je,login_url='/')
+def profesores(request):
+    lista=[]
+    listAmon=Amonestaciones.objects.values('Profesor').annotate(Count('Profesor'))
+    newlist = sorted(listAmon, key=itemgetter('Profesor__count'), reverse=True)
+    for l in newlist:
+        l["Profesor"]=Profesores.objects.get(id=l["Profesor"]).Apellidos+", "+Profesores.objects.get(id=l["Profesor"]).Nombre
+    context={"lista":newlist,'menu_alumnos':True}
+    return render(request,'lprofesores.html',context)
 
+
+ 
 
 def ContarFaltas(lista_id):
 	contar=[]
