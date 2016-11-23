@@ -19,21 +19,21 @@
 <h2>Alumnos - {{curso.Curso}}</h2>
 <h4>Tutor: {{curso.Tutor}}</h4>
 <table class="table table-bordered">
-    <tr><td>N.</td><td>Alumno</td><td>A/S</td><td>A</td><td>S</td><td>Hist.</td></tr>
+    <tr><td class="text-center">N.</td><td>Alumno</td><td class="text-center">A/S</td><td class="text-center">A</td><td class="text-center">S</td><td class="text-center">Hist.</td></tr>
     
-    {% for cont,alum,acum in alumnos%}
+    {% for alum,acum in alumnos%}
     
     <tr>
-      <td>{{cont}}</td>
+      <td class="text-center">{{forloop.counter}}</td>
       
         
         
       <td>{{alum.Nombre}}</td>
       
-      <td>{{acum}}</td>
-      <td><a href="/convivencia/amonestacion/{{alum.id}}"><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></a></td>
-      <td><a href="/convivencia/sancion/{{alum.id}}"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></a></td>
-      <td><a href="/convivencia/historial/{{alum.id}}"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></a></td>
+      <td class="text-center">{{acum}}</td>
+      <td class="text-center"><a href="/convivencia/amonestacion/{{alum.id}}"><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></a></td>
+      <td class="text-center"><a href="/convivencia/sancion/{{alum.id}}"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></a></td>
+      <td class="text-center"><a href="/convivencia/historial/{{alum.id}}"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></a></td>
       
     </tr>
     {% endfor %}

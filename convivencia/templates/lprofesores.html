@@ -7,8 +7,9 @@
 <table class="table table-bordered">
     {% for l in lista %}
 <tr>
+    <td class="text-center">{{forloop.counter}}</td>
     <td>{{l.Profesor}}</td>
-    <td>{{l.Profesor__count}}</td>
+    <td class="text-center">{{l.Profesor__count}}</td>
 </tr>
 {% endfor %}
 </table>

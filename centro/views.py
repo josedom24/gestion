@@ -26,7 +26,7 @@ def alumnos(request):
 	lista_alumnos = Alumnos.objects.filter(Unidad__id=primer_id)
 	form = UnidadForm({'Unidad':primer_id})
 	#lista=zip(lista_alumnos,funciones.ContarFaltas(lista_alumnos.values("id")),funciones.ContarAmonestacionesAcumuladas(lista_alumnos.values("id")),range(1,len(lista_alumnos)+1))
-	lista=zip(range(1,len(lista_alumnos)+1),lista_alumnos,ContarFaltas(lista_alumnos.values("id")))
+	lista=zip(lista_alumnos,ContarFaltas(lista_alumnos.values("id")))
 	context={'alumnos':lista,'form':form,'curso':Cursos.objects.get(id=primer_id),'menu_alumnos':True}
 	return render(request, 'alumnos.html',context)
 
@@ -63,7 +63,7 @@ def profesores(request):
 	cursos=Tutorias(lista_profesores.values("id"))
 	
 	#lista=zip(lista_alumnos,funciones.ContarFaltas(lista_alumnos.values("id")),funciones.ContarAmonestacionesAcumuladas(lista_alumnos.values("id")),range(1,len(lista_alumnos)+1))
-	lista=zip(lista_profesores,range(1,len(lista_profesores)+1),cursos)
+	lista=zip(lista_profesores,cursos)
         context={'profesores':lista,'form':form,"departamento":departamento,'menu_profesor':True}
 	return render(request, 'profesor.html',context)
 
