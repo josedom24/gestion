@@ -118,6 +118,8 @@ def carta_sancion(request,identificador):
 @user_passes_test(group_check_je,login_url='/')
 def imprimir_profesores(request):
 	lista_profesores = Profesores.objects.all().exclude(Apellidos="-").order_by("Apellidos")
+	if request.path.split("/")[2]=="claustro":
+		lista_profesores=lista_profesores.exclude(Baja=True)
         data={'profesores':lista_profesores,'fecha':datetime.now(),"resto":len(lista_profesores) % 3}
 	# Render html content through html template with context
 	return imprimir("pdf_"+request.path.split("/")[2]+".html",data,request.path.split("/")[2]+".pdf")
