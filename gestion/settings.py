@@ -1,5 +1,3 @@
-  GNU nano 2.2.6                                                                                                                                                                                                                                                                                                              File: settings.py                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
-
 """
 Django settings for gestion project.
 
