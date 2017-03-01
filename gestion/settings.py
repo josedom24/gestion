@@ -1,3 +1,5 @@
+  GNU nano 2.2.6                                                                                                                                                                                                                                                                                                              File: settings.py                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+
 """
 Django settings for gestion project.
 
@@ -60,7 +62,7 @@ ROOT_URLCONF = 'gestion.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': [os.path.join(BASE_DIR,'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -133,11 +135,38 @@ STATICFILES_DIRS = (
 )
 import ConfigParser
 configuracion = ConfigParser.ConfigParser()
-configuracion.read('gestion.cfg')
+configuracion.read(os.path.join(BASE_DIR, 'gestion.cfg'))
 EMAIL_HOST = configuracion.get('bd','EMAIL_HOST')
 EMAIL_HOST_USER = configuracion.get('bd','EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = configuracion.get('bd','EMAIL_HOST_PASSWORD')
 EMAIL_PORT = configuracion.get('bd','EMAIL_PORT')
 EMAIL_USE_TLS = configuracion.get('bd','EMAIL_USE_TLS')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
