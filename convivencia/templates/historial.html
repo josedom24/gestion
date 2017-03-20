@@ -5,12 +5,7 @@
 {% block content %}
 <h3>Historial Alumno</h3>
 <h4>{{alum.Nombre}} ({{alum.Unidad}})</h4>
-
 {% if historial %}
-
-
-  
-
 
 
 <table class="table table-bordered">
@@ -32,13 +27,18 @@
         {% autoescape off %}
     	
             {% if h.Sancion %}
-            <td>{{h.Sancion}}<//td>
+            <td>{{h.Sancion}}</td>
             {%else%}
             <td></td>
             {% endif%}
         
-
+            {% if h.Profesor %}
+            
+           <td> <strong>{{h.Profesor}} ({{ horas|slice:h.Hora|last}})</strong><br/>{{h.Comentario}}</td>
+           
+           {%else%}
            <td> {{h.Comentario}}</td>
+           {% endif %}
         {% endautoescape %}
         
     </tr>

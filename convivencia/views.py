@@ -49,6 +49,7 @@ def parte(request,tipo,alum_id):
 @login_required(login_url='/')
 @user_passes_test(group_check_je,login_url='/')
 def historial(request,alum_id):
+	horas=["1ª hora","2ª hora","3ª hora","Recreo","4ª hora","5ª hora","6ª hora"]
 	alum=Alumnos.objects.get(pk=alum_id)
 	amon=Amonestaciones.objects.filter(IdAlumno_id=alum_id).order_by('Fecha')
 	sanc=Sanciones.objects.filter(IdAlumno_id=alum_id).order_by("Fecha")
@@ -63,7 +64,7 @@ def historial(request,alum_id):
 		else:
 			tipo.append("Sanción")
 	hist=zip(historial,tipo,range(1,len(historial)+1))
-	context={'alum':alum,'historial':hist,'menu_historial':True}
+	context={'alum':alum,'historial':hist,'menu_historial':True,'horas':horas}
 	return render(request, 'historial.html',context)
 
 
