@@ -86,7 +86,7 @@
             
             </td>
             {%else%}
-            <td>{{h.Comentario}}</td>
+            <td><strong>{{h.Profesor}} ({{ horas|slice:h.Hora|last}})</strong><br/>{{h.Comentario}}</td>
             {% endif%}
         
 
