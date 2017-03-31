@@ -5,13 +5,14 @@
 {% block content %}
 <h3>Estadísticas</h3>
 <h4>1er Trimestre</h4>
-<table class="table table-bordered">
-
-<tr>
-    <td>{{datos.0}}</td>
-    <td class="text-center">{{datos.1}}</td>
-</tr>
-
-</table>
+<ul>
+	<li>Amonestaciones: {{datos.0}}</li>
+	<li>Sanciones: {{datos.1}}</li>
+</ul>
+<h4>2º Trimestre</h4>
+<ul>
+	<li>Amonestaciones: {{datos.2}}</li>
+	<li>Sanciones: {{datos.3}}</li>
+</ul>
 
 {% endblock %}

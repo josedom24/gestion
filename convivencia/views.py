@@ -140,7 +140,7 @@ def estadisticas(request):
     fi1=datetime(year1,9,1)
     ff1=datetime(year1,12,31)
     fi2=datetime(year1+1,1,1)
-    fi2=datetime(year1+1,3,31)
+    ff2=datetime(year1+1,3,31)
     fi3=datetime(year1+1,4,1)
     ff3=datetime(year1+1,6,30)
 
