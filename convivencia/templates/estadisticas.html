@@ -1,0 +1,17 @@
+{% extends "base_menu.html" %}
+
+{% block title %}Centro{% endblock %}
+
+{% block content %}
+<h3>Estadísticas</h3>
+<h4>1er Trimestre</h4>
+<table class="table table-bordered">
+
+<tr>
+    <td>{{datos.0}}</td>
+    <td class="text-center">{{datos.1}}</td>
+</tr>
+
+</table>
+
+{% endblock %}
