@@ -8,8 +8,9 @@ urlpatterns = [
 	url(r'^resumen/(?P<tipo>[a-z]+)$', views.resumen_hoy),
 	url(r'^resumen/(?P<tipo>[a-z]+)/(?P<mes>[0-9]+)/(?P<ano>[0-9]+)$', views.resumen),
 	url(r'^show/(?P<tipo>[a-z]+)/(?P<mes>[0-9]+)/(?P<ano>[0-9]+)/(?P<dia>[0-9]+)$', views.show),
+	url(r'^estadistica$', views.estadisticas),
 	url(r'^horas$', views.horas),
-        url(r'^profesores$', views.profesores),
+    url(r'^profesores$', views.profesores),
         	
 
 	
