@@ -24,7 +24,8 @@
                     {%endif%}
                     {% if menu_historial and prof%}
                     <a class="btn btn-default btn-secundary" href="/pdf/historial/{{alum.id}}/" role="button">Imprimir Historial</a>
-                    {% else %}
+                    {%endif%}
+                    {% if menu_historial and not prof %}
                     <a class="btn btn-default btn-secundary" href="/pdf/historial/{{alum.id}}/n" role="button">Imprimir Historial</a>
                     {%endif%}
                     {% if menu_amonestacion%}

@@ -4,7 +4,7 @@ from django.shortcuts import render,redirect
 from convivencia.forms import AmonestacionForm,SancionForm,FechasForm
 from centro.models import Alumnos,Profesores
 from centro.views import group_check_je
-from convivencia.models import Amonestaciones,Sanciones
+from convivencia.models import Amonestaciones,Sanciones,TiposAmonestaciones
 from django.contrib.auth.decorators import login_required,user_passes_test
 import time,calendar
 from datetime import datetime
@@ -137,6 +137,9 @@ def show(request,tipo,mes,ano,dia):
 @login_required(login_url='/')
 @user_passes_test(group_check_je,login_url='/')
 def estadisticas(request):
+
+
+
 	if request.method=="POST":
 		
 		f1=datetime(int(request.POST.get('Fecha1_year')),int(request.POST.get('Fecha1_month')),int(request.POST.get('Fecha1_day')))
@@ -147,6 +150,12 @@ def estadisticas(request):
 		fechas=[f1,f2]
 		form=FechasForm(request.POST)
 		total=()
+		#Tipos de amonestaciones
+		tipos=[]
+		for i in TiposAmonestaciones.objects.all():
+			tipos.append((i.TipoAmonestacion,
+						Amonestaciones.objects.filter(Fecha__gte=f1).filter(Fecha__lte=f2).filter(Tipo=i).count(),
+						))
 	else:
 		year1=Amonestaciones.objects.first().Fecha.year
 		fi1=datetime(year1,9,1)
@@ -166,7 +175,17 @@ def estadisticas(request):
 		form=FechasForm()
 		fechas=None
 		total=Amonestaciones.objects.count(),Sanciones.objects.count()
-	context={'total':total,'form':form,'datos':datos,'fechas':fechas,'menu_alumnos':True}
+
+		#Tipos de amonestaciones
+		tipos=[]
+		for i in TiposAmonestaciones.objects.all():
+			tipos.append((i.TipoAmonestacion,
+						Amonestaciones.objects.filter(Fecha__gte=fi1).filter(Fecha__lte=ff1).filter(Tipo=i).count(),
+						Amonestaciones.objects.filter(Fecha__gte=fi2).filter(Fecha__lte=ff2).filter(Tipo=i).count(),
+						Amonestaciones.objects.filter(Fecha__gte=fi3).filter(Fecha__lte=ff3).filter(Tipo=i).count(),
+						))
+
+	context={'tipos':tipos,'total':total,'form':form,'datos':datos,'fechas':fechas,'menu_alumnos':True}
 	return render(request,'estadisticas.html',context)
     
 
