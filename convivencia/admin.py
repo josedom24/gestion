@@ -1,5 +1,5 @@
 from django.contrib import admin
-from convivencia.models import Amonestaciones,Sanciones
+from convivencia.models import Amonestaciones,Sanciones,TiposAmonestaciones
 # Register your models here.
 
 
@@ -19,5 +19,7 @@ class SancionesAdmin(admin.ModelAdmin):
      
     search_fields = ['Comentario']
 
+admin.site.register(TiposAmonestaciones)
 admin.site.register(Amonestaciones,AmonestacionesAdmin)
 admin.site.register(Sanciones,SancionesAdmin)
+

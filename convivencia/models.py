@@ -8,6 +8,15 @@ from centro.models import Alumnos,Profesores
 
 # Register your models here.
 
+class TiposAmonestaciones(models.Model):
+	TipoAmonestacion = models.CharField(max_length=60)
+
+	def __unicode__(self):
+		return self.TipoAmonestacion
+
+	class Meta:
+		verbose_name="Tipo Amonestación"
+		verbose_name_plural="Tipos de Amonestaciones"
 
 class Amonestaciones(models.Model):
 	hora = (
@@ -25,6 +34,7 @@ class Amonestaciones(models.Model):
 	Hora = models.CharField(max_length=1,choices=hora,default='1')
 	Comentario=models.TextField(blank=True)
 	Profesor = models.ForeignKey(Profesores)
+	Tipo = models.ForeignKey(TiposAmonestaciones, related_name='Tipo_de',blank=True,null=True,on_delete=models.SET_NULL)
 	
 
 	def __unicode__(self):
