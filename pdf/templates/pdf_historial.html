@@ -86,7 +86,11 @@
             
             </td>
             {%else%}
-            <td><strong>{{h.Profesor}} ({{ horas|slice:h.Hora|last}})</strong><br/>{{h.Comentario}}</td>
+            {% if h.Profesor and prof %}
+              <td><strong>{{h.Profesor}} ({{ horas|slice:h.Hora|last}})</strong><br/>{{h.Comentario}}</td>
+            {% else %}
+              <td>{{h.Comentario}}</td>
+            {% endif%}
             {% endif%}
         
 

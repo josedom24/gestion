@@ -42,7 +42,7 @@ def imprimir_faltas(request,curso):
 
 @login_required(login_url='/')
 @user_passes_test(group_check_je,login_url='/')
-def imprimir_historial(request,alum_id):
+def imprimir_historial(request,alum_id,prof):
 	horas=["1ª hora","2ª hora","3ª hora","Recreo","4ª hora","5ª hora","6ª hora"]
 	alum=Alumnos.objects.get(pk=alum_id)
 	amon=Amonestaciones.objects.filter(IdAlumno_id=alum_id).order_by('Fecha')
@@ -58,7 +58,8 @@ def imprimir_historial(request,alum_id):
 		else:
                     tipo.append("S")
 	hist=zip(historial,tipo,range(1,len(historial)+1))
-	data={'alum':alum,'historial':hist,'horas':horas}
+	prof=True if prof=="" else False
+	data={'alum':alum,'historial':hist,'horas':horas,'prof':prof}
 	return imprimir("pdf_historial.html",data,"historial.pdf")
 
 @login_required(login_url='/')
@@ -73,6 +74,7 @@ def imprimir_show(request,tipo,mes,ano,dia):
 		titulo="Resumen de sanciones"
 	
 	datos=zip(range(1,len(datos)+1),datos,ContarFaltas(datos.values("IdAlumno")))
+	
 	data={'datos':datos,'tipo':tipo,'fecha':fecha,'titulo':titulo,tipo:True}
 	return imprimir("pdf_resumen.html",data,"resumen_"+tipo+".pdf")	
 

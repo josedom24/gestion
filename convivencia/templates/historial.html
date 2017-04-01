@@ -6,7 +6,13 @@
 <h3>Historial Alumno</h3>
 <h4>{{alum.Nombre}} ({{alum.Unidad}})</h4>
 {% if historial %}
-
+{% if prof %}
+    <a href="/convivencia/historial/{{alum.id}}/n">Mostrar historial sin datos de profesores</a>
+{% else %}    
+    <a href="/convivencia/historial/{{alum.id}}/">Mostrar historial con datos de profesores</a>
+{% endif %}
+<br/>
+<br/>
 
 <table class="table table-bordered">
 
@@ -31,9 +37,8 @@
             {%else%}
             <td></td>
             {% endif%}
-        
-            {% if h.Profesor %}
             
+            {% if h.Profesor and prof %}
            <td> <strong>{{h.Profesor}} ({{ horas|slice:h.Hora|last}})</strong><br/>{{h.Comentario}}</td>
            
            {%else%}
