@@ -1,7 +1,7 @@
 
 # -*- coding: utf-8 -*-
 from django.shortcuts import render,redirect
-from convivencia.forms import AmonestacionForm,SancionForm
+from convivencia.forms import AmonestacionForm,SancionForm,FechasForm
 from centro.models import Alumnos,Profesores
 from centro.views import group_check_je
 from convivencia.models import Amonestaciones,Sanciones
@@ -136,35 +136,61 @@ def show(request,tipo,mes,ano,dia):
 @login_required(login_url='/')
 @user_passes_test(group_check_je,login_url='/')
 def estadisticas(request):
-    year1=Amonestaciones.objects.first().Fecha.year
-    fi1=datetime(year1,9,1)
-    ff1=datetime(year1,12,31)
-    fi2=datetime(year1+1,1,1)
-    ff2=datetime(year1+1,3,31)
-    fi3=datetime(year1+1,4,1)
-    ff3=datetime(year1+1,6,30)
+	if request.method=="POST":
+		
+		f1=datetime(int(request.POST.get('Fecha1_year')),int(request.POST.get('Fecha1_month')),int(request.POST.get('Fecha1_day')))
+		f2=datetime(int(request.POST.get('Fecha2_year')),int(request.POST.get('Fecha2_month')),int(request.POST.get('Fecha2_day')))
+		a1t=Amonestaciones.objects.filter(Fecha__gte=f1).filter(Fecha__lte=f2).count()
+		s1t=Sanciones.objects.filter(Fecha__gte=f1).filter(Fecha__lte=f2).count()
+		datos=a1t,s1t
+		fechas=[f1,f2]
+		form=FechasForm(request.POST)
+		total=()
+	else:
+		year1=Amonestaciones.objects.first().Fecha.year
+		fi1=datetime(year1,9,1)
+		ff1=datetime(year1,12,31)
+		fi2=datetime(year1+1,1,1)
+		ff2=datetime(year1+1,3,31)
+		fi3=datetime(year1+1,4,1)
+		ff3=datetime(year1+1,6,30)
 
-    a1t=Amonestaciones.objects.filter(Fecha__gte=fi1).filter(Fecha__lte=ff1).count()
-    a2t=Amonestaciones.objects.filter(Fecha__gte=fi2).filter(Fecha__lte=ff2).count()
-    a3t=Amonestaciones.objects.filter(Fecha__gte=fi3).filter(Fecha__lte=ff3).count()
-    
-    s1t=Sanciones.objects.filter(Fecha__gte=fi1).filter(Fecha__lte=ff1).count()
-    s2t=Sanciones.objects.filter(Fecha__gte=fi2).filter(Fecha__lte=ff2).count()
-    s3t=Sanciones.objects.filter(Fecha__gte=fi3).filter(Fecha__lte=ff3).count()
-    datos=a1t,s1t,a2t,s2t,a3t,s3t
-    context={'datos':datos,'menu_alumnos':True}
-    return render(request,'estadisticas.html',context)
+		a1t=Amonestaciones.objects.filter(Fecha__gte=fi1).filter(Fecha__lte=ff1).count()
+		a2t=Amonestaciones.objects.filter(Fecha__gte=fi2).filter(Fecha__lte=ff2).count()
+		a3t=Amonestaciones.objects.filter(Fecha__gte=fi3).filter(Fecha__lte=ff3).count()
+		s1t=Sanciones.objects.filter(Fecha__gte=fi1).filter(Fecha__lte=ff1).count()
+		s2t=Sanciones.objects.filter(Fecha__gte=fi2).filter(Fecha__lte=ff2).count()
+		s3t=Sanciones.objects.filter(Fecha__gte=fi3).filter(Fecha__lte=ff3).count()
+		datos=a1t,s1t,a2t,s2t,a3t,s3t
+		form=FechasForm()
+		fechas=None
+		total=Amonestaciones.objects.count(),Sanciones.objects.count()
+	context={'total':total,'form':form,'datos':datos,'fechas':fechas,'menu_alumnos':True}
+	return render(request,'estadisticas.html',context)
     
 
 @login_required(login_url='/')
 @user_passes_test(group_check_je,login_url='/')
 def horas(request):
-    lista=[]
-    horas=["Primera","Segunda","Tercera","Recreo","Cuarta","Quinta","Sexta"]
-    for i in xrange(1,8):
-        lista.append(Amonestaciones.objects.filter(Hora=i).count())
-    context={'horas':zip(horas,lista),'menu_alumnos':True}
-    return render(request,'horas.html',context)
+	if request.method=="POST":
+		f1=datetime(int(request.POST.get('Fecha1_year')),int(request.POST.get('Fecha1_month')),int(request.POST.get('Fecha1_day')))
+		f2=datetime(int(request.POST.get('Fecha2_year')),int(request.POST.get('Fecha2_month')),int(request.POST.get('Fecha2_day')))
+	lista=[]
+	horas=["Primera","Segunda","Tercera","Recreo","Cuarta","Quinta","Sexta"]
+	for i in xrange(1,8):
+		if request.method=="POST":
+			lista.append(Amonestaciones.objects.filter(Hora=i).filter(Fecha__gte=f1).filter(Fecha__lte=f2).count())
+		else:
+			lista.append(Amonestaciones.objects.filter(Hora=i).count())
+	form=FechasForm(request.POST) if request.method=="POST" else FechasForm()
+	horas.append("Total")
+	if request.method=="POST":
+		lista.append(Amonestaciones.objects.filter(Fecha__gte=f1).filter(Fecha__lte=f2).count())
+	else:
+		lista.append(Amonestaciones.objects.count())
+
+	context={'form':form,'horas':zip(horas,lista),'menu_alumnos':True}
+	return render(request,'horas.html',context)
 	
 @login_required(login_url='/')
 @user_passes_test(group_check_je,login_url='/')
