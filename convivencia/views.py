@@ -6,10 +6,15 @@ from centro.models import Alumnos,Profesores
 from centro.views import group_check_je
 from convivencia.models import Amonestaciones,Sanciones,TiposAmonestaciones
 from django.contrib.auth.decorators import login_required,user_passes_test
+from correo.models import Correos
 import time,calendar
 from datetime import datetime
 from operator import itemgetter
 from django.db.models import Count
+from django.template.loader import get_template
+from django.shortcuts import render
+from django.template import Context
+from django.core.mail import send_mail
 
 # Create your views here.
 
@@ -29,6 +34,42 @@ def parte(request,tipo,alum_id):
 		
 		if form.is_valid():
 			form.save()
+			
+			if tipo=="amonestacion":
+				amon=form.instance
+				destinatarios=[amon.Profesor,amon.IdAlumno.Unidad.Tutor]
+				
+				template = get_template("correo_amonestacion.html")
+				contenido = template.render(Context({'amon':amon}))
+				new_correo=Correos(Fecha=time.strftime("%Y-%m-%d"),Asunto="Nueva amonestación",Contenido=contenido)
+				new_correo.save()
+				for dest in destinatarios:
+					new_correo.Destinatarios.add(dest)
+				new_correo.save()
+
+			if tipo=="sancion":
+				sanc=form.instance
+				destinatarios=sanc.IdAlumno.Unidad.EquipoEducativo
+				template = get_template("correo_sancion.html")
+				contenido = template.render(Context({'sanc':sanc}))
+				new_correo=Correos(Fecha=time.strftime("%Y-%m-%d"),Asunto="Nueva sanción",Contenido=contenido)
+				new_correo.save()
+				for dest in destinatarios.all():
+					new_correo.Destinatarios.add(dest)
+				new_correo.save()
+			correos=[]
+			for prof in new_correo.Destinatarios.all():
+				correo = Profesores.objects.get(id=prof.id).Email
+				if correo!="":
+					correos.append(correo)
+				print correo
+			send_mail(
+                new_correo.Asunto,
+                new_correo.Contenido,
+                '41011038.edu@juntadeandalucia.es',
+                correos,
+                fail_silently=False,
+               )
 			return redirect('/centro/alumnos')
 	else:
 		if tipo=="amonestacion":
