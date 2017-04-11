@@ -256,13 +256,22 @@ def horas(request):
 @login_required(login_url='/')
 @user_passes_test(group_check_je,login_url='/')
 def profesores(request):
-    lista=[]
-    listAmon=Amonestaciones.objects.values('Profesor').annotate(Count('Profesor'))
-    newlist = sorted(listAmon, key=itemgetter('Profesor__count'), reverse=True)
-    for l in newlist:
-        l["Profesor"]=Profesores.objects.get(id=l["Profesor"]).Apellidos+", "+Profesores.objects.get(id=l["Profesor"]).Nombre
-    context={"lista":newlist,'menu_alumnos':True}
-    return render(request,'lprofesores.html',context)
+	if request.method=="POST":
+		f1=datetime(int(request.POST.get('Fecha1_year')),int(request.POST.get('Fecha1_month')),int(request.POST.get('Fecha1_day')))
+		f2=datetime(int(request.POST.get('Fecha2_year')),int(request.POST.get('Fecha2_month')),int(request.POST.get('Fecha2_day')))
+	lista=[]
+	if request.method=="POST":
+		listAmon=Amonestaciones.objects.values('Profesor').filter(Fecha__gte=f1).filter(Fecha__lte=f2).annotate(Count('Profesor'))
+	else:
+		listAmon=Amonestaciones.objects.values('Profesor').annotate(Count('Profesor'))
+	newlist = sorted(listAmon, key=itemgetter('Profesor__count'), reverse=True)
+	suma=0
+	for l in newlist:
+		l["Profesor"]=Profesores.objects.get(id=l["Profesor"]).Apellidos+", "+Profesores.objects.get(id=l["Profesor"]).Nombre
+		suma+=l["Profesor__count"]
+	form=FechasForm(request.POST) if request.method=="POST" else FechasForm()
+	context={"form":form,"lista":newlist,'menu_alumnos':True,"suma":suma}
+	return render(request,'lprofesores.html',context)
 
 
  
