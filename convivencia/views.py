@@ -5,6 +5,7 @@ from convivencia.forms import AmonestacionForm,SancionForm,FechasForm
 from centro.models import Alumnos,Profesores
 from centro.views import group_check_je
 from convivencia.models import Amonestaciones,Sanciones,TiposAmonestaciones
+from centro.models import Cursos
 from django.contrib.auth.decorators import login_required,user_passes_test
 from correo.models import Correos
 import time,calendar
@@ -276,7 +277,37 @@ def profesores(request):
 	return render(request,'lprofesores.html',context)
 
 
- 
+@login_required(login_url='/')
+@user_passes_test(group_check_je,login_url='/')
+def grupos(request):
+	cursos=Cursos.objects.order_by('Curso')
+	if request.method=="POST":
+		f1=datetime(int(request.POST.get('Fecha1_year')),int(request.POST.get('Fecha1_month')),int(request.POST.get('Fecha1_day')))
+		f2=datetime(int(request.POST.get('Fecha2_year')),int(request.POST.get('Fecha2_month')),int(request.POST.get('Fecha2_day')))
+	lista=[]
+	
+	for curso in cursos:
+
+		if request.method=="POST":
+			lista.append([Amonestaciones.objects.filter(IdAlumno__in=Alumnos.objects.filter(Unidad=curso)).filter(Fecha__gte=f1).filter(Fecha__lte=f2).count(),
+				Sanciones.objects.filter(IdAlumno__in=Alumnos.objects.filter(Unidad=curso)).filter(Fecha__gte=f1).filter(Fecha__lte=f2).count()])
+		else:
+			lista.append([Amonestaciones.objects.filter(IdAlumno__in=Alumnos.objects.filter(Unidad=curso)).count(),
+				Sanciones.objects.filter(IdAlumno__in=Alumnos.objects.filter(Unidad=curso)).count()])
+	form=FechasForm(request.POST) if request.method=="POST" else FechasForm()
+	#Total
+	total=[]
+	if request.method=="POST":
+		total.append(Amonestaciones.objects.filter(Fecha__gte=f1).filter(Fecha__lte=f2).count())
+		total.append(Sanciones.objects.filter(Fecha__gte=f1).filter(Fecha__lte=f2).count())
+	else:
+		total.append(Amonestaciones.objects.count())
+		total.append(Sanciones.objects.count())
+	cursos=zip(cursos,lista)
+	cursos=sorted(cursos, key=lambda x: x[1][0], reverse=True)
+	context={'form':form,'cursos':cursos,'menu_alumnos':True,'total':total}
+	return render(request,'grupos.html',context)
+	
 
 def ContarFaltas(lista_id):
 	contar=[]

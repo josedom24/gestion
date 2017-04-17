@@ -1,0 +1,43 @@
+{% extends "base_menu.html" %}
+
+{% block title %}Centro{% endblock %}
+
+{% block content %}
+<h3>Filtrar por fechas</h3>
+ <form action="/convivencia/grupos" method="POST" class="form-hotizontal">
+        {% csrf_token %}
+        <div class="form-group">
+              <div class="col-xs-8">
+                {{ form.as_p }}
+            
+           <input type="submit" value="Filtrar" />
+           </div>
+        </div>
+
+	
+    </form>
+<br/>
+	    <br/>
+	    <br/>
+	    <br/>
+<hr/>
+<h3>Resumen de amonestaciones por grupos</h3>
+<table class="table table-bordered">
+  <tr>
+    <td><strong>Grupo</strong></td>
+    <td class="text-center" > <strong>A/S</strong></td>
+  </tr>
+    {% for g in cursos %}
+<tr>
+    <td>{{g.0}}</td>
+    <td class="text-center">{{g.1.0}}/{{g.1.1}}</td>
+    
+</tr>
+{% endfor %}
+<tr>
+  <td>Total</td>
+  <td class="text-center">{{total.0}}/{{total.1}}</td>
+</tr>
+</table>
+
+{% endblock %}
