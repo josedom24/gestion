@@ -197,6 +197,7 @@ def estadisticas(request):
 			tipos.append((i.TipoAmonestacion,
 						Amonestaciones.objects.filter(Fecha__gte=f1).filter(Fecha__lte=f2).filter(Tipo=i).count(),
 						))
+		filtro=True
 	else:
 		year1=Amonestaciones.objects.first().Fecha.year
 		fi1=datetime(year1,9,1)
@@ -214,8 +215,9 @@ def estadisticas(request):
 		s3t=Sanciones.objects.filter(Fecha__gte=fi3).filter(Fecha__lte=ff3).count()
 		datos=a1t,s1t,a2t,s2t,a3t,s3t
 		form=FechasForm()
-		fechas=None
+		fechas=[fi1,ff3]
 		total=Amonestaciones.objects.count(),Sanciones.objects.count()
+		filtro=False
 
 		#Tipos de amonestaciones
 		tipos=[]
@@ -226,7 +228,7 @@ def estadisticas(request):
 						Amonestaciones.objects.filter(Fecha__gte=fi3).filter(Fecha__lte=ff3).filter(Tipo=i).count(),
 						))
 
-	context={'tipos':tipos,'total':total,'form':form,'datos':datos,'fechas':fechas,'menu_alumnos':True}
+	context={'filtro':filtro,'tipos':tipos,'total':total,'form':form,'datos':datos,'fechas':fechas,'menu_alumnos':True}
 	return render(request,'estadisticas.html',context)
     
 

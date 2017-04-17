@@ -21,9 +21,9 @@
 	    <br/>
 	    <br/>
 <hr/>
-{% if not fechas %}
+{% if not filtro %}
 <h3>Estadísticas</h3>
-<h4>1er Trimestre</h4>
+<h4>1er Trimestre (1/9/{{fechas.0|date:"Y"}} - 31/12/{{fechas.0|date:"Y"}})</h4>
 <ul>
 	<li>Amonestaciones: {{datos.0}}</li>
 	<ul>
@@ -34,7 +34,7 @@
 	<li>Sanciones: {{datos.1}}</li>
 </ul>
 
-<h4>2º Trimestre</h4>
+<h4>2º Trimestre (1/1/{{fechas.1|date:"Y"}} - 31/3/{{fechas.1|date:"Y"}})</h4>
 <ul>
 	<li>Amonestaciones: {{datos.2}}</li>
 	<ul>
@@ -46,7 +46,7 @@
 </ul>
 
 
-<h4>3er Trimestre</h4>
+<h4>3er Trimestre (1/4/{{fechas.1|date:"Y"}} - 30/6/{{fechas.1|date:"Y"}})</h4>
 <ul>
 	<li>Amonestaciones: {{datos.4}}</li>
 	<ul>
