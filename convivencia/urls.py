@@ -10,6 +10,7 @@ urlpatterns = [
 	url(r'^show/(?P<tipo>[a-z]+)/(?P<mes>[0-9]+)/(?P<ano>[0-9]+)/(?P<dia>[0-9]+)$', views.show),
 	url(r'^estadistica$', views.estadisticas),
 	url(r'^grupos', views.grupos),
+	url(r'^alumnos', views.alumnos),
 	url(r'^horas$', views.horas),
     url(r'^profesores$', views.profesores),
         	

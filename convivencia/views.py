@@ -316,6 +316,54 @@ def grupos(request):
 	return render(request,'grupos.html',context)
 	
 
+@login_required(login_url='/')
+@user_passes_test(group_check_je,login_url='/')
+def alumnos(request):
+	
+	if request.method=="POST":
+		f1=datetime(int(request.POST.get('Fecha1_year')),int(request.POST.get('Fecha1_month')),int(request.POST.get('Fecha1_day')))
+		f2=datetime(int(request.POST.get('Fecha2_year')),int(request.POST.get('Fecha2_month')),int(request.POST.get('Fecha2_day')))
+	
+
+	#Total
+	total=[]
+	if request.method=="POST":
+		total.append(Amonestaciones.objects.filter(Fecha__gte=f1).filter(Fecha__lte=f2).count())
+		total.append(Sanciones.objects.filter(Fecha__gte=f1).filter(Fecha__lte=f2).count())
+	else:
+		total.append(Amonestaciones.objects.count())
+		total.append(Sanciones.objects.count())
+
+	
+
+	if request.method=="POST":
+		listAmon=Amonestaciones.objects.values('IdAlumno').filter(Fecha__gte=f1).filter(Fecha__lte=f2).annotate(Count('IdAlumno'))
+		listSan=Sanciones.objects.values('IdAlumno').filter(Fecha__gte=f1).filter(Fecha__lte=f2).annotate(Count('IdAlumno'))
+	else:
+		listAmon=Amonestaciones.objects.values('IdAlumno').annotate(Count('IdAlumno'))
+		listSan=Sanciones.objects.values('IdAlumno').annotate(Count('IdAlumno'))
+	newlist = sorted(listAmon, key=itemgetter('IdAlumno__count'), reverse=True)
+	for l in newlist:
+		try:
+			l["Sanciones"]=listSan.get(IdAlumno=l["IdAlumno"]).get("IdAlumno__count")
+		except:
+			l["Sanciones"]=0
+		l["Porcentajes"]=[]
+		try:
+			l["Porcentajes"].append(l["IdAlumno__count"]*100/total[0])
+		except:
+			l["Porcentajes"].append(0)
+		try:
+			l["Porcentajes"].append(l["Sanciones"]*100/total[1])
+		except:
+			l["Porcentajes"].append(0)
+		l["IdAlumno"]=Alumnos.objects.get(id=l["IdAlumno"]).Nombre+" ("+Alumnos.objects.get(id=l["IdAlumno"]).Unidad.Curso+")"
+	form=FechasForm(request.POST) if request.method=="POST" else FechasForm()
+	context={"form":form,"lista":newlist,'menu_alumnos':True,"suma":total}
+	return render(request,'lalumnos.html',context)
+
+	
+
 def ContarFaltas(lista_id):
 	contar=[]
 	for alum in lista_id:
