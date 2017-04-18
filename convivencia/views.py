@@ -284,17 +284,8 @@ def grupos(request):
 	if request.method=="POST":
 		f1=datetime(int(request.POST.get('Fecha1_year')),int(request.POST.get('Fecha1_month')),int(request.POST.get('Fecha1_day')))
 		f2=datetime(int(request.POST.get('Fecha2_year')),int(request.POST.get('Fecha2_month')),int(request.POST.get('Fecha2_day')))
-	lista=[]
 	
-	for curso in cursos:
 
-		if request.method=="POST":
-			lista.append([Amonestaciones.objects.filter(IdAlumno__in=Alumnos.objects.filter(Unidad=curso)).filter(Fecha__gte=f1).filter(Fecha__lte=f2).count(),
-				Sanciones.objects.filter(IdAlumno__in=Alumnos.objects.filter(Unidad=curso)).filter(Fecha__gte=f1).filter(Fecha__lte=f2).count()])
-		else:
-			lista.append([Amonestaciones.objects.filter(IdAlumno__in=Alumnos.objects.filter(Unidad=curso)).count(),
-				Sanciones.objects.filter(IdAlumno__in=Alumnos.objects.filter(Unidad=curso)).count()])
-	form=FechasForm(request.POST) if request.method=="POST" else FechasForm()
 	#Total
 	total=[]
 	if request.method=="POST":
@@ -303,6 +294,22 @@ def grupos(request):
 	else:
 		total.append(Amonestaciones.objects.count())
 		total.append(Sanciones.objects.count())
+
+	lista=[]
+	
+	for curso in cursos:
+
+		if request.method=="POST":
+			datos=[Amonestaciones.objects.filter(IdAlumno__in=Alumnos.objects.filter(Unidad=curso)).filter(Fecha__gte=f1).filter(Fecha__lte=f2).count(),
+				Sanciones.objects.filter(IdAlumno__in=Alumnos.objects.filter(Unidad=curso)).filter(Fecha__gte=f1).filter(Fecha__lte=f2).count()]
+		else:
+			datos=[Amonestaciones.objects.filter(IdAlumno__in=Alumnos.objects.filter(Unidad=curso)).count(),
+				Sanciones.objects.filter(IdAlumno__in=Alumnos.objects.filter(Unidad=curso)).count()]
+		datos.append(datos[0]*100/total[0])
+		datos.append(datos[1]*100/total[1])
+		lista.append(datos)
+	form=FechasForm(request.POST) if request.method=="POST" else FechasForm()
+	
 	cursos=zip(cursos,lista)
 	cursos=sorted(cursos, key=lambda x: x[1][0], reverse=True)
 	context={'form':form,'cursos':cursos,'menu_alumnos':True,'total':total}
