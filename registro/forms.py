@@ -41,9 +41,12 @@ class BuscarRegistroForm(forms.Form):
 		super(BuscarRegistroForm, self).__init__(*args, **kwargs)
 		choices = [(pt, pt) for pt in Registro.objects.values("Curso").distinct().values_list("Curso", flat=True).distinct()]
 		#choices.extend(EXTRA_CHOICES)
-		self.fields['Curso'].choices = choices
+		
 		hoy=datetime.now()
 		if hoy.month>=9:
+			choices.append((str(hoy.year)+"-"+str(hoy.year+1),str(hoy.year)+"-"+str(hoy.year+1)))
+			self.fields['Curso'].choices = choices
 			self.fields['Curso'].initial=str(hoy.year)+"-"+str(hoy.year+1)
 		else:
+			self.fields['Curso'].choices = choices
 			self.fields['Curso'].initial=str(hoy.year-1)+'-'+str(hoy.year)
