@@ -44,7 +44,9 @@ class BuscarRegistroForm(forms.Form):
 		
 		hoy=datetime.now()
 		if hoy.month>=9:
-			choices.append((str(hoy.year)+"-"+str(hoy.year+1),str(hoy.year)+"-"+str(hoy.year+1)))
+			 year_actual=(str(hoy.year)+"-"+str(hoy.year+1),str(hoy.year)+"-"+str(hoy.year+1))
+                        if not year_actual in choices:
+                                choices.append(year_actual)
 			self.fields['Curso'].choices = choices
 			self.fields['Curso'].initial=str(hoy.year)+"-"+str(hoy.year+1)
 		else:
