@@ -79,7 +79,9 @@ def add(request,tipo):
 		curso=CalcularCurso()
 		dict={'Tipo':tipo,'Curso':curso}
 		reg=Registro.objects.filter(**dict).order_by("-N").first()
-		if reg.N>1:
+		if reg is None:
+                        N=1
+                elif reg.N>1:
 			N=reg.N+1
 		else:
 			N=reg.N
