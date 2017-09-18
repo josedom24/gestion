@@ -45,7 +45,8 @@ def parte(request,tipo,alum_id):
 				new_correo=Correos(Fecha=time.strftime("%Y-%m-%d"),Asunto="Nueva amonestación",Contenido=contenido)
 				new_correo.save()
 				for dest in destinatarios:
-					new_correo.Destinatarios.add(dest)
+					if dest!=None:
+						new_correo.Destinatarios.add(dest)
 				new_correo.save()
 
 			if tipo=="sancion":

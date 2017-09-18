@@ -39,6 +39,9 @@ class SancionForm(forms.ModelForm):
 
 
 class FechasForm(forms.Form):
-	Fecha1	= forms.DateField(initial=Amonestaciones.objects.first().Fecha,widget=forms.SelectDateWidget(years=range(2000, 2100)))
+	try:
+		Fecha1	= forms.DateField(initial=Amonestaciones.objects.first().Fecha,widget=forms.SelectDateWidget(years=range(2000, 2100)))
+	except:
+		Fecha1	= forms.DateField(initial=date.today,widget=forms.SelectDateWidget(years=range(2000, 2100)))
 	Fecha2	= forms.DateField(initial=date.today,widget=forms.SelectDateWidget(years=range(2000, 2100)))
 	
