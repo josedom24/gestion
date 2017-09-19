@@ -54,15 +54,16 @@ campos=["Nombre","DNI","Direccion","CodPostal","Localidad","Fecha_nacimiento","P
 
 with open('alumnos.csv', 'rb') as mycsvfile:
     dictofdata = csv.DictReader(mycsvfile, dialect='mydialect')
+    cont=1
     for row in dictofdata:
-    	row["id"]=row["Id"]
-    	del row["Id"]
+    	row["id"]=cont
     	print row
     	if row["Unidad"]=="":
     		del row["Unidad"]
     	else:
     	    row["Unidad"]=Cursos.objects.get(Curso=row["Unidad"])
-    	
+    	cont=cont+1
+	row["Fecha_nacimiento"]=row["Fecha_nacimiento"].split("/")[2]+"-"+row["Fecha_nacimiento"].split("/")[1]+"-"+row["Fecha_nacimiento"].split("/")[0]
     	a=Alumnos(**row)
     	a.save()
 		
