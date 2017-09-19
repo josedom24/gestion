@@ -15,7 +15,7 @@ def index(request):
 			context={'error':True}
 		else:
 			login(request, user)
-			if request.POST.has_key("next"):
+			if request.POST.has_key("next") and request.POST["next"]!="":
 				return redirect(request.POST["next"])
 	
 	
