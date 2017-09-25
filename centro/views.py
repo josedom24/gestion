@@ -20,14 +20,20 @@ def alumnos(request):
 	if request.method == 'POST':
 		primer_id=request.POST.get("Unidad")
 	else:
-		primer_id=request.session.get('Unidad', Cursos.objects.order_by('Curso').first().id)
+		try:
+			primer_id=request.session.get('Unidad', Cursos.objects.order_by('Curso').first().id)
+		except:
+			primer_id=0
 
 	request.session['Unidad']=primer_id
 	lista_alumnos = Alumnos.objects.filter(Unidad__id=primer_id)
 	form = UnidadForm({'Unidad':primer_id})
 	#lista=zip(lista_alumnos,funciones.ContarFaltas(lista_alumnos.values("id")),funciones.ContarAmonestacionesAcumuladas(lista_alumnos.values("id")),range(1,len(lista_alumnos)+1))
 	lista=zip(lista_alumnos,ContarFaltas(lista_alumnos.values("id")))
-	context={'alumnos':lista,'form':form,'curso':Cursos.objects.get(id=primer_id),'menu_alumnos':True}
+	try:
+		context={'alumnos':lista,'form':form,'curso':Cursos.objects.get(id=primer_id),'menu_alumnos':True}
+	except:
+		context={'alumnos':lista,'form':form,'curso':None,'menu_alumnos':True}
 	return render(request, 'alumnos.html',context)
 
 

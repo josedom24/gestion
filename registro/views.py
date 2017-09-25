@@ -79,10 +79,10 @@ def add(request,tipo):
 		curso=CalcularCurso()
 		dict={'Tipo':tipo,'Curso':curso}
 		reg=Registro.objects.filter(**dict).order_by("-N").first()
-		if reg.N>1:
-			N=reg.N+1
+		if reg is None:
+			N=1
 		else:
-			N=reg.N
+			N=reg.N+1
 		form = RegistroForm({'N':N,'Curso':curso,'Tipo':tipo,'Fecha':time.strftime("%d/%m/%Y"),'Idp':1,'Idr':1,'Idc':1})
 		error=False
 	context={'N':N,'curso':curso,'tipo':tipo,'form':form,'error':error,'menu_registro':True}
