@@ -16,13 +16,13 @@ def group_check_sec(user):
 @login_required(login_url='/')
 @user_passes_test(group_check_je,login_url='/')
 def alumnos(request):
+        
 	if request.method == 'POST':
 		primer_id=request.POST.get("Unidad")
 	else:
 		primer_id=request.session.get('Unidad', Cursos.objects.order_by('Curso').first().id)
 
 	request.session['Unidad']=primer_id
-		
 	lista_alumnos = Alumnos.objects.filter(Unidad__id=primer_id)
 	form = UnidadForm({'Unidad':primer_id})
 	#lista=zip(lista_alumnos,funciones.ContarFaltas(lista_alumnos.values("id")),funciones.ContarAmonestacionesAcumuladas(lista_alumnos.values("id")),range(1,len(lista_alumnos)+1))
