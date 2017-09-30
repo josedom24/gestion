@@ -14,16 +14,20 @@
                     {% if menu_alumnos or menu_resumen%}
                     <a class="btn btn-default btn-secundary" href="/convivencia/resumen/amonestacion" role="button">Resumen de amonestaciones</a>
                     <a class="btn btn-default btn-secundary" href="/convivencia/resumen/sancion" role="button">Resumen de sanciones</a>
-                    <a class="btn btn-default btn-secundary" href="/convivencia/estadistica" role="button">Estadística general</a>
-                    <a class="btn btn-default btn-secundary" href="/convivencia/horas" role="button">Resumen por horas</a>
-                    <a class="btn btn-default btn-secundary" href="/convivencia/profesores" role="button">Resumen por profesores</a>
-                    <a class="btn btn-default btn-secundary" href="/convivencia/grupos" role="button">Resumen por grupos</a>
-                    <a class="btn btn-default btn-secundary" href="/convivencia/alumnos" role="button">Resumen por alumnos</a>
-                    {% endif%}
+                    <a class="btn btn-default btn-secundary" href="/pdf/sanciones/hoy" role="button">Imprimir Sanciones Hoy</a>
                     {% if menu_alumnos and curso %}
                     <a class="btn btn-default btn-secundary" href="/pdf/partes/{{curso.id}}" role="button">Imprimir {{curso.Curso}}</a>
                     <a class="btn btn-default btn-secundary" href="/pdf/faltas/{{curso.id}}" role="button">Control de Faltas {{curso.Curso}}</a>
                     {%endif%}
+                    
+                    {% endif%}
+
+                    {% if menu_sancion%}
+                    <a class="btn btn-default btn-secundary" href="/pdf/show/sancion/{{ fecha|date:"m" }}/{{ fecha|date:"Y" }}/{{ fecha|date:"d" }}" role="button">Imprimir Sanciones</a>
+                    
+                    
+                    {%endif%}
+
                     {% if menu_historial and prof%}
                     <a class="btn btn-default btn-secundary" href="/pdf/historial/{{alum.id}}/" role="button">Imprimir Historial</a>
                     {%endif%}
@@ -34,10 +38,21 @@
                     <a class="btn btn-default btn-secundary" href="/pdf/show/amonestacion/{{ fecha|date:"m" }}/{{ fecha|date:"Y" }}/{{ fecha|date:"d" }}" role="button">Imprimir Amonestaciones</a>
                     <a class="btn btn-default btn-secundary" href="/pdf/carta_amonestacion/{{ fecha|date:"m" }}/{{ fecha|date:"Y" }}/{{ fecha|date:"d" }}" role="button">Imprimir Cartas</a>
                     {%endif%}
-                    {% if menu_sancion%}
-                    <a class="btn btn-default btn-secundary" href="/pdf/show/sancion/{{ fecha|date:"m" }}/{{ fecha|date:"Y" }}/{{ fecha|date:"d" }}" role="button">Imprimir Sanciones</a>
+
                     
-                    {%endif%}
+                    <a class="btn btn-default btn-primary" href="/convivencia/estadistica" role="button">Estadística general</a>
+                    {% if menu_estadistica%}
+                    <a class="btn btn-default btn-secundary" href="/convivencia/horas" role="button">Resumen por horas</a>
+                    <a class="btn btn-default btn-secundary" href="/convivencia/profesores" role="button">Resumen por profesores</a>
+                    <a class="btn btn-default btn-secundary" href="/convivencia/grupos" role="button">Resumen por grupos</a>
+                    <a class="btn btn-default btn-secundary" href="/convivencia/alumnos" role="button">Resumen por alumnos</a>
+                    {% endif%}
+
+
+
+                    
+                    
+                    
                     <a class="btn btn-default btn-primary" href="/centro/cursos" role="button">Cursos</a>
 
                     <a class="btn btn-default btn-primary" href="/centro/profesores" role="button">Profesores</a>

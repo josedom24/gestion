@@ -181,8 +181,6 @@ def show(request,tipo,mes,ano,dia):
 @user_passes_test(group_check_je,login_url='/')
 def estadisticas(request):
 
-
-
 	if request.method=="POST":
 		
 		f1=datetime(int(request.POST.get('Fecha1_year')),int(request.POST.get('Fecha1_month')),int(request.POST.get('Fecha1_day')))
@@ -230,7 +228,7 @@ def estadisticas(request):
 						Amonestaciones.objects.filter(Fecha__gte=fi3).filter(Fecha__lte=ff3).filter(Tipo=i).count(),
 						))
 
-	context={'filtro':filtro,'tipos':tipos,'total':total,'form':form,'datos':datos,'fechas':fechas,'menu_alumnos':True}
+	context={'filtro':filtro,'tipos':tipos,'total':total,'form':form,'datos':datos,'fechas':fechas,'menu_estadistica':True}
 	return render(request,'estadisticas.html',context)
     
 
@@ -254,7 +252,7 @@ def horas(request):
 	else:
 		lista.append(Amonestaciones.objects.count())
 
-	context={'form':form,'horas':zip(horas,lista),'menu_alumnos':True}
+	context={'form':form,'horas':zip(horas,lista),'menu_estadistica':True}
 	return render(request,'horas.html',context)
 	
 @login_required(login_url='/')
@@ -274,7 +272,7 @@ def profesores(request):
 		l["Profesor"]=Profesores.objects.get(id=l["Profesor"]).Apellidos+", "+Profesores.objects.get(id=l["Profesor"]).Nombre
 		suma+=l["Profesor__count"]
 	form=FechasForm(request.POST) if request.method=="POST" else FechasForm()
-	context={"form":form,"lista":newlist,'menu_alumnos':True,"suma":suma}
+	context={"form":form,"lista":newlist,'menu_estadistica':True,"suma":suma}
 	return render(request,'lprofesores.html',context)
 
 
@@ -313,7 +311,7 @@ def grupos(request):
 	
 	cursos=zip(cursos,lista)
 	cursos=sorted(cursos, key=lambda x: x[1][0], reverse=True)
-	context={'form':form,'cursos':cursos,'menu_alumnos':True,'total':total}
+	context={'form':form,'cursos':cursos,'menu_estadistica':True,'total':total}
 	return render(request,'grupos.html',context)
 	
 
@@ -360,7 +358,7 @@ def alumnos(request):
 			l["Porcentajes"].append(0)
 		l["IdAlumno"]=Alumnos.objects.get(id=l["IdAlumno"]).Nombre+" ("+Alumnos.objects.get(id=l["IdAlumno"]).Unidad.Curso+")"
 	form=FechasForm(request.POST) if request.method=="POST" else FechasForm()
-	context={"form":form,"lista":newlist,'menu_alumnos':True,"suma":total}
+	context={"form":form,"lista":newlist,'menu_estadistica':True,"suma":total}
 	return render(request,'lalumnos.html',context)
 
 	

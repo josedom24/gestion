@@ -21,12 +21,15 @@
 <table class="table table-bordered">
     <tr><td class="text-center">N.</td><td>Alumno</td><td class="text-center">A/S</td><td class="text-center">A</td><td class="text-center">S</td><td class="text-center">Hist.</td></tr>
     
-    {% for alum,acum in alumnos%}
+    {% for alum,acum,sanc in alumnos%}
     
+    {% if sanc %}
+    <tr class="danger">
+    {%else%}
     <tr>
+    {% endif %}
       <td class="text-center">{{forloop.counter}}</td>
-      
-        
+         
         
       <td>{{alum.Nombre}}</td>
       

@@ -33,7 +33,6 @@ def imprimir_partes(request,curso):
 @login_required(login_url='/')
 @user_passes_test(group_check_je,login_url='/')
 def imprimir_faltas(request,curso):
-        print "ssss"
 	lista_alumnos = Alumnos.objects.filter(Unidad__id=curso)
         data={'alumnos':lista_alumnos,'curso':Cursos.objects.get(id=curso),'cont':range(0,30)}
 	# Render html content through html template with context
@@ -80,6 +79,19 @@ def imprimir_show(request,tipo,mes,ano,dia):
 
 @login_required(login_url='/')
 @user_passes_test(group_check_je,login_url='/')
+def imprimir_sanciones_hoy(request):
+	hoy=datetime.now()
+	dict={}
+	dict["Fecha_fin__gte"]=hoy
+	dict["Fecha__lte"]=hoy
+	datos=Sanciones.objects.filter(**dict).order_by("Fecha")
+	titulo="Alumnos sancionados"
+	datos=zip(range(1,len(datos)+1),datos,[x for x in datos])
+	data={'datos':datos,'tipo':"sancion",'fecha':hoy,'titulo':titulo}
+	return imprimir("pdf_resumen.html",data,"resumen_sancion_hoy.pdf")	
+
+@login_required(login_url='/')
+@user_passes_test(group_check_je,login_url='/')
 def carta_amonestacion(request,mes,ano,dia):
 	info={}
 	contenido=""
@@ -119,11 +131,17 @@ def carta_sancion(request,identificador):
 
 @login_required(login_url='/')
 @user_passes_test(group_check_je,login_url='/')
-def imprimir_profesores(request):
+def imprimir_profesores(request,curso=None):
 	lista_profesores = Profesores.objects.all().exclude(Apellidos="-").order_by("Apellidos")
 	if request.path.split("/")[2]=="claustro":
-		lista_profesores=lista_profesores.exclude(Baja=True)
-        data={'profesores':lista_profesores,'fecha':datetime.now(),"resto":len(lista_profesores) % 3}
+		if curso==None:
+			lista_profesores=lista_profesores.exclude(Baja=True)
+			texto='Asistencia a claustro'
+		else:
+			c=Cursos.objects.get(id=curso)
+			lista_profesores=c.EquipoEducativo.all()
+			texto='Asistencia a Equipo Educativo de '+c.Curso
+        data={'texto':texto,'profesores':lista_profesores,'fecha':datetime.now(),"resto":len(lista_profesores) % 3}
 	# Render html content through html template with context
 	return imprimir("pdf_"+request.path.split("/")[2]+".html",data,request.path.split("/")[2]+".pdf")
 

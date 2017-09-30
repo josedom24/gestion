@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from centro.models import Alumnos,Cursos,Departamentos,Profesores
 from convivencia.models import Amonestaciones,Sanciones
 from centro.forms import UnidadForm,DepartamentosForm
-
+from datetime import datetime
 
 
 def group_check_je(user):
@@ -29,7 +29,7 @@ def alumnos(request):
 	lista_alumnos = Alumnos.objects.filter(Unidad__id=primer_id)
 	form = UnidadForm({'Unidad':primer_id})
 	#lista=zip(lista_alumnos,funciones.ContarFaltas(lista_alumnos.values("id")),funciones.ContarAmonestacionesAcumuladas(lista_alumnos.values("id")),range(1,len(lista_alumnos)+1))
-	lista=zip(lista_alumnos,ContarFaltas(lista_alumnos.values("id")))
+	lista=zip(lista_alumnos,ContarFaltas(lista_alumnos.values("id")),EstaSancionado(lista_alumnos.values("id")))
 	try:
 		context={'alumnos':lista,'form':form,'curso':Cursos.objects.get(id=primer_id),'menu_alumnos':True}
 	except:
@@ -103,6 +103,24 @@ def Tutorias(lista_id):
 		except Exception, e:
 			cursos.append("")
 	return cursos
+
+
+def EstaSancionado(lista_id):
+	estasancionado=[]
+	hoy=datetime.now()
+	dict={}
+	dict["Fecha_fin__gte"]=hoy
+	dict["Fecha__lte"]=hoy
+	sanc=Sanciones.objects.filter(**dict).order_by("Fecha")
+	listaid=[x.IdAlumno.id for x in sanc]
+	for alum in lista_id:
+		if alum.values()[0] in listaid:
+			estasancionado.append(True)
+		else:
+			estasancionado.append(False)
+	return estasancionado
+		
+
 
 
 @login_required(login_url='/')
