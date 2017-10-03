@@ -133,6 +133,7 @@ def carta_sancion(request,identificador):
 @user_passes_test(group_check_je,login_url='/')
 def imprimir_profesores(request,curso=None):
 	lista_profesores = Profesores.objects.all().exclude(Apellidos="-").order_by("Apellidos")
+	texto="Listado de profesores"
 	if request.path.split("/")[2]=="claustro":
 		if curso==None:
 			lista_profesores=lista_profesores.exclude(Baja=True)
@@ -163,7 +164,10 @@ def imprimir(temp,data,tittle):
 	# Write PDF to file
 	
 	pdf = StringIO()
-	pisa.CreatePDF(StringIO(pdf_data.encode('utf-8')), pdf)
+	try:
+		pisa.CreatePDF(StringIO(pdf_data.encode('utf-8')), pdf)
+	except:
+		return HttpResponse('Errors')
 	pdf.reset()
 	response = HttpResponse(pdf.read(),content_type='application/pdf')
 	response['Content-Disposition'] = 'attachment; filename="'+tittle+'"'
