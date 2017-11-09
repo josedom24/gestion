@@ -24,7 +24,7 @@ from datetime import datetime
 @login_required(login_url='/')
 @user_passes_test(group_check_je,login_url='/')
 def imprimir_partes(request,curso):
-	lista_alumnos = Alumnos.objects.filter(Unidad__id=curso)
+	lista_alumnos = Alumnos.objects.filter(Unidad__id=curso).order_by("Nombre")
 	lista=zip(range(1,len(lista_alumnos)+1),lista_alumnos,ContarFaltas(lista_alumnos.values("id")))
         data={'alumnos':lista,'curso':Cursos.objects.get(id=curso),'fecha':datetime.now()}
 	# Render html content through html template with context
@@ -33,7 +33,7 @@ def imprimir_partes(request,curso):
 @login_required(login_url='/')
 @user_passes_test(group_check_je,login_url='/')
 def imprimir_faltas(request,curso):
-	lista_alumnos = Alumnos.objects.filter(Unidad__id=curso)
+	lista_alumnos = Alumnos.objects.filter(Unidad__id=curso).order_by("Nombre")
         data={'alumnos':lista_alumnos,'curso':Cursos.objects.get(id=curso),'cont':range(0,30)}
 	# Render html content through html template with context
 	return imprimir("pdf_faltas.html",data,"faltas.pdf")
