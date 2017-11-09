@@ -29,7 +29,7 @@ def alumnos(request):
 
 	request.session['Unidad']=primer_id
 	lista_alumnos = Alumnos.objects.filter(Unidad__id=primer_id)
-	lista_alumnos=sorted(lista_alumnos,key=lambda d: normalize(d.Nombre))
+	
 
 	form = UnidadForm({'Unidad':primer_id})
 	#lista=zip(lista_alumnos,funciones.ContarFaltas(lista_alumnos.values("id")),funciones.ContarAmonestacionesAcumuladas(lista_alumnos.values("id")),range(1,len(lista_alumnos)+1))
