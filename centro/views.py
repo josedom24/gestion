@@ -5,6 +5,8 @@ from centro.models import Alumnos,Cursos,Departamentos,Profesores
 from convivencia.models import Amonestaciones,Sanciones
 from centro.forms import UnidadForm,DepartamentosForm
 from datetime import datetime
+from unicodedata import lookup, name
+
 
 
 def group_check_je(user):
@@ -26,7 +28,9 @@ def alumnos(request):
 			primer_id=0
 
 	request.session['Unidad']=primer_id
-	lista_alumnos = Alumnos.objects.filter(Unidad__id=primer_id).order_by("Nombre")
+	lista_alumnos = Alumnos.objects.filter(Unidad__id=primer_id)
+	lista_alumnos=sorted(lista_alumnos,key=lambda d: normalize(d.Nombre))
+
 	form = UnidadForm({'Unidad':primer_id})
 	#lista=zip(lista_alumnos,funciones.ContarFaltas(lista_alumnos.values("id")),funciones.ContarAmonestacionesAcumuladas(lista_alumnos.values("id")),range(1,len(lista_alumnos)+1))
 	lista=zip(lista_alumnos,ContarFaltas(lista_alumnos.values("id")),EstaSancionado(lista_alumnos.values("id")))
@@ -133,3 +137,17 @@ def cursos(request):
 	
 	context={'cursos':lista_cursos,'menu_cursos':True}
 	return render(request, 'cursos.html',context)
+
+def normalize(s, encoding = "UTF-8"):
+    if not isinstance(s,unicode):
+        s = s.decode(encoding)
+
+    ret = u""
+    for c in s:
+        n = name(c)
+        pos = n.find("WITH")
+        if pos >= 0:
+            n = n[:pos]
+        n = lookup(n.strip())
+        ret += n
+    return ret

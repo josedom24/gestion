@@ -17,14 +17,16 @@ from convivencia.models import Amonestaciones,Sanciones
 from registro.models import Registro 
 from centro.views import ContarFaltas,group_check_je,group_check_sec
 from datetime import datetime
-
+from unicodedata import lookup, name
+from centro.views import normalize
 # Create your views here.
 
 
 @login_required(login_url='/')
 @user_passes_test(group_check_je,login_url='/')
 def imprimir_partes(request,curso):
-	lista_alumnos = Alumnos.objects.filter(Unidad__id=curso).order_by("Nombre")
+	lista_alumnos = Alumnos.objects.filter(Unidad__id=curso)
+	lista_alumnos=sorted(lista_alumnos,key=lambda d: normalize(d.Nombre))
 	lista=zip(range(1,len(lista_alumnos)+1),lista_alumnos,ContarFaltas(lista_alumnos.values("id")))
         data={'alumnos':lista,'curso':Cursos.objects.get(id=curso),'fecha':datetime.now()}
 	# Render html content through html template with context
@@ -33,7 +35,8 @@ def imprimir_partes(request,curso):
 @login_required(login_url='/')
 @user_passes_test(group_check_je,login_url='/')
 def imprimir_faltas(request,curso):
-	lista_alumnos = Alumnos.objects.filter(Unidad__id=curso).order_by("Nombre")
+	lista_alumnos = Alumnos.objects.filter(Unidad__id=curso)
+	lista_alumnos=sorted(lista_alumnos,key=lambda d: normalize(d.Nombre))
         data={'alumnos':lista_alumnos,'curso':Cursos.objects.get(id=curso),'cont':range(0,30)}
 	# Render html content through html template with context
 	return imprimir("pdf_faltas.html",data,"faltas.pdf")
