@@ -17,7 +17,6 @@ from convivencia.models import Amonestaciones,Sanciones
 from registro.models import Registro 
 from centro.views import ContarFaltas,group_check_je,group_check_sec
 from datetime import datetime
-from unicodedata import lookup, name
 from centro.views import normalize
 # Create your views here.
 
@@ -27,7 +26,8 @@ from centro.views import normalize
 def imprimir_partes(request,curso):
 	lista_alumnos = Alumnos.objects.filter(Unidad__id=curso)
 	lista_alumnos=sorted(lista_alumnos,key=lambda d: normalize(d.Nombre))
-	lista=zip(range(1,len(lista_alumnos)+1),lista_alumnos,ContarFaltas(lista_alumnos.values("id")))
+	ids=[{"id":elem.id} for elem in lista_alumnos]
+	lista=zip(range(1,len(lista_alumnos)+1),lista_alumnos,ContarFaltas(ids))
         data={'alumnos':lista,'curso':Cursos.objects.get(id=curso),'fecha':datetime.now()}
 	# Render html content through html template with context
 	return imprimir("pdf_partes.html",data,"partes.pdf")

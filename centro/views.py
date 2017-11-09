@@ -9,6 +9,7 @@ from unicodedata import lookup, name
 
 
 
+
 def group_check_je(user):
     return user.groups.filter(name__in=['jefatura de estudios'])
 def group_check_sec(user):
@@ -28,12 +29,14 @@ def alumnos(request):
 			primer_id=0
 
 	request.session['Unidad']=primer_id
+
 	lista_alumnos = Alumnos.objects.filter(Unidad__id=primer_id)
-	
+	lista_alumnos=sorted(lista_alumnos,key=lambda d: normalize(d.Nombre))
+	ids=[{"id":elem.id} for elem in lista_alumnos]
 
 	form = UnidadForm({'Unidad':primer_id})
 	#lista=zip(lista_alumnos,funciones.ContarFaltas(lista_alumnos.values("id")),funciones.ContarAmonestacionesAcumuladas(lista_alumnos.values("id")),range(1,len(lista_alumnos)+1))
-	lista=zip(lista_alumnos,ContarFaltas(lista_alumnos.values("id")),EstaSancionado(lista_alumnos.values("id")))
+	lista=zip(lista_alumnos,ContarFaltas(ids),EstaSancionado(ids))
 	try:
 		context={'alumnos':lista,'form':form,'curso':Cursos.objects.get(id=primer_id),'menu_alumnos':True}
 	except:
