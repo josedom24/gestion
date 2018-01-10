@@ -5,7 +5,7 @@ from centro.models import Profesores
 from django.forms.widgets import CheckboxSelectMultiple,HiddenInput,DateInput,Textarea,TextInput,Select,SelectDateWidget
 from django.contrib.admin.widgets import AdminDateWidget 
 from datetime import date
-
+import datetime
 
 
 class AmonestacionForm(forms.ModelForm):
@@ -15,7 +15,7 @@ class AmonestacionForm(forms.ModelForm):
 		fields = "__all__"
 		widgets = {
 			'IdAlumno':HiddenInput(),
-			'Fecha':SelectDateWidget(),
+			'Fecha':SelectDateWidget(years=(datetime.date.today().year,datetime.date.today().year-1)),
                         'Comentario': Textarea(attrs={'cols': 80, 'rows': 15}),
 			
 			#'Comentario': TinyMCE(),
@@ -28,8 +28,8 @@ class SancionForm(forms.ModelForm):
 		fields = "__all__"
 		widgets = {
 			'IdAlumno':HiddenInput(),
-			'Fecha':SelectDateWidget(),
-			'Fecha_fin':SelectDateWidget(),
+			'Fecha':SelectDateWidget(years=(datetime.date.today().year,datetime.date.today().year-1)),
+			'Fecha_fin':SelectDateWidget(years=(datetime.date.today().year,datetime.date.today().year-1)),
 			
 			'Sancion':TextInput(attrs={'size': '67'}),
 			'Comentario': Textarea(attrs={'cols': 80, 'rows': 15}),
