@@ -3,23 +3,8 @@
 {% block title %}Centro{% endblock %}
 
 {% block content %}
-<h3>Filtrar por fechas</h3>
- <form action="/convivencia/estadistica" method="POST" class="form-hotizontal">
-        {% csrf_token %}
-        <div class="form-group">
-              <div class="col-xs-8">
-                {{ form.as_p }}
-            
-           <input type="submit" value="Filtrar" />
-           </div>
-        </div>
-
-	
-    </form>
-<br/>
-	    <br/>
-	    <br/>
-	    <br/>
+<h3>Curso:{{curso}}</h3>
+ 
 <hr/>
 {% if not filtro %}
 <h3>Estadísticas</h3>
@@ -81,5 +66,4 @@
 
 {% endif %}
 
-<a href="estadistica/curso/2017">Ver estadística general curso 2016/2017</a>
 {% endblock %}

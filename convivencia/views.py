@@ -234,6 +234,48 @@ def estadisticas(request):
 
 @login_required(login_url='/')
 @user_passes_test(group_check_je,login_url='/')
+def estadisticas2(request,curso):
+
+	if request.method=="POST":
+		
+		pass
+	else:
+		year1=int(curso)-1
+		fi1=datetime(year1,9,1)
+		ff1=datetime(year1,12,31)
+		fi2=datetime(year1+1,1,1)
+		ff2=datetime(year1+1,3,31)
+		fi3=datetime(year1+1,4,1)
+		ff3=datetime(year1+1,6,30)
+
+		a1t=Amonestaciones.objects.using('db%s'%curso).filter(Fecha__gte=fi1).filter(Fecha__lte=ff1).count()
+		a2t=Amonestaciones.objects.using('db%s'%curso).filter(Fecha__gte=fi2).filter(Fecha__lte=ff2).count()
+		a3t=Amonestaciones.objects.using('db%s'%curso).filter(Fecha__gte=fi3).filter(Fecha__lte=ff3).count()
+		s1t=Sanciones.objects.using('db%s'%curso).filter(Fecha__gte=fi1).filter(Fecha__lte=ff1).count()
+		s2t=Sanciones.objects.using('db%s'%curso).filter(Fecha__gte=fi2).filter(Fecha__lte=ff2).count()
+		s3t=Sanciones.objects.using('db%s'%curso).filter(Fecha__gte=fi3).filter(Fecha__lte=ff3).count()
+		datos=a1t,s1t,a2t,s2t,a3t,s3t
+		form=FechasForm()
+		fechas=[fi1,ff3]
+		total=Amonestaciones.objects.using('db%s'%curso).count(),Sanciones.objects.using('db%s'%curso).count()
+		filtro=False
+
+		#Tipos de amonestaciones
+		tipos=[]
+		for i in TiposAmonestaciones.objects.using('db%s'%curso).all():
+			tipos.append((i.TipoAmonestacion,
+						Amonestaciones.objects.using('db%s'%curso).filter(Fecha__gte=fi1).filter(Fecha__lte=ff1).filter(Tipo=i).count(),
+						Amonestaciones.objects.using('db%s'%curso).filter(Fecha__gte=fi2).filter(Fecha__lte=ff2).filter(Tipo=i).count(),
+						Amonestaciones.objects.using('db%s'%curso).filter(Fecha__gte=fi3).filter(Fecha__lte=ff3).filter(Tipo=i).count(),
+						))
+
+	context={'curso':str(int(curso)-1)+"/"+curso,'filtro':filtro,'tipos':tipos,'total':total,'form':form,'datos':datos,'fechas':fechas,'menu_estadistica':True}
+	return render(request,'estadisticas2.html',context)
+
+
+
+@login_required(login_url='/')
+@user_passes_test(group_check_je,login_url='/')
 def horas(request):
 	if request.method=="POST":
 		f1=datetime(int(request.POST.get('Fecha1_year')),int(request.POST.get('Fecha1_month')),int(request.POST.get('Fecha1_day')))
