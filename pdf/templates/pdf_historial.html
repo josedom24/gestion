@@ -81,8 +81,15 @@
         {% autoescape off %}
     	
             {% if h.Sancion %}
-            <td><strong>Sanción: </strong>{{h.Sancion}}<br/>
+            {% if h.NoExpulsion %}
+                <td><strong>Sanción: </strong>{{h.Sancion}}<br/>
+            {{h.Comentario}}<br/><strong>No expulsión</strong>
+            {%else%}
+                <td><strong>Sanción: </strong>{{h.Sancion}}<br/>
             {{h.Comentario}}
+            
+            {%endif%}
+            
             
             </td>
             {%else%}
