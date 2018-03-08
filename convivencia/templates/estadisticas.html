@@ -31,7 +31,7 @@
 	<li>{{i}}:{{j}}</li>
 	{% endfor %}
 	</ul>
-	<li>Sanciones: {{datos.1}}</li>
+	<li>Sanciones: {{datos.1}} (Sin expulsión:{{datos.6}})</li>
 </ul>
 
 <h4>2º Trimestre (1/1/{{fechas.1|date:"Y"}} - 31/3/{{fechas.1|date:"Y"}})</h4>
@@ -42,7 +42,7 @@
 	<li>{{i}}:{{k}}</li>
 	{% endfor %}
 	</ul>
-	<li>Sanciones: {{datos.3}}</li>
+	<li>Sanciones: {{datos.3}} (Sin expulsión:{{datos.7}})</li>
 </ul>
 
 
@@ -55,14 +55,14 @@
 		{% endfor %}
 	</ul>
 
-	<li>Sanciones: {{datos.5}}</li>
+	<li>Sanciones: {{datos.5}} (Sin expulsión:{{datos.8}})</li>
 </ul>
 
 
 <h4><strong>Total</strong></h4>
 <ul>
 	<li>Amonestaciones: {{total.0}}</li>
-	<li>Sanciones: {{total.1}}</li>
+	<li>Sanciones: {{total.1}} (Sin expulsión:{{total.2}})</li>
 </ul>
 
 {% else %}
@@ -76,7 +76,7 @@
 	{% endfor %}
 	</ul>
 
-	<li>Sanciones: {{datos.1}}</li>
+	<li>Sanciones: {{datos.1}} (Sin expulsión:{{datos.2}})</li>
 </ul>
 
 {% endif %}

@@ -187,7 +187,8 @@ def estadisticas(request):
 		f2=datetime(int(request.POST.get('Fecha2_year')),int(request.POST.get('Fecha2_month')),int(request.POST.get('Fecha2_day')))
 		a1t=Amonestaciones.objects.filter(Fecha__gte=f1).filter(Fecha__lte=f2).count()
 		s1t=Sanciones.objects.filter(Fecha__gte=f1).filter(Fecha__lte=f2).count()
-		datos=a1t,s1t
+		sne1t=Sanciones.objects.filter(Fecha__gte=f1).filter(Fecha__lte=f2).filter(NoExpulsion=True).count()
+		datos=a1t,s1t,sne1t
 		fechas=[f1,f2]
 		form=FechasForm(request.POST)
 		total=()
@@ -213,10 +214,13 @@ def estadisticas(request):
 		s1t=Sanciones.objects.filter(Fecha__gte=fi1).filter(Fecha__lte=ff1).count()
 		s2t=Sanciones.objects.filter(Fecha__gte=fi2).filter(Fecha__lte=ff2).count()
 		s3t=Sanciones.objects.filter(Fecha__gte=fi3).filter(Fecha__lte=ff3).count()
-		datos=a1t,s1t,a2t,s2t,a3t,s3t
+		sne1t=Sanciones.objects.filter(Fecha__gte=fi1).filter(Fecha__lte=ff1).filter(NoExpulsion=True).count()
+		sne2t=Sanciones.objects.filter(Fecha__gte=fi2).filter(Fecha__lte=ff2).filter(NoExpulsion=True).count()
+		sne3t=Sanciones.objects.filter(Fecha__gte=fi3).filter(Fecha__lte=ff3).filter(NoExpulsion=True).count()
+		datos=a1t,s1t,a2t,s2t,a3t,s3t,sne1t,sne2t,sne3t
 		form=FechasForm()
 		fechas=[fi1,ff3]
-		total=Amonestaciones.objects.count(),Sanciones.objects.count()
+		total=Amonestaciones.objects.count(),Sanciones.objects.count(),Sanciones.objects.filter(NoExpulsion=True).count()
 		filtro=False
 
 		#Tipos de amonestaciones
