@@ -33,6 +33,12 @@
         {% autoescape off %}
     	
             {% if h.Sancion %}
+            {% if h.NoExpulsion %}
+                <td>{{h.Sancion}}<br/><strong>No expulsión</strong></td>
+            {%else%}
+                <td>{{h.Sancion}}</td>
+            
+            {%endif%}
             <td>{{h.Sancion}}</td>
             {%else%}
             <td></td>
