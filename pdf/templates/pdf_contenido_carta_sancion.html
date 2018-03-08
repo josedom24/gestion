@@ -7,7 +7,15 @@ Dª Ana María González Solís, en su calidad de Directora del IES Gonzalo Naza
 <br />
 <strong>{{sancion.Comentario}}</strong><br />
 <div align="justify"><br />
-dado que los mismos se consideran constitutivos de conductas gravemente perjudiciales contra la convivencia, al alumno <strong>{{sancion.IdAlumno.Nombre}} </strong>le ha sido impuesta la corrección de <strong>{{sancion.Sancion}}</strong>, durante el cual deberá realizar las tareas de formación que el tutor le asigne, y que tendrá que recoger el día lectivo siguiente a las 12:15 horas en la conserjerí­a del instituto.<br />
+dado que los mismos se consideran constitutivos de conductas gravemente perjudiciales contra la convivencia, al alumno <strong>{{sancion.IdAlumno.Nombre}} </strong>le ha sido impuesta la corrección de <strong>{{sancion.Sancion}}</strong>
+{% if sancion.NoExpulsion %}
+    . La presente sanción no conlleva la retirada del derecho de asistencia a clase.      
+            {%else%}
+    , durante el cual deberá realizar las tareas de formación que el tutor le asigne, y que tendrá que recoger el día lectivo siguiente a las 12:15 horas en la conserjerí­a del instituto.
+            
+            {%endif%}
+
+<br />
 <br />
 <br />
 Contra la presente resolución podrá presentar reclamación ante la Directora. En caso de ser estimada la reclamación, la corrección no figurará en el expediente académico del alumno.<br />

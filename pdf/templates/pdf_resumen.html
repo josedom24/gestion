@@ -86,7 +86,12 @@
       <td width="10%">{{cont}}</td>
       <td>{{dato.IdAlumno.Nombre}}</td>
       <td width="15%">{{dato.IdAlumno.Unidad.Curso}}</td>
-      <td>{{dato.Sancion}}</td>
+      {% if dato.NoExpulsion %}
+        <td>{{dato.Sancion}}<br/><strong>No expulsión</strong></td>
+      {%else%}
+        <td>{{dato.Sancion}}</td>
+      {%endif%}
+      
       <td width="15%">{{dato.Fecha|date:"d/m/Y"}}</td>
       <td width="15%">{{dato.Fecha_fin|date:"d/m/Y"}}</td>
       
