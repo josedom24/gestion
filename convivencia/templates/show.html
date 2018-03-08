@@ -19,8 +19,8 @@
         {% endif%}  
         {% if sancion %}
             <td>Sanción</td>
-            <td>F ini.</td>
-            <td>F fin.</td>
+            <td>Fecha ini.</td>
+            <td>Fecha fin.</td>
             <td>Carta</td>
         {% endif%}  
     </tr>
@@ -34,7 +34,12 @@
         <td>{{contar}}</td>
         {% endif%}
         {% if sancion %}
-            <td>{{h.Sancion}}</td>
+            {% if h.NoExpulsion %}
+                <td>{{h.Sancion}}<br/><strong>No expulsión</strong></td>
+            {%else%}
+                <td>{{h.Sancion}}</td>
+            
+            {%endif%}
             <td>{{h.Fecha|date:"d/m/Y"}}</td>
             <td>{{h.Fecha_fin|date:"d/m/Y"}}</td>
             

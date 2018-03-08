@@ -52,7 +52,7 @@ class Sanciones(models.Model):
 	Fecha_fin = models.DateField(verbose_name="Fecha finalización")
 	Sancion=models.CharField(max_length=100,blank=True)
 	Comentario=models.TextField(blank=True)
-	
+	NoExpulsion = models.BooleanField(default=False,verbose_name="Medidas de flexibilización a la expulsión")	
 
 	def __unicode__(self):
 		return self.IdAlumno.Nombre 
