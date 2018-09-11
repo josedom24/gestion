@@ -200,7 +200,10 @@ def estadisticas(request):
 						))
 		filtro=True
 	else:
-		year1=Amonestaciones.objects.first().Fecha.year
+		try:
+			year1=Amonestaciones.objects.first().Fecha.year
+		except:
+			year1=datetime.now().year
 		fi1=datetime(year1,9,1)
 		ff1=datetime(year1,12,31)
 		fi2=datetime(year1+1,1,1)

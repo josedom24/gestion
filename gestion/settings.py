@@ -88,6 +88,10 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db2017.sqlite3'),
     },
+    'db2018': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db2018.sqlite3'),
+    },
 }
 
 
