@@ -43,30 +43,30 @@ cursos.pop(0)###
 
 cont=0
 for c in cursos:
-	c=Cursos(Curso=c)
-	cont=cont+1
-	c.save()###
+    c=Cursos(Curso=c)
+    cont=cont+1
+    c.save()###
 
 
 
 ###Alumnos
-campos=["Nombre","DNI","Direccion","CodPostal","Localidad","Fecha_nacimiento","Provincia","Unidad","Ap1tutor","Ap2tutor","Nomtutor","Telefono1","Telefono2"]#
+campos=["id","Nombre","DNI","Direccion","CodPostal","Localidad","Fecha_nacimiento","Provincia","Unidad","Ap1tutor","Ap2tutor","Nomtutor","Telefono1","Telefono2"]#
 
 with open('alumnos.csv', 'rb') as mycsvfile:
     dictofdata = csv.DictReader(mycsvfile, dialect='mydialect')
     cont=1
     for row in dictofdata:
-    	row["id"]=cont
-    	print row
-    	if row["Unidad"]=="":
-    		del row["Unidad"]
-    	else:
-    	    row["Unidad"]=Cursos.objects.get(Curso=row["Unidad"])
-    	cont=cont+1
-	row["Fecha_nacimiento"]=row["Fecha_nacimiento"].split("/")[2]+"-"+row["Fecha_nacimiento"].split("/")[1]+"-"+row["Fecha_nacimiento"].split("/")[0]
-    	a=Alumnos(**row)
-    	a.save()
-		
+        row["id"]=cont
+        print row
+        if row["Unidad"]=="":
+            del row["Unidad"]
+        else:
+            row["Unidad"]=Cursos.objects.get(Curso=row["Unidad"])
+        cont=cont+1
+        row["Fecha_nacimiento"]=row["Fecha_nacimiento"].split("/")[2]+"-"+row["Fecha_nacimiento"].split("/")[1]+"-"+row["Fecha_nacimiento"].split("/")[0]
+        a=Alumnos(**row)
+        a.save()
+        
 
 
 
