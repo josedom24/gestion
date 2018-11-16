@@ -28,7 +28,7 @@ def imprimir_partes(request,curso):
 	lista_alumnos=sorted(lista_alumnos,key=lambda d: normalize(d.Nombre))
 	ids=[{"id":elem.id} for elem in lista_alumnos]
 	lista=zip(range(1,len(lista_alumnos)+1),lista_alumnos,ContarFaltas(ids))
-        data={'alumnos':lista,'curso':Cursos.objects.get(id=curso),'fecha':datetime.now()}
+	data={'alumnos':lista,'curso':Cursos.objects.get(id=curso),'fecha':datetime.now()}
 	# Render html content through html template with context
 	return imprimir("pdf_partes.html",data,"partes.pdf")
 
@@ -37,7 +37,7 @@ def imprimir_partes(request,curso):
 def imprimir_faltas(request,curso):
 	lista_alumnos = Alumnos.objects.filter(Unidad__id=curso)
 	lista_alumnos=sorted(lista_alumnos,key=lambda d: normalize(d.Nombre))
-        data={'alumnos':lista_alumnos,'curso':Cursos.objects.get(id=curso),'cont':range(0,30)}
+	data={'alumnos':lista_alumnos,'curso':Cursos.objects.get(id=curso),'cont':range(0,30)}
 	# Render html content through html template with context
 	return imprimir("pdf_faltas.html",data,"faltas.pdf")
 
@@ -58,7 +58,7 @@ def imprimir_historial(request,alum_id,prof):
 		if str(type(h)).split(".")[2][0]=="A":
 			tipo.append("A")
 		else:
-                    tipo.append("S")
+					tipo.append("S")
 	hist=zip(historial,tipo,range(1,len(historial)+1))
 	prof=True if prof=="" else False
 	data={'alum':alum,'historial':hist,'horas':horas,'prof':prof}
@@ -100,16 +100,16 @@ def carta_amonestacion(request,mes,ano,dia):
 	contenido=""
 	fecha2=datetime(int(ano),int(mes),int(dia))
 	info["fecha"]="%s/%s/%s"%(dia,mes,ano)
-        lista_alumnos=set(Amonestaciones.objects.filter(Fecha=fecha2).values_list("IdAlumno"))
-        info["amonestaciones"]=[]
-        for alum in lista_alumnos:
-            info["amonestaciones"].append(Alumnos.objects.get(id=alum[0]))
-       
+	lista_alumnos=set(Amonestaciones.objects.filter(Fecha=fecha2).values_list("IdAlumno"))
+	info["amonestaciones"]=[]
+	for alum in lista_alumnos:
+		info["amonestaciones"].append(Alumnos.objects.get(id=alum[0]))
+	   
 
 	for i in info["amonestaciones"]:
 		info2={}
 		info2["amonestacion"]=i
-                info2["num_amon"]=str(len(Amonestaciones.objects.filter(IdAlumno_id=i.id)))
+		info2["num_amon"]=len(Amonestaciones.objects.filter(IdAlumno_id=i.id))
 		template = get_template("pdf_contenido_carta_amonestacion.html")
 		contenido=contenido+ template.render(Context(info2))
 		if i.id!=info["amonestaciones"][-1].id:
@@ -145,7 +145,7 @@ def imprimir_profesores(request,curso=None):
 			c=Cursos.objects.get(id=curso)
 			lista_profesores=c.EquipoEducativo.all()
 			texto='Asistencia a Equipo Educativo de '+c.Curso
-        data={'texto':texto,'profesores':lista_profesores,'fecha':datetime.now(),"resto":len(lista_profesores) % 3}
+		data={'texto':texto,'profesores':lista_profesores,'fecha':datetime.now(),"resto":len(lista_profesores) % 3}
 	# Render html content through html template with context
 	return imprimir("pdf_"+request.path.split("/")[2]+".html",data,request.path.split("/")[2]+".pdf")
 
