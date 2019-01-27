@@ -95,7 +95,7 @@ def imprimir_sanciones_hoy(request):
 
 @login_required(login_url='/')
 @user_passes_test(group_check_je,login_url='/')
-def carta_amonestacion(request,mes,ano,dia):
+def carta_amonestacion(request,mes,ano,dia,todos):
 	info={}
 	contenido=""
 	fecha2=datetime(int(ano),int(mes),int(dia))
@@ -103,8 +103,10 @@ def carta_amonestacion(request,mes,ano,dia):
 	lista_alumnos=set(Amonestaciones.objects.filter(Fecha=fecha2).values_list("IdAlumno"))
 	info["amonestaciones"]=[]
 	for alum in lista_alumnos:
-		info["amonestaciones"].append(Alumnos.objects.get(id=alum[0]))
-	   
+		if todos=="n" and Alumnos.objects.get(id=alum[0]).email=="":
+			info["amonestaciones"].append(Alumnos.objects.get(id=alum[0]))
+		if todos=="s":
+			info["amonestaciones"].append(Alumnos.objects.get(id=alum[0]))
 
 	for i in info["amonestaciones"]:
 		info2={}

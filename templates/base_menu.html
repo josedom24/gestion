@@ -36,7 +36,9 @@
                     {%endif%}
                     {% if menu_amonestacion%}
                     <a class="btn btn-default btn-secundary" href="/pdf/show/amonestacion/{{ fecha|date:"m" }}/{{ fecha|date:"Y" }}/{{ fecha|date:"d" }}" role="button">Imprimir Amonestaciones</a>
-                    <a class="btn btn-default btn-secundary" href="/pdf/carta_amonestacion/{{ fecha|date:"m" }}/{{ fecha|date:"Y" }}/{{ fecha|date:"d" }}" role="button">Imprimir Cartas</a>
+                    <a class="btn btn-default btn-secundary" href="/pdf/send/amonestacion/{{ fecha|date:"m" }}/{{ fecha|date:"Y" }}/{{ fecha|date:"d" }}" role="button">Enviar por correo</a>
+                    <a class="btn btn-default btn-secundary" href="/pdf/carta_amonestacion/{{ fecha|date:"m" }}/{{ fecha|date:"Y" }}/{{ fecha|date:"d" }}/s" role="button">Imprimir Cartas</a>
+                    <a class="btn btn-default btn-secundary" href="/pdf/carta_amonestacion/{{ fecha|date:"m" }}/{{ fecha|date:"Y" }}/{{ fecha|date:"d" }}/n" role="button">Imprimir Cartas (Alumnos sin correo)</a>
                     {%endif%}
 
                     

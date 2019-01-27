@@ -28,7 +28,15 @@
     {% for n,h,contar in datos %}
     <tr>
         <td>{{ n }}</td>
-        <td>{{h.IdAlumno.Nombre}}</td>
+        <td>{{h.IdAlumno.Nombre}}
+            {% if amonestacion %}
+            {% if h.IdAlumno.email %}
+                ({{h.IdAlumno.email}})
+            {%else%}
+                <a href="/admin/centro/alumnos/{{h.IdAlumno.id}}/change/">(Añadir correo electrónico)</a>
+                                {%endif%}
+            {%endif%}
+        </td>
     	<td>{{h.IdAlumno.Unidad}}</td>
         {% if amonestacion %}
         <td>{{contar}}</td>
