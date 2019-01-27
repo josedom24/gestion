@@ -140,9 +140,10 @@ def send_amonestacion(request,mes,ano,dia):
 		info2["num_amon"]=len(Amonestaciones.objects.filter(IdAlumno_id=i.id))
 		template = get_template("pdf_contenido_carta_amonestacion.html")
 		contenido=contenido+ template.render(Context(info2))
+		asunto="IES Gonzalo Nazareno. Amonestación: "+i.Nombre.encode("utf-8")
 		
 		msg = EmailMultiAlternatives(
-                "IES Gonzalo Nazareno. Amonestacion a alumno "+i.Nombre,
+                asunto,
                 contenido,
                 '41011038.edu@juntadeandalucia.es',
                 [i.email]
