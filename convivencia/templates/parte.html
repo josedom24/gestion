@@ -5,8 +5,12 @@
 {% block content %}
 <h3>{{titulo}}</h3>
 <h4>Alumno: {{alum.Nombre}} ({{alum.Unidad}})</h4>
-
-
+{% if not alum.email%}
+    <p><strong>Este alumno no tiene guardado un correo electrónico de contacto. <a href="/admin/centro/alumnos/{{alum.id}}/change/">Puedes añadir un nuevo correo.</a></strong></p>
+{%else%}
+    <p>Correo electrónico de contacto: <strong>{{alum.email}}</strong></p>
+{%endif%}
+<br/>
 <form action="/convivencia/{{tipo}}/{{alum.id}}" method="post">
     {% csrf_token %}
     {{ form.as_p}}

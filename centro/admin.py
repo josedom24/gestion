@@ -9,7 +9,7 @@ class AlumnosAdmin(admin.ModelAdmin):
     #date_hierarchy = 'Fecha_nacimiento'
     actions_selection_counter=False
     list_filter = ['Unidad','Localidad']
-    list_display = ["Nombre",'DNI','Localidad','Telefono1']
+    list_display = ["Nombre",'DNI','Localidad','Telefono1','email']
      
     search_fields = ['Nombre','DNI']
 

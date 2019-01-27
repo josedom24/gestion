@@ -81,6 +81,7 @@ class Alumnos(models.Model):
 	Nomtutor = models.CharField(max_length=20,verbose_name="Nombre tutor")
 	Telefono1 = models.CharField(max_length=12,blank=True)
 	Telefono2 = models.CharField(max_length=12,blank=True)
+	email = models.EmailField(max_length=70,blank=True)
 	Obs=models.TextField(blank=True,verbose_name="Observaciones")
 
 	def __unicode__(self):
