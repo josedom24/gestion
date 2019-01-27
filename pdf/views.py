@@ -18,6 +18,7 @@ from registro.models import Registro
 from centro.views import ContarFaltas,group_check_je,group_check_sec
 from datetime import datetime
 from centro.views import normalize
+from django.core.mail import EmailMultiAlternatives
 # Create your views here.
 
 
@@ -118,8 +119,38 @@ def carta_amonestacion(request,mes,ano,dia,todos):
 			contenido=contenido+"<pdf:nextpage>"
 	info["contenido"]=contenido
 	return imprimir("pdf_carta.html",info,"carta_amonestacion"+".pdf")	
-	
 
+
+@login_required(login_url='/')
+@user_passes_test(group_check_je,login_url='/')
+def send_amonestacion(request,mes,ano,dia):
+	info={}
+	contenido=""
+	fecha2=datetime(int(ano),int(mes),int(dia))
+	info["fecha"]="%s/%s/%s"%(dia,mes,ano)
+	lista_alumnos=set(Amonestaciones.objects.filter(Fecha=fecha2).values_list("IdAlumno"))
+	info["amonestaciones"]=[]
+	for alum in lista_alumnos:
+		if Alumnos.objects.get(id=alum[0]).email!="":
+			info["amonestaciones"].append(Alumnos.objects.get(id=alum[0]))
+
+	for i in info["amonestaciones"]:
+		info2={}
+		info2["amonestacion"]=i
+		info2["num_amon"]=len(Amonestaciones.objects.filter(IdAlumno_id=i.id))
+		template = get_template("pdf_contenido_carta_amonestacion.html")
+		contenido=contenido+ template.render(Context(info2))
+		
+		msg = EmailMultiAlternatives(
+                "IES Gonzalo Nazareno. Amonestacion a alumno "+i.Nombre,
+                contenido,
+                '41011038.edu@juntadeandalucia.es',
+                [i.email]
+               )
+    	msg.attach_alternative(contenido, "text/html")
+    	msg.send(fail_silently=False)
+	context={"info":info}
+	return render(request,"send_amonestacion.html",context)
 
 @login_required(login_url='/')
 @user_passes_test(group_check_je,login_url='/')

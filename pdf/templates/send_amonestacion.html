@@ -1,0 +1,15 @@
+{% extends "base_menu.html" %}
+
+{% block title %}Envío de amonestaciones por correos electrónico{% endblock %}
+
+{% block content %}
+<h3>Envío de amonestaciones por correos electrónico ({{info.fecha}})</h3>
+<p>Se han enviado mensajes a los correos electrónicos de contacto de los siguientes alumnos:</p>
+<table class="table table-bordered">
+    
+{% for alum in info.amonestaciones%}
+    <tr><td>{{alum.Nombre}} ({{alum.email}}</td></tr>
+{%endfor%}
+</table>
+
+{% endblock %}
