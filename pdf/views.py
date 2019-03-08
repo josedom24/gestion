@@ -102,6 +102,7 @@ def carta_amonestacion(request,mes,ano,dia,todos):
 	fecha2=datetime(int(ano),int(mes),int(dia))
 	info["fecha"]="%s/%s/%s"%(dia,mes,ano)
 	lista_alumnos=set(Amonestaciones.objects.filter(Fecha=fecha2).values_list("IdAlumno"))
+	lista_amonestaciones = Amonestaciones.objects.filter(Fecha=fecha2)
 	info["amonestaciones"]=[]
 	for alum in lista_alumnos:
 		if todos=="n" and Alumnos.objects.get(id=alum[0]).email=="":
@@ -109,9 +110,10 @@ def carta_amonestacion(request,mes,ano,dia,todos):
 		if todos=="s":
 			info["amonestaciones"].append(Alumnos.objects.get(id=alum[0]))
 
-	for i in info["amonestaciones"]:
+	for i,a in zip(info["amonestaciones"],lista_amonestaciones):
 		info2={}
 		info2["amonestacion"]=i
+		info2["datos"]=a
 		info2["num_amon"]=len(Amonestaciones.objects.filter(IdAlumno_id=i.id))
 		template = get_template("pdf_contenido_carta_amonestacion.html")
 		contenido=contenido+ template.render(Context(info2))
@@ -129,6 +131,7 @@ def send_amonestacion(request,mes,ano,dia):
 	fecha2=datetime(int(ano),int(mes),int(dia))
 	info["fecha"]="%s/%s/%s"%(dia,mes,ano)
 	lista_alumnos=set(Amonestaciones.objects.filter(Fecha=fecha2).values_list("IdAlumno"))
+	lista_amonestaciones=Amonestaciones.objects.filter(Fecha=fecha2)
 	info["amonestaciones"]=[]
 	for alum in lista_alumnos:
 		if Alumnos.objects.get(id=alum[0]).email!="":
