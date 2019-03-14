@@ -101,23 +101,22 @@ def carta_amonestacion(request,mes,ano,dia,todos):
 	contenido=""
 	fecha2=datetime(int(ano),int(mes),int(dia))
 	info["fecha"]="%s/%s/%s"%(dia,mes,ano)
-	lista_alumnos=set(Amonestaciones.objects.filter(Fecha=fecha2).values_list("IdAlumno"))
+	#lista_alumnos=set(Amonestaciones.objects.filter(Fecha=fecha2).values_list("IdAlumno"))
 	lista_amonestaciones = Amonestaciones.objects.filter(Fecha=fecha2)
 	info["amonestaciones"]=[]
-	for alum in lista_alumnos:
-		if todos=="n" and Alumnos.objects.get(id=alum[0]).email=="":
-			info["amonestaciones"].append(Alumnos.objects.get(id=alum[0]))
+	for amonestacion in lista_amonestaciones:
+		if todos=="n" and amonestacion.IdAlumno.email=="":
+			info["amonestaciones"].append(amonestacion)
 		if todos=="s":
-			info["amonestaciones"].append(Alumnos.objects.get(id=alum[0]))
+			info["amonestaciones"].append(amonestacion)
 
-	for i,a in zip(info["amonestaciones"],lista_amonestaciones):
+	for a in info["amonestaciones"]:
 		info2={}
-		info2["amonestacion"]=i
-		info2["datos"]=a
-		info2["num_amon"]=len(Amonestaciones.objects.filter(IdAlumno_id=i.id))
+		info2["amonestacion"]=a
+		info2["num_amon"]=len(Amonestaciones.objects.filter(IdAlumno_id=a.IdAlumno.id))
 		template = get_template("pdf_contenido_carta_amonestacion.html")
 		contenido=contenido+ template.render(Context(info2))
-		if i.id!=info["amonestaciones"][-1].id:
+		if a.IdAlumno.id!=info["amonestaciones"][-1].id:
 			contenido=contenido+"<pdf:nextpage>"
 	info["contenido"]=contenido
 	return imprimir("pdf_carta.html",info,"carta_amonestacion"+".pdf")	

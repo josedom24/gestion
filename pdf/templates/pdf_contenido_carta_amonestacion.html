@@ -1,8 +1,8 @@
 <div class="cabecera">
-{{amonestacion.Nomtutor}} {{amonestacion.Ap1tutor}} {{amonestacion.Ap2tutor}}<br />
-{{amonestacion.Direccion}}<br />
-{{amonestacion.CodPostal}} {{amonestacion.Localidad}}<br />
-({{amonestacion.Provincia}})      <br />
+{{amonestacion.IdAlumno.Nomtutor}} {{amonestacion.IdAlumno.Ap1tutor}} {{amonestacion.IdAlumno.Ap2tutor}}<br />
+{{amonestacion.IdAlumno.Direccion}}<br />
+{{amonestacion.IdAlumno.CodPostal}} {{amonestacion.IdAlumno.Localidad}}<br />
+({{amonestacion.IdAlumno.Provincia}})      <br />
 </div>
 <br />
 <br />
@@ -10,12 +10,12 @@
 <br />
 Estimado Sr. / Sra.:<br />
 <br />
-<div align="justify">Su hijo/a <strong>{{amonestacion.Nombre}}</strong>, ha recibido una amonestación por escrito de un profesor/a del centro por: <strong>{{datos.Tipo}}</strong>.
+<div align="justify">Su hijo/a <strong>{{amonestacion.IdAlumno.Nombre}}</strong>, ha recibido una amonestación por escrito de un profesor/a del centro por: <strong>{{amonestacion.Tipo}}</strong>.
 <br/><br/>
 Descripción del hecho:<br/>
-{{datos.Comentario}}
+<strong>{{amonestacion.Comentario}}</strong>
 <br/><br/>
-<strong>{{amonestacion.Nombre}}</strong> acumula un total de <strong>{{num_amon}}</strong> amonestaciones por escrito.
+<strong>{{amonestacion.IdAlumno.Nombre}}</strong> acumula un total de <strong>{{num_amon}}</strong> amonestaciones por escrito.
     
  {% if num_amon > 3 %}
  <br /><br/>
