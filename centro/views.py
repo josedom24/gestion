@@ -63,7 +63,10 @@ def misalumnos(request):
         else:
             buscarcurso=numerocurso+unicode("º","utf8")+" "+nombrecurso.upper()
 
-	primer_id = Cursos.objects.get(Curso=buscarcurso).id
+        try:
+            primer_id = Cursos.objects.get(Curso=buscarcurso).id
+        except:
+            return redirect("/")
 	request.session['Unidad']=primer_id
 
 	lista_alumnos = Alumnos.objects.filter(Unidad__id=primer_id)
