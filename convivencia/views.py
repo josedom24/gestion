@@ -3,7 +3,7 @@
 from django.shortcuts import render,redirect
 from convivencia.forms import AmonestacionForm,SancionForm,FechasForm
 from centro.models import Alumnos,Profesores
-from centro.views import group_check_je
+from centro.views import group_check_je,group_check_prof
 from convivencia.models import Amonestaciones,Sanciones,TiposAmonestaciones
 from centro.models import Cursos
 from django.contrib.auth.decorators import login_required,user_passes_test
@@ -90,7 +90,7 @@ def parte(request,tipo,alum_id):
 
 
 @login_required(login_url='/')
-@user_passes_test(group_check_je,login_url='/')
+@user_passes_test(group_check_prof,login_url='/')
 def historial(request,alum_id,prof):
 	horas=["1ª hora","2ª hora","3ª hora","Recreo","4ª hora","5ª hora","6ª hora"]
 	alum=Alumnos.objects.get(pk=alum_id)

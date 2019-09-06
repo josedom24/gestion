@@ -8,7 +8,10 @@
                 <div class="center-block btn-group-vertical" role="group" aria-label="...">
                     <p class="text-center"><strong>Bienvenid@ {{user.username}}</strong></p>
                     <p class="text-center"><strong>Menú</strong></p>
-                    
+                    {% if user.groups.first.name == "profesor" or user.groups.last.name == "profesor" %}
+                    <a class="btn btn-default btn-primary" href="/centro/misalumnos" role="button">Mis Alumnos</a>
+                    {% endif %}
+                     
                     {% if user.groups.first.name == "jefatura de estudios" or user.groups.last.name == "jefatura de estudios" %}
                     <a class="btn btn-default btn-primary" href="/centro/alumnos" role="button">Alumnos</a>
                     {% if menu_alumnos or menu_resumen%}
@@ -81,8 +84,8 @@
                     <a class="btn btn-default btn-secundary" href="/pdf/registro/{{tipo}}/{{curso}}" role="button">Imprimir registro salida({{curso}})</a>
                     {%endif%}
                     {%endif%}
-                    {%endif%}
                     <a class="btn btn-default btn-primary" href="/admin" role="button">Administración</a>
+                    {%endif%}
                     <a class="btn btn-default btn-primary" href="/logout" role="button">Desconectar</a>
                 </div>
 
