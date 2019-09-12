@@ -16,6 +16,7 @@
         <td>Unidad</td>
         {% if amonestacion %}
             <td>A/S</td>  
+            <td>Hora</td>
         {% endif%}  
         {% if sancion %}
             <td>Sanción</td>
@@ -34,12 +35,13 @@
                 ({{h.IdAlumno.email}})
             {%else%}
                 <a href="/admin/centro/alumnos/{{h.IdAlumno.id}}/change/">(Añadir correo electrónico)</a>
-                                {%endif%}
+                    {%endif%}
             {%endif%}
         </td>
     	<td>{{h.IdAlumno.Unidad}}</td>
         {% if amonestacion %}
         <td>{{contar}}</td>
+        <td>{{h.Hora}}</td>
         {% endif%}
         {% if sancion %}
             {% if h.NoExpulsion %}
