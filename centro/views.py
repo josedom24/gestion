@@ -59,12 +59,14 @@ def misalumnos(request):
             
         numerocurso=request.user.username[5:6]
         if letra!="":
-            buscarcurso=numerocurso+unicode("º","utf8")+" "+nombrecurso.upper()+" "+letra
+            buscarcurso=numerocurso+unicode("º","utf8")+" "+nombrecurso.upper()+" "+letra.upper()
         else:
             buscarcurso=numerocurso+unicode("º","utf8")+" "+nombrecurso.upper()
+		
 
         try:
-            primer_id = Cursos.objects.get(Curso=buscarcurso).id
+			print(buscarcurso)
+			primer_id = Cursos.objects.get(Curso=buscarcurso).id
         except:
             return redirect("/")
 	request.session['Unidad']=primer_id

@@ -19,7 +19,7 @@ csv.register_dialect(
     quoting = csv.QUOTE_MINIMAL)#
 
 
-print "Debe existir un fichero alumnos.csv, con el siguiente contenido:Nombre,DNI,Direccion,CodPostal,Localidad,Fecha_nacimiento,Provincia,Unidad,Ap1tutor,Ap2tutor,Nomtutor,Telefono1,Telefono2"
+print "Debe existir un fichero alumnos.csv, con el siguiente contenido:Nombre,DNI,Direccion,CodPostal,Localidad,Fecha_nacimiento,Provincia,Unidad,Ap1tutor,Ap2tutor,Nomtutor,Telefono1,Telefono2,correoelectrónico"
 print "Se va a proceder a borrar los datos de Cursos, Alumnos, amonestaciones y Sanciones del curso actual"
 resp=raw_input("Estas seguro? (s)")
 if resp!='s':
@@ -57,13 +57,14 @@ with open('alumnos.csv', 'rb') as mycsvfile:
     cont=1
     for row in dictofdata:
         row["id"]=cont
-        print row
         if row["Unidad"]=="":
             del row["Unidad"]
         else:
             row["Unidad"]=Cursos.objects.get(Curso=row["Unidad"])
         cont=cont+1
+        print(row)
         row["Fecha_nacimiento"]=row["Fecha_nacimiento"].split("/")[2]+"-"+row["Fecha_nacimiento"].split("/")[1]+"-"+row["Fecha_nacimiento"].split("/")[0]
+        row["Obs"]=""
         a=Alumnos(**row)
         a.save()
         
