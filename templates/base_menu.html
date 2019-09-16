@@ -10,6 +10,8 @@
                 <p class="text-center"><strong>Menú</strong></p>
                 {% if user.groups.first.name == "profesor" or user.groups.last.name == "profesor" %}
                     <a class="btn btn-default btn-primary" href="/centro/misalumnos" role="button">Mis Alumnos</a>
+                    <a class="btn btn-default btn-primary" href="/admin/password_change/" role="button">Cambiar contraseña</a>
+                    
                 {% endif %}
                 {% if user.groups.first.name == "jefatura de estudios" or user.groups.last.name == "jefatura de estudios" %}
                     <a class="btn btn-default btn-primary" href="/centro/alumnos" role="button">Alumnos</a>
