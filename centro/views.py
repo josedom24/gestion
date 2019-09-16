@@ -65,8 +65,8 @@ def misalumnos(request):
 		
 
         try:
-			print(buscarcurso)
-			primer_id = Cursos.objects.get(Curso=buscarcurso).id
+    	    print(buscarcurso)
+	    primer_id = Cursos.objects.get(Curso=buscarcurso).id
         except:
             return redirect("/")
 	request.session['Unidad']=primer_id
