@@ -18,17 +18,17 @@ def list_correo(request):
     paginator = Paginator(reg, 10)
     page = request.GET.get('page')
     try:
-	contacts = paginator.page(page)
-	request.GET._mutable = True
-	if request.GET.get('page'):
-		request.GET.pop('page')
+        contacts = paginator.page(page)
+        request.GET._mutable = True
+        if request.GET.get('page'):
+            request.GET.pop('page')
     except PageNotAnInteger:
-	# If page is not an integer, deliver first page.
-	contacts = paginator.page(1)
+    # If page is not an integer, deliver first page.
+        contacts = paginator.page(1)
     except EmptyPage:
-	# If page is out of range (e.g. 9999), deliver last page of results.
-	contacts = paginator.page(paginator.num_pages)
-	
+    # If page is out of range (e.g. 9999), deliver last page of results.
+        contacts = paginator.page(paginator.num_pages)
+    
     context={'reg':contacts,'menu_correos':True}
     return render(request, 'list_correos.html',context)
 

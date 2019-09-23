@@ -64,7 +64,6 @@ def parte(request,tipo,alum_id):
 				correo = Profesores.objects.get(id=prof.id).Email
 				if correo!="":
 					correos.append(correo)
-				print correo
 			send_mail(
                 new_correo.Asunto,
                 new_correo.Contenido,
