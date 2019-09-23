@@ -140,7 +140,7 @@ def resumen(request,tipo,mes,ano):
 	for f in dic_fechas:
 		fechas.append(f["Fecha"])
 
-	for dia in xrange(1,int(ult_dia)+1):
+	for dia in range(1,int(ult_dia)+1):
 		fecha=datetime(int(ano),int(mes),dia)
 		if fecha.date() in fechas:
 			calhtml=calhtml.replace(">"+str(dia)+"<",'><a href="/convivencia/show/%s/%s/%s/%s"><strong>%s</strong></a><'%(tipo,mes,ano,dia,dia))
@@ -157,7 +157,7 @@ def resumen(request,tipo,mes,ano):
 
 def AddMonths(d,x):
     newmonth = ((( d.month - 1) + x ) % 12 ) + 1
-    newyear  = d.year + ((( d.month - 1) + x ) / 12 ) 
+    newyear  = d.year + ((( d.month - 1) + x ) // 12 ) 
     return datetime( newyear, newmonth, d.day)
 
 @login_required(login_url='/')
@@ -288,7 +288,7 @@ def horas(request):
 		f2=datetime(int(request.POST.get('Fecha2_year')),int(request.POST.get('Fecha2_month')),int(request.POST.get('Fecha2_day')))
 	lista=[]
 	horas=["Primera","Segunda","Tercera","Recreo","Cuarta","Quinta","Sexta"]
-	for i in xrange(1,8):
+	for i in range(1,8):
 		if request.method=="POST":
 			lista.append(Amonestaciones.objects.filter(Hora=i).filter(Fecha__gte=f1).filter(Fecha__lte=f2).count())
 		else:
@@ -352,8 +352,14 @@ def grupos(request):
 		else:
 			datos=[Amonestaciones.objects.filter(IdAlumno__in=Alumnos.objects.filter(Unidad=curso)).count(),
 				Sanciones.objects.filter(IdAlumno__in=Alumnos.objects.filter(Unidad=curso)).count()]
-		datos.append(datos[0]*100/total[0])
-		datos.append(datos[1]*100/total[1])
+		try:
+			datos.append(datos[0]*100//total[0])
+		except:
+			datos.append(0)
+		try:
+			datos.append(datos[1]*100//total[1])
+		except:
+			datos.append(0)
 		lista.append(datos)
 	form=FechasForm(request.POST) if request.method=="POST" else FechasForm()
 	
@@ -397,11 +403,11 @@ def alumnos(request):
 			l["Sanciones"]=0
 		l["Porcentajes"]=[]
 		try:
-			l["Porcentajes"].append(l["IdAlumno__count"]*100/total[0])
+			l["Porcentajes"].append(l["IdAlumno__count"]*100//total[0])
 		except:
 			l["Porcentajes"].append(0)
 		try:
-			l["Porcentajes"].append(l["Sanciones"]*100/total[1])
+			l["Porcentajes"].append(l["Sanciones"]*100//total[1])
 		except:
 			l["Porcentajes"].append(0)
 		l["IdAlumno"]=Alumnos.objects.get(id=l["IdAlumno"]).Nombre+" ("+Alumnos.objects.get(id=l["IdAlumno"]).Unidad.Curso+")"
@@ -415,8 +421,8 @@ def ContarFaltas(lista_id):
 	contar=[]
 	for alum in lista_id:
 
-		am=str(len(Amonestaciones.objects.filter(IdAlumno_id=alum.values()[0])))
-		sa=str(len(Sanciones.objects.filter(IdAlumno_id=alum.values()[0])))
+		am=str(len(Amonestaciones.objects.filter(IdAlumno_id=list(alum.values())[0])))
+		sa=str(len(Sanciones.objects.filter(IdAlumno_id=list(alum.values())[0])))
 
 		contar.append(am+"/"+sa)
 	return contar

@@ -18,7 +18,7 @@ def registro(request,tipo):
 
     form = BuscarRegistroForm()
     error=False
-    if request.method=='GET'and request.GET.has_key("Curso"):
+    if request.method=='GET'and "Curso" in request.GET:
         form = BuscarRegistroForm(request.GET)
         error=True
 
