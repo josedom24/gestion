@@ -1,23 +1,19 @@
-# -*- coding: utf-8 -*-
 import datetime
 import os
 
 from django.conf import settings
 from django.http import HttpResponse
-from django.template import Context
 from django.template.loader import get_template
 
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required,user_passes_test
 
 from xhtml2pdf import pisa
-from io import StringIO
 from centro.models import Alumnos,Cursos,Profesores
 from convivencia.models import Amonestaciones,Sanciones
 from registro.models import Registro 
 from centro.views import ContarFaltas,group_check_je,group_check_sec
 from datetime import datetime
-from centro.views import normalize
 from django.core.mail import EmailMultiAlternatives
 # Create your views here.
 
@@ -26,7 +22,7 @@ from django.core.mail import EmailMultiAlternatives
 @user_passes_test(group_check_je,login_url='/')
 def imprimir_partes(request,curso):
     lista_alumnos = Alumnos.objects.filter(Unidad__id=curso)
-    lista_alumnos=sorted(lista_alumnos,key=lambda d: normalize(d.Nombre))
+    lista_alumnos=sorted(lista_alumnos,key=lambda d: d.Nombre)
     ids=[{"id":elem.id} for elem in lista_alumnos]
     lista=zip(range(1,len(lista_alumnos)+1),lista_alumnos,ContarFaltas(ids))
     data={'alumnos':lista,'curso':Cursos.objects.get(id=curso),'fecha':datetime.now()}
@@ -37,7 +33,7 @@ def imprimir_partes(request,curso):
 @user_passes_test(group_check_je,login_url='/')
 def imprimir_faltas(request,curso):
     lista_alumnos = Alumnos.objects.filter(Unidad__id=curso)
-    lista_alumnos=sorted(lista_alumnos,key=lambda d: normalize(d.Nombre))
+    lista_alumnos=sorted(lista_alumnos,key=lambda d: d.Nombre)
     data={'alumnos':lista_alumnos,'curso':Cursos.objects.get(id=curso),'cont':range(0,30)}
     # Render html content through html template with context
     return imprimir("pdf_faltas.html",data,"faltas.pdf")
@@ -199,15 +195,11 @@ def imprimir_registro(request,tipo,curso):
 
 def imprimir(temp,data,tittle):
     template = get_template(temp)
-    pdf_data = template.render(Context(data))
-    # Write PDF to file
-    
-    pdf = StringIO()
+    pdf_data = template.render(data)
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="'+tittle+'"'
     try:
-        pisa.CreatePDF(StringIO(pdf_data.encode('utf-8')), pdf)
+        pisa.CreatePDF(pdf_data, dest=response)
     except:
         return HttpResponse('Errors')
-    pdf.reset()
-    response = HttpResponse(pdf.read(),content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="'+tittle+'"'
     return response

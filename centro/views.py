@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required,user_passes_test
 from django.http import HttpResponse
@@ -35,7 +33,7 @@ def alumnos(request):
     request.session['Unidad']=primer_id
 
     lista_alumnos = Alumnos.objects.filter(Unidad__id=primer_id)
-    lista_alumnos=sorted(lista_alumnos,key=lambda d: normalize(d.Nombre))
+    lista_alumnos=sorted(lista_alumnos,key=lambda d: d.Nombre)
     ids=[{"id":elem.id} for elem in lista_alumnos]
 
     form = UnidadForm({'Unidad':primer_id})
@@ -72,7 +70,7 @@ def misalumnos(request):
     
     lista_alumnos = Alumnos.objects.filter(Unidad__id=primer_id)
     
-    lista_alumnos = sorted(lista_alumnos,key=lambda d: normalize(d.Nombre))
+    lista_alumnos = sorted(lista_alumnos,key=lambda d: d.Nombre)
     ids=[{"id":elem.id} for elem in lista_alumnos]
 
     #form = UnidadForm({'Unidad':primer_id})
@@ -101,7 +99,7 @@ def alumnos(request):
     request.session['Unidad']=primer_id
 
     lista_alumnos = Alumnos.objects.filter(Unidad__id=primer_id)
-    lista_alumnos=sorted(lista_alumnos,key=lambda d: normalize(d.Nombre))
+    lista_alumnos=sorted(lista_alumnos,key=lambda d: d.Nombre)
     ids=[{"id":elem.id} for elem in lista_alumnos]
 
     form = UnidadForm({'Unidad':primer_id})
@@ -167,8 +165,8 @@ def ContarFaltas(lista_id):
     contar=[]
     for alum in lista_id:
 
-        am=str(len(Amonestaciones.objects.filter(IdAlumno_id=alum.values()[0])))
-        sa=str(len(Sanciones.objects.filter(IdAlumno_id=alum.values()[0])))
+        am=str(len(Amonestaciones.objects.filter(IdAlumno_id=list(alum.values())[0])))
+        sa=str(len(Sanciones.objects.filter(IdAlumno_id=list(alum.values())[0])))
         
         contar.append(am+"/"+sa)
     return contar
@@ -192,7 +190,7 @@ def EstaSancionado(lista_id):
     sanc=Sanciones.objects.filter(**dict).order_by("Fecha")
     listaid=[x.IdAlumno.id for x in sanc]
     for alum in lista_id:
-        if alum.values()[0] in listaid:
+        if list(alum.values())[0] in listaid:
             estasancionado.append(True)
         else:
             estasancionado.append(False)
@@ -212,16 +210,3 @@ def cursos(request):
     context={'cursos':lista_cursos,'menu_cursos':True}
     return render(request, 'cursos.html',context)
 
-def normalize(s, encoding = "UTF-8"):
-    if not isinstance(s,unicode):
-        s = s.decode(encoding)
-
-    ret = u""
-    for c in s:
-        n = name(c)
-        pos = n.find("WITH")
-        if pos >= 0:
-            n = n[:pos]
-        n = lookup(n.strip())
-        ret += n
-    return ret
