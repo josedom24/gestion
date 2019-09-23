@@ -29,11 +29,11 @@ class Amonestaciones(models.Model):
 		('7','Sexta'),
 
 	)
-	IdAlumno = models.ForeignKey(Alumnos)
+	IdAlumno = models.ForeignKey(Alumnos,on_delete=models.SET_NULL)
 	Fecha = models.DateField()
 	Hora = models.CharField(max_length=1,choices=hora,default='1')
 	Comentario=models.TextField(blank=True)
-	Profesor = models.ForeignKey(Profesores)
+	Profesor = models.ForeignKey(Profesores,on_delete=models.SET_NULL)
 	Tipo = models.ForeignKey(TiposAmonestaciones, related_name='Tipo_de',blank=True,null=True,on_delete=models.SET_NULL)
 	
 
@@ -47,7 +47,7 @@ class Amonestaciones(models.Model):
 
 class Sanciones(models.Model):
 	
-	IdAlumno = models.ForeignKey(Alumnos)
+	IdAlumno = models.ForeignKey(Alumnos,on_delete=models.SET_NULL)
 	Fecha = models.DateField()
 	Fecha_fin = models.DateField(verbose_name="Fecha finalización")
 	Sancion=models.CharField(max_length=100,blank=True)

@@ -143,8 +143,8 @@ STATICFILES_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(BASE_DIR,"static"),
 )
-import ConfigParser
-configuracion = ConfigParser.ConfigParser()
+import configparser
+configuracion = configparser.ConfigParser()
 configuracion.read(os.path.join(BASE_DIR, 'gestion.cfg'))
 EMAIL_HOST = configuracion.get('bd','EMAIL_HOST')
 EMAIL_HOST_USER = configuracion.get('bd','EMAIL_HOST_USER')

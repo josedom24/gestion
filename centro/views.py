@@ -50,38 +50,40 @@ def alumnos(request):
 @login_required(login_url='/')
 @user_passes_test(group_check_prof,login_url='/')
 def misalumnos(request):
-        letra=request.user.username[-1]
-        if letra=="r":
-            letra=""
-            nombrecurso=request.user.username[6:]
-        else:
-            nombrecurso=request.user.username[6:-1]
-            
-        numerocurso=request.user.username[5:6]
-        if letra!="":
-            buscarcurso=numerocurso+unicode("º","utf8")+" "+nombrecurso.upper()+" "+letra.upper()
-        else:
-            buscarcurso=numerocurso+unicode("º","utf8")+" "+nombrecurso.upper()
-		
-
-        try:
-			primer_id = Cursos.objects.get(Curso=buscarcurso.encode('utf-8')).id
-        except:
-            return redirect("/")
-	request.session['Unidad']=primer_id
-
-	lista_alumnos = Alumnos.objects.filter(Unidad__id=primer_id)
-	lista_alumnos=sorted(lista_alumnos,key=lambda d: normalize(d.Nombre))
-	ids=[{"id":elem.id} for elem in lista_alumnos]
+    letra=request.user.username[-1]
+    if letra=="r":
+        letra=""
+        nombrecurso=request.user.username[6:]
+    else:
+        nombrecurso=request.user.username[6:-1]
+           
+    numerocurso=request.user.username[5:6]
+    if letra!="":
+        buscarcurso=numerocurso+unicode("º","utf8")+" "+nombrecurso.upper()+" "+letra.upper()
+    else:
+        buscarcurso=numerocurso+unicode("º","utf8")+" "+nombrecurso.upper()
+	
+    try:
+        primer_id = Cursos.objects.get(Curso=buscarcurso.encode('utf-8')).id
+    except:
+        return redirect("/")
+	
+    request.session['Unidad']=primer_id
+    
+    lista_alumnos = Alumnos.objects.filter(Unidad__id=primer_id)
+    
+    lista_alumnos = sorted(lista_alumnos,key=lambda d: normalize(d.Nombre))
+    ids=[{"id":elem.id} for elem in lista_alumnos]
 
 	#form = UnidadForm({'Unidad':primer_id})
 	#lista=zip(lista_alumnos,funciones.ContarFaltas(lista_alumnos.values("id")),funciones.ContarAmonestacionesAcumuladas(lista_alumnos.values("id")),range(1,len(lista_alumnos)+1))
-	lista=zip(lista_alumnos,ContarFaltas(ids),EstaSancionado(ids))
-	try:
-		context={'alumnos':lista,'curso':Cursos.objects.get(id=primer_id)}
-	except:
-		context={'alumnos':lista,'curso':None}
-	return render(request, 'misalumnos.html',context)
+    
+    lista=zip(lista_alumnos,ContarFaltas(ids),EstaSancionado(ids))
+    try:
+        context={'alumnos':lista,'curso':Cursos.objects.get(id=primer_id)}      
+    except:
+        context={'alumnos':lista,'curso':None}
+    return render(request, 'misalumnos.html',context)
 
 
 @login_required(login_url='/')
@@ -126,16 +128,17 @@ def alumnos_curso(request,curso):
 def profesores(request):
 	if request.method == 'POST':
 		dep_id=request.POST.get("Departamento")
-                area_id=request.POST.get("Areas")
-                if area_id!=request.session.get("Areas",""):
-                    dep_id=""
+            area_id=request.POST.get("Areas")
+            if area_id!=request.session.get("Areas",""):
+                dep_id=""
 	else:
 		dep_id=request.session.get('Departamento', "")
-                area_id=request.session.get("Areas","")
-	request.session['Areas']=area_id
+        area_id=request.session.get("Areas","")
+	
+    request.session['Areas']=area_id
 	request.session['Departamento']=dep_id
-        form=DepartamentosForm({'Areas':area_id,'Departamento':dep_id})
-        if dep_id=="":
+    form=DepartamentosForm({'Areas':area_id,'Departamento':dep_id})
+    if dep_id=="":
 		lista_profesores = Profesores.objects.all().order_by("Apellidos")
 		departamento=""
 	else:
