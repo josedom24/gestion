@@ -15,7 +15,7 @@ def group_check_je(user):
 def group_check_sec(user):
     return user.groups.filter(name__in=['secretaria'])
 def group_check_prof(user):
-    return user.groups.filter(name__in=['secretaria']) or user.groups.filter(name__in=['profesor'])
+    return user.groups.filter(name__in=['jefatura de estudios']) or user.groups.filter(name__in=['profesor'])
 
 # Create your views here.
 @login_required(login_url='/')
