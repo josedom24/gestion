@@ -183,7 +183,7 @@ def imprimir_profesores(request,curso=None):
 			texto='Asistencia a Equipo Educativo de '+c.Curso
 		data={'texto':texto,'profesores':lista_profesores,'fecha':datetime.now(),"resto":len(lista_profesores) % 3}
 	elif request.path.split("/")[2]=="semana":
-		lista_profesores=lista_profesores.all()
+		lista_profesores=lista_profesores.exclude(Baja=True)
 		texto='Asistencia semanal'
 		data={'texto':texto,'profesores':lista_profesores,'fecha':datetime.now(),"resto":len(lista_profesores) % 3}
 	# Render html content through html template with context

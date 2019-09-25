@@ -7,15 +7,15 @@
         size: a4 landscape;
         @frame header_frame {           /* Static Frame */
             -pdf-frame-content: header_content;
-            left: 50pt; width: 712pt; top: 20pt; height: 50pt;
+            left: 40pt; width: 742pt; top: 10pt; height: 140pt;
             
         }
         @frame content_frame {          /* Content Frame */
-            left: 50pt; width: 712pt; top: 90pt; height: 462pt;
+            left: 40pt; width: 742pt; top: 112pt; height: 462pt;
         }
         @frame footer_frame {           /* Another static Frame */
             -pdf-frame-content: footer_content;
-            left: 50pt; width: 712pt; top: 772pt; height: 20pt;
+            left: 40pt; width: 742pt; top: 570pt; height: 20pt;
         }
     }
     
@@ -34,36 +34,34 @@
     }
     body
     {
-	    font-size:110%;
+	    font-size:120%;
     }
-   
+       
     </style>
 </head>
 
    
 <body>
 <div id="header_content">
-      <table cellspacing="0" cellpadding="4" width="50%">
-        <tr>
-          <td width="25%"><img width="50%"  alt="" src="https://gestion.gonzalonazareno.org/static/img/logo.jpg" /></td>
-          <td>
-      <h3>IES Gonzalo Nazareno</h3>
-      <p>C/Las Botijas,10</p>
-      <p>41710 - Dos Hermanas (Sevilla)</p>
-      <p>Tfno: 955839911 - Fax: 955839915</p>
-    </td>
-  </table>
+            
+    <h2>IES Gonzalo Nazareno</h2>
+      
+      <h2>Semana del ___ al ___ de _______________ Curso 2019/2020</h2>  
+      <table width="100%" border="0.2" cellspacing="0" cellpadding="4">
+          <tr><td width="15%"></td><td colspan="2">Lunes</td><td colspan="2">Martes</td><td colspan="2">Martes Tardes</td><td colspan="2">Miércoles</td><td colspan="2">Jueves</td><td colspan="2">Viernes</td></tr>
+          <tr><td width="15%"></td><td>Entrada</td><td>Salida</td><td>Entrada</td><td>Salida</td><td>Entrada</td><td>Salida</td><td>Entrada</td><td>Salida</td><td>Entrada</td><td>Salida</td><td>Entrada</td><td>Salida</td></tr>
+      </table>
     </div>
- <div id="footer_content"><pdf:pagenumber> / <pdf:pagecount>
+    <div id="footer_content"><pdf:pagenumber> / <pdf:pagecount>
     </div>
- <h1>{{texto}} - Fecha: {{fecha|date:"d/m/Y"}} </h1><br/><br/>
- <table width="100%" border="0.2" cellspacing="0" cellpadding="5">
-   <tr><td></td><td>Lunes</td><td>Martes</td><td>M. Tardes</td><td>Miércoles</td><td>Jueves</td><td>Viernes</td></tr>
+ 
+ <table width="100%" border="0.2" cellspacing="0" cellpadding="4">
+  
    
     {% for prof in profesores%}
     <tr> 
-	 <td>{{prof.Apellidos}}<br/>{{prof.Nombre}} </td>
-   <td></td><td></td><td></td><td></td><td></td><td></td>
+	 <td width="15%">{{prof.Apellidos}}<br/>{{prof.Nombre}} </td>
+   <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
   </tr>
    {% endfor%}
    
