@@ -13,6 +13,7 @@ urlpatterns = [
         url(r'^profesores$', views.imprimir_profesores),
         url(r'^claustro$', views.imprimir_profesores),
         url(r'^claustro/(?P<curso>[0-9]+)$', views.imprimir_profesores),
+		url(r'^semana$', views.imprimir_profesores),
         url(r'^registro/(?P<tipo>[\w-])/(?P<curso>\d{4}-\d{4})$', views.imprimir_registro),
         url(r'^sanciones/hoy$', views.imprimir_sanciones_hoy),
         
