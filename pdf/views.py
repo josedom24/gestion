@@ -42,7 +42,15 @@ def imprimir_faltas(request,curso):
 	# Render html content through html template with context
 	return imprimir("pdf_faltas.html",data,"faltas.pdf")
 
-
+@login_required(login_url='/')
+@user_passes_test(group_check_je,login_url='/')
+def imprimir_telefonos(request,curso):
+	lista_alumnos = Alumnos.objects.filter(Unidad__id=curso)
+	lista_alumnos=sorted(lista_alumnos,key=lambda d: normalize(d.Nombre))
+	lista=zip(range(1,len(lista_alumnos)+1),lista_alumnos)
+	data={'alumnos':lista,'curso':Cursos.objects.get(id=curso),'fecha':datetime.now()}
+	# Render html content through html template with context
+	return imprimir("pdf_telefonos.html",data,"telefonos.pdf")
 @login_required(login_url='/')
 @user_passes_test(group_check_je,login_url='/')
 def imprimir_historial(request,alum_id,prof):
