@@ -4,12 +4,20 @@
 
 {% block content %}
 <h3>Envío de amonestaciones por correos electrónico ({{info.fecha}})</h3>
-<p>Se han enviado mensajes a los correos electrónicos de contacto de los siguientes alumnos:</p>
-<table class="table table-bordered">
+
+{% if info.amonestaciones%}
+    <p>Se han enviado mensajes a los correos electrónicos de contacto de los siguientes alumnos:</p>
+    <table class="table table-bordered">
     
-{% for alum in info.amonestaciones%}
-    <tr><td>{{alum.Nombre}} ({{alum.email}}</td></tr>
-{%endfor%}
-</table>
+    {% for alum in info.amonestaciones%}
+        <tr><td>{{alum.IdAlumno.Nombre}} ({{alum.IdAlumno.email}})</td></tr>
+    {%endfor%}
+    </table>
+{%else%}
+    <p>No se ha envíado ningún correo.</p>
+{%endif%}
+<br/>
+<a href="{{url}}">Volver al resumen de amonestaciones</a>
+
 
 {% endblock %}

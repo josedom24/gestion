@@ -138,29 +138,27 @@ def send_amonestacion(request,mes,ano,dia):
 	fecha2=datetime(int(ano),int(mes),int(dia))
 	info["fecha"]="%s/%s/%s"%(dia,mes,ano)
 	lista_alumnos=set(Amonestaciones.objects.filter(Fecha=fecha2).values_list("IdAlumno"))
-	lista_amonestaciones=Amonestaciones.objects.filter(Fecha=fecha2)
-	info["amonestaciones"]=[]
-	for alum in lista_alumnos:
-		if Alumnos.objects.get(id=alum[0]).email!="":
-			info["amonestaciones"].append(Alumnos.objects.get(id=alum[0]))
+	
+	info["amonestaciones"]=Amonestaciones.objects.filter(Fecha=fecha2)
+	
 
 	for i in info["amonestaciones"]:
 		info2={}
 		info2["amonestacion"]=i
-		info2["num_amon"]=len(Amonestaciones.objects.filter(IdAlumno_id=i.id))
+		info2["num_amon"]=len(Amonestaciones.objects.filter(IdAlumno_id=i.IdAlumno.id))
 		template = get_template("pdf_contenido_carta_amonestacion.html")
-		contenido=contenido+ template.render(Context(info2))
-		asunto="IES Gonzalo Nazareno. Amonestación: "+i.Nombre.encode("utf-8")
-		
-		msg = EmailMultiAlternatives(
-                asunto,
-                contenido,
-                '41011038.edu@juntadeandalucia.es',
-                [i.email]
-               )
-    	msg.attach_alternative(contenido, "text/html")
-    	msg.send(fail_silently=False)
-	context={"info":info}
+		contenido=template.render(Context(info2))
+		asunto="IES Gonzalo Nazareno. Amonestación: "+i.IdAlumno.Nombre.encode("utf-8")
+		if i.IdAlumno.email:
+			msg = EmailMultiAlternatives(
+        	        asunto,
+        	        contenido,
+        	        '41011038.edu@juntadeandalucia.es',
+        	        [i.IdAlumno.email]
+        	       )
+    		msg.attach_alternative(contenido, "text/html")
+    		msg.send(fail_silently=False)
+	context={"info":info,"url":"/convivencia/show/amonestacion/"+str(mes)+"/"+str(ano)+"/"+str(dia)}
 	return render(request,"send_amonestacion.html",context)
 
 @login_required(login_url='/')
