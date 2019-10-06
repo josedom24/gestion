@@ -192,6 +192,8 @@ def imprimir_profesores(request,curso=None):
 		lista_profesores=lista_profesores.exclude(Baja=True)
 		texto='Asistencia semanal'
 		data={'texto':texto,'profesores':lista_profesores,'fecha':datetime.now(),"resto":len(lista_profesores) % 3}
+	else:
+		data={'texto':texto,'profesores':lista_profesores,'fecha':datetime.now(),"resto":len(lista_profesores) % 3}
 	# Render html content through html template with context
 	return imprimir("pdf_"+request.path.split("/")[2]+".html",data,request.path.split("/")[2]+".pdf")
 
