@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'd$ug$)j1jhr2%z4gnpbc9^v^@4*sbu5we9nt_dtg72x7e+xq^('
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['gestion.gonzalonazareno.org']
 
