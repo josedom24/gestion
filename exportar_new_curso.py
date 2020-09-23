@@ -39,7 +39,7 @@ with open('alumnos.csv', 'rb') as mycsvfile:
         cursos.append(row['Unidad'])##
 cursos=list(set(cursos))
 cursos.sort()
-cursos.pop(0)###
+cursos.pop(0)
 
 cont=0
 for c in cursos:
@@ -50,12 +50,13 @@ for c in cursos:
 
 
 ###Alumnos
-campos=["id","Nombre","DNI","Direccion","CodPostal","Localidad","Fecha_nacimiento","Provincia","Unidad","Ap1tutor","Ap2tutor","Nomtutor","Telefono1","Telefono2"]#
+campos=["id","Nombre","DNI","Direccion","CodPostal","Localidad","Fecha_nacimiento""Provincia","Unidad","Ap1tutor","Ap2tutor","Nomtutor","Telefono1","Telefono2","email"]#
 
 with open('alumnos.csv', 'rb') as mycsvfile:
     dictofdata = csv.DictReader(mycsvfile, dialect='mydialect')
     cont=1
     for row in dictofdata:
+        print(row)
         row["id"]=cont
         if row["Unidad"]=="":
             del row["Unidad"]
@@ -65,11 +66,10 @@ with open('alumnos.csv', 'rb') as mycsvfile:
         print(row)
         row["Fecha_nacimiento"]=row["Fecha_nacimiento"].split("/")[2]+"-"+row["Fecha_nacimiento"].split("/")[1]+"-"+row["Fecha_nacimiento"].split("/")[0]
         row["Obs"]=""
+        print(row)
         a=Alumnos(**row)
         a.save()
         
-
-
 
 
 

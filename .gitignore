@@ -1,6 +1,7 @@
 db2017.sqlite3
 db2018.sqlite3
 db2019.sqlite3
+db2020.sqlite3
 db.sqlite3
 *.pyc
 *.swp
