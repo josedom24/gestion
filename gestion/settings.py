@@ -82,23 +82,23 @@ WSGI_APPLICATION = 'gestion.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'basededatos/db.sqlite3'),
     },
     'db2017': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db2017.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'basededatos/db2017.sqlite3'),
     },
     'db2018': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db2018.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'basededatos/db2018.sqlite3'),
     },
     'db2019': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db2019.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'basededatos/db2019.sqlite3'),
     },
     'db2020': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db2020.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'basededatos/db2020.sqlite3'),
     },
 }
 
