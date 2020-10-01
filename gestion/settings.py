@@ -177,7 +177,31 @@ EMAIL_USE_TLS = configuracion.get('bd','EMAIL_USE_TLS')
 
 
 
-
+#import logging.config
+#LOGGING = {
+#    'version': 1,
+#    'disable_existing_loggers': False,
+#    'handlers': {
+#        'file': {
+#            'level': 'DEBUG',
+#            'class': 'logging.FileHandler',
+#            'filename': os.path.join(BASE_DIR, 'gestion.log')
+#        }
+#
+#    },
+#    'loggers': {
+#        'django': {
+#            'handlers': ['file'],
+#            'level': 'CRITICAL',
+#            'propagate': True,
+#        },
+#        
+#        'xhtml2pdf': {
+#            'handlers': ['file'],
+#            'level': 'DEBUG'
+#       },
+#    },
+#}
 
 
 
