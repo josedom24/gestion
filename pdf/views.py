@@ -150,14 +150,17 @@ def send_amonestacion(request,mes,ano,dia):
 		contenido=template.render(Context(info2))
 		asunto="IES Gonzalo Nazareno. Amonestación: "+i.IdAlumno.Nombre.encode("utf-8")
 		if i.IdAlumno.email:
-			msg = EmailMultiAlternatives(
-        	        asunto,
-        	        contenido,
-        	        '41011038.edu@juntadeandalucia.es',
-        	        [i.IdAlumno.email]
-        	       )
-    		msg.attach_alternative(contenido, "text/html")
-    		msg.send(fail_silently=False)
+			try:
+				msg = EmailMultiAlternatives(
+        		        asunto,
+        		        contenido,
+        		        '41011038.edu@juntadeandalucia.es',
+        		        [i.IdAlumno.email]
+        		       )
+    			msg.attach_alternative(contenido, "text/html")
+    			msg.send(fail_silently=False)
+			except:
+				pass
 	context={"info":info,"url":"/convivencia/show/amonestacion/"+str(mes)+"/"+str(ano)+"/"+str(dia)}
 	return render(request,"send_amonestacion.html",context)
 
