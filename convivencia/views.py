@@ -58,6 +58,7 @@ def parte(request,tipo,alum_id):
 				new_correo.save()
 				for dest in destinatarios.all():
 					new_correo.Destinatarios.add(dest)
+				new_correo.Destinatarios.add(sanc.IdAlumno.Unidad.Tutor)
 				new_correo.save()
 			correos=[]
 			for prof in new_correo.Destinatarios.all():
