@@ -149,8 +149,10 @@ def send_amonestacion(request,mes,ano,dia):
         template = get_template("pdf_contenido_carta_amonestacion.html")
         contenido=template.render(Context(info2))
         asunto="IES Gonzalo Nazareno. Amonestación: "+i.IdAlumno.Nombre.encode("utf-8")
-        if i.IdAlumno.email:
-            try:
+        # 8/4/2021
+        correos=Correos.objects.filter(Fecha=fecha2).filter(Asunto=asunto)
+        if i.IdAlumno.email and len(correos)==0:
+        ####    try:
                 msg=""
                 msg = EmailMultiAlternatives(
                         asunto,
@@ -161,6 +163,10 @@ def send_amonestacion(request,mes,ano,dia):
 
                 msg.attach_alternative(contenido, "text/html")
                 msg.send(fail_silently=False)
+                # 8/4/2021
+                new_correo=Correos(Fecha=info["fecha"],Asunto=asunto,Contenido=contenido)
+				new_correo.save()
+                ####
             except:
                 pass
     context={"info":info,"url":"/convivencia/show/amonestacion/"+str(mes)+"/"+str(ano)+"/"+str(dia)}
