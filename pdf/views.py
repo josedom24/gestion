@@ -166,7 +166,7 @@ def send_amonestacion(request,mes,ano,dia):
 					   )
 
 				msg.attach_alternative(contenido, "text/html")
-				#msg.send(fail_silently=False)
+				msg.send(fail_silently=False)
 			# 8/4/2021
 				f=datetime.strptime(info["fecha"], '%d/%m/%Y')
 				new_correo=Correos(Fecha=f.strftime("%Y-%m-%d"),Asunto=asunto,Contenido=contenido)
