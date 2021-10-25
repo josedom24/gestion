@@ -48,11 +48,13 @@ class Profesores(models.Model):
 	
 
 	def __unicode__(self):
-		return self.Nombre+" "+self.Apellidos
+		return self.Apellidos+" "+self.Nombre
 
 	class Meta:
 		verbose_name="Profesor"
 		verbose_name_plural="Profesores"
+		ordering = ("Apellidos",)
+		
 
 class Cursos(models.Model):
 	
