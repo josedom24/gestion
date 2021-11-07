@@ -1,4 +1,5 @@
 basededatos/
+venv/
 basededatos/db2017.sqlite3
 basededatos/db2018.sqlite3
 basededatos/db2019.sqlite3
@@ -7,6 +8,7 @@ db.sqlite3
 *.pyc
 *.swp
 *.cfg
+*.csv
 .project
 .pydevproject
 vpython27

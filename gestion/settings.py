@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'pdf.apps.PdfConfig',
     'registro.apps.RegistroConfig',
     'correo.apps.CorreoConfig',
+    'absentismo.apps.AbsentismoConfig',
 #    'django_admin_bootstrapped',
     'django.contrib.admin',
     'django.contrib.auth',
