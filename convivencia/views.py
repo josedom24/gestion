@@ -49,6 +49,19 @@ def parte(request,tipo,alum_id):
 						new_correo.Destinatarios.add(dest)
 				new_correo.save()
 
+				# Comunica la amonestación a la familia
+				correo_familia = amon.IdAlumno.email
+				if correo_familia:
+					template = get_template("correo_amonestacion.html")
+					contenido = template.render(Context({'amon': amon}))
+					send_mail(
+						'Nueva amonestación',
+						contenido,
+						'41011038.edu@juntadeandalucia.es',
+						(correo_familia,),
+						fail_silently=False
+					)
+
 			if tipo=="sancion":
 				sanc=form.instance
 				destinatarios=sanc.IdAlumno.Unidad.EquipoEducativo
