@@ -3,7 +3,7 @@ Pillow==4.0.0
 PyPDF2==1.26.0
 argparse==1.2.1
 html5lib==1.0b8
-reportlab==3.3.0
+reportlab==3.5.55
 six==1.10.0
 webencodings==0.5
 wsgiref==0.1.2
