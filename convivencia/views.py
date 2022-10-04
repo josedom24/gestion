@@ -57,7 +57,7 @@ def parte(request,tipo,alum_id):
 					send_mail(
 						'Nueva amonestación',
 						contenido,
-						'41011038.edu@juntadeandalucia.es',
+						'41011038.jestudios.edu@juntadeandalucia.es',
 						(correo_familia,),
 						fail_silently=False
 					)
@@ -82,7 +82,7 @@ def parte(request,tipo,alum_id):
 			send_mail(
                 new_correo.Asunto,
                 new_correo.Contenido,
-                '41011038.edu@juntadeandalucia.es',
+                '41011038.jestudios.edu@juntadeandalucia.es',
                 correos,
                 fail_silently=False,
                )
