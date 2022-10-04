@@ -105,7 +105,6 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'basededatos/db2021.sqlite3'),
     },
-    ,
     'db2022': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'basededatos/db2022.sqlite3'),
