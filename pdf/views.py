@@ -161,7 +161,7 @@ def send_amonestacion(request,mes,ano,dia):
 				msg = EmailMultiAlternatives(
 						asunto,
 						contenido,
-						'41011038.edu@juntadeandalucia.es',
+						'41011038.jestudios.edu@juntadeandalucia.es',
 						[i.IdAlumno.email]
 					   )
 
