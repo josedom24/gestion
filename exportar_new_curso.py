@@ -20,6 +20,7 @@ csv.register_dialect(
 
 
 print "Debe existir un fichero alumnos.csv, con el siguiente contenido:Nombre,DNI,Direccion,CodPostal,Localidad,Fecha_nacimiento,Provincia,Unidad,Ap1tutor,Ap2tutor,Nomtutor,Telefono1,Telefono2,correoelectrónico"
+print 'El fichero debe estar codificado con UTF-8. Con la siguiente cabecera: "Nombre","DNI","Direccion","CodPostal","Localidad","Fecha_nacimiento""Provincia","Unidad","Ap1tutor","Ap2tutor","Nomtutor","Telefono1","Telefono2","email"'
 print "Se va a proceder a borrar los datos de Cursos, Alumnos, amonestaciones y Sanciones del curso actual"
 resp=raw_input("Estas seguro? (s)")
 if resp!='s':
@@ -50,7 +51,7 @@ for c in cursos:
 
 
 ###Alumnos
-campos=["id","Nombre","DNI","Direccion","CodPostal","Localidad","Fecha_nacimiento""Provincia","Unidad","Ap1tutor","Ap2tutor","Nomtutor","Telefono1","Telefono2","email"]#
+campos=["id","Nombre","DNI","Direccion","CodPostal","Localidad","Fecha_nacimiento","Provincia","Unidad","Ap1tutor","Ap2tutor","Nomtutor","Telefono1","Telefono2","email"]
 
 with open('alumnos.csv', 'rb') as mycsvfile:
     dictofdata = csv.DictReader(mycsvfile, dialect='mydialect')
