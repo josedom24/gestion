@@ -1,6 +1,4 @@
-# -*- coding: utf-8 -*-
 from django import forms
-from django.forms import ModelForm
 from correo.models import Correos
 from centro.models import Cursos,Departamentos,Areas
 from django.contrib.admin.widgets import FilteredSelectMultiple

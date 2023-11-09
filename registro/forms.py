@@ -1,6 +1,4 @@
-# -*- coding: utf-8 -*-
 from django import forms
-from django.forms import ModelForm
 from registro.models import Procedencia,Remitente,ClaseDocumento,Registro
 from django.forms.widgets import HiddenInput,DateInput,Textarea,TextInput,Select,SelectDateWidget
 from datetime import datetime

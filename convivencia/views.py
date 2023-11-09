@@ -1,5 +1,4 @@
 
-# -*- coding: utf-8 -*-
 from django.shortcuts import render,redirect
 from convivencia.forms import AmonestacionForm,SancionForm,FechasForm
 from centro.models import Alumnos,Profesores

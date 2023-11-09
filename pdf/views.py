@@ -1,8 +1,4 @@
-# -*- coding: utf-8 -*-
 import datetime
-import os
-
-from django.conf import settings
 from django.http import HttpResponse
 from django.template import Context
 from django.template.loader import get_template
@@ -11,14 +7,13 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required,user_passes_test
 
 from xhtml2pdf import pisa
-from io import StringIO,BytesIO
+from io import BytesIO
 from centro.models import Alumnos,Cursos,Profesores
 from convivencia.models import Amonestaciones,Sanciones
 from registro.models import Registro 
 from correo.models import Correos
 from centro.views import ContarFaltas,group_check_je,group_check_sec
 from datetime import datetime
-#from centro.views import normalize
 from django.core.mail import EmailMultiAlternatives
 
 # Create your views here.
@@ -187,9 +182,7 @@ def send_amonestacion(request,mes,ano,dia):
 @login_required(login_url='/')
 @user_passes_test(group_check_je,login_url='/')
 def carta_sancion(request,identificador):
-	info2={}
-	contenido=""
-	
+	info2={}	
 	info2["sancion"]=Sanciones.objects.get(id=identificador)
 	info={}
 	template = get_template("pdf_contenido_carta_sancion.html")
