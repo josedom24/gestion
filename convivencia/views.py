@@ -166,7 +166,6 @@ def resumen(request,tipo,mes,ano):
 		if fecha.date() in fechas:
 			calhtml=calhtml.replace(">"+str(dia)+"<",'><a href="/convivencia/show/%s/%s/%s/%s"><strong>%s</strong></a><'%(tipo,mes,ano,dia,dia))
 	calhtml=calhtml.replace('class="month"','class="table-condensed table-bordered table-striped"')
-	#form=TipoResumen(initial={'tipo':tipo})
 	
 	
 	mes_actual=datetime(int(ano),int(mes),1)
