@@ -225,7 +225,7 @@ def imprimir_registro(request,tipo,curso):
 
 
 
-def imprimir(temp,data,tittle):
+def imprimir(temp,data,title):
 	template = get_template(temp)
 	pdf_data = template.render(Context(data).flatten())
 	
@@ -233,7 +233,7 @@ def imprimir(temp,data,tittle):
 	pdf = BytesIO()
 	
 	response = HttpResponse(pdf.read(),content_type='application/pdf')
-	response['Content-Disposition'] = 'attachment; filename="'+tittle+'"'
+	response['Content-Disposition'] = 'attachment; filename="'+title+'"'
 	try:
 		pisa.CreatePDF(pdf_data, dest=response)
 	except:
