@@ -36,8 +36,6 @@ INSTALLED_APPS = [
     'pdf.apps.PdfConfig',
     'registro.apps.RegistroConfig',
     'correo.apps.CorreoConfig',
-    'absentismo.apps.AbsentismoConfig',
-#    'django_admin_bootstrapped',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -156,8 +154,11 @@ STATICFILES_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(BASE_DIR,"static"),
 )
-import ConfigParser
-configuracion = ConfigParser.ConfigParser()
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+
+import configparser
+configuracion = configparser.ConfigParser()
 configuracion.read(os.path.join(BASE_DIR, 'gestion.cfg'))
 EMAIL_HOST = configuracion.get('bd','EMAIL_HOST')
 EMAIL_HOST_USER = configuracion.get('bd','EMAIL_HOST_USER')

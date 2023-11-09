@@ -40,7 +40,7 @@ class BuscarDestinatariosForm(forms.Form):
             for i in Areas.objects.all().order_by("Nombre"):
                 lista.append("Areas: "+i.Nombre)
             lista2=[]
-            for i in xrange(0,len(lista)):
+            for i in range(0,len(lista)):
                 lista2.append((i,lista[i]))
             
             self.fields['Profesores'].choices=lista2

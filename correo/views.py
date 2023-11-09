@@ -18,28 +18,28 @@ def list_correo(request):
     paginator = Paginator(reg, 10)
     page = request.GET.get('page')
     try:
-	contacts = paginator.page(page)
-	request.GET._mutable = True
-	if request.GET.get('page'):
-		request.GET.pop('page')
+        contacts = paginator.page(page)
+        request.GET._mutable = True
+        if request.GET.get('page'):
+            request.GET.pop('page')
     except PageNotAnInteger:
-	# If page is not an integer, deliver first page.
-	contacts = paginator.page(1)
+        # If page is not an integer, deliver first page.
+        contacts = paginator.page(1)
     except EmptyPage:
-	# If page is out of range (e.g. 9999), deliver last page of results.
-	contacts = paginator.page(paginator.num_pages)
-	
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        contacts = paginator.page(paginator.num_pages)
+    
     context={'reg':contacts,'menu_correos':True}
     return render(request, 'list_correos.html',context)
 
 @login_required(login_url='/')
 @user_passes_test(group_check_je,login_url='/')
 def new_correo(request):
-    if request.method=='POST' and not request.POST.has_key("correo"):
+    if request.method=='POST' and not "correo" in request.POST:
         form2 = BuscarDestinatariosForm(request.POST)
         form = CorreoForm({'Asunto':request.POST.get("Asunto"),'Contenido':request.POST.get("Contenido"),'Destinatarios':SelectProfes(int(request.POST.get("Profesores"))),'Fecha':time.strftime("%d/%m/%Y")})
 
-    elif request.method=='POST' and request.POST.has_key("correo"):
+    elif request.method=='POST' and "correo" in request.POST:
         form2 = BuscarDestinatariosForm(request.POST.get("Profesores")) 
         form = CorreoForm(request.POST)
         if form.is_valid():

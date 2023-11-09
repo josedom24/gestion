@@ -6,7 +6,7 @@ from django.db import models
 class Procedencia(models.Model):
 	Procedencia=models.CharField(max_length=30)
 
-	def __unicode__(self):
+	def __str__(self):
 		return self.Procedencia
 
 	class Meta:
@@ -16,7 +16,7 @@ class Procedencia(models.Model):
 class Remitente(models.Model):
 	Remitente=models.CharField(max_length=40)
 
-	def __unicode__(self):
+	def __str__(self):
 		return self.Remitente
 
 	class Meta:
@@ -26,7 +26,7 @@ class Remitente(models.Model):
 class ClaseDocumento(models.Model):
 	ClaseDocumento=models.CharField(max_length=20)
 
-	def __unicode__(self):
+	def __str__(self):
 		return self.ClaseDocumento
 
 	class Meta:
@@ -38,12 +38,12 @@ class Registro(models.Model):
 	Fecha = models.DateField()
 	N=models.IntegerField()
 	Tipo = models.CharField(max_length=7)
-	Idp= models.ForeignKey(Procedencia,null=True,blank=True)
-	Idr= models.ForeignKey(Remitente,null=True,blank=True)
-	Idc= models.ForeignKey(ClaseDocumento,null=True,blank=True)
+	Idp= models.ForeignKey(Procedencia,null=True,blank=True,on_delete=models.SET_NULL)
+	Idr= models.ForeignKey(Remitente,null=True,blank=True,on_delete=models.SET_NULL)
+	Idc= models.ForeignKey(ClaseDocumento,null=True,blank=True,on_delete=models.SET_NULL)
 	Contenido=models.TextField(blank=True)
 
-	def __unicode__(self):
+	def __str__(self):
 		return self.Curso+' - ' + str(self.N)+' - ' + str(self.Fecha)+ ' - '+self.Tipo +' - '+self.Contenido
 
 	class Meta:

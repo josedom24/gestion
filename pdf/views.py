@@ -11,15 +11,16 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required,user_passes_test
 
 from xhtml2pdf import pisa
-from cStringIO import StringIO
+from io import StringIO,BytesIO
 from centro.models import Alumnos,Cursos,Profesores
 from convivencia.models import Amonestaciones,Sanciones
 from registro.models import Registro 
 from correo.models import Correos
 from centro.views import ContarFaltas,group_check_je,group_check_sec
 from datetime import datetime
-from centro.views import normalize
+#from centro.views import normalize
 from django.core.mail import EmailMultiAlternatives
+
 # Create your views here.
 
 
@@ -27,7 +28,7 @@ from django.core.mail import EmailMultiAlternatives
 @user_passes_test(group_check_je,login_url='/')
 def imprimir_partes(request,curso):
 	lista_alumnos = Alumnos.objects.filter(Unidad__id=curso)
-	lista_alumnos=sorted(lista_alumnos,key=lambda d: normalize(d.Nombre))
+	lista_alumnos=sorted(lista_alumnos,key=lambda d: d.Nombre)
 	ids=[{"id":elem.id} for elem in lista_alumnos]
 	lista=zip(range(1,len(lista_alumnos)+1),lista_alumnos,ContarFaltas(ids))
 	data={'alumnos':lista,'curso':Cursos.objects.get(id=curso),'fecha':datetime.now()}
@@ -38,7 +39,7 @@ def imprimir_partes(request,curso):
 @user_passes_test(group_check_je,login_url='/')
 def imprimir_faltas(request,curso):
 	lista_alumnos = Alumnos.objects.filter(Unidad__id=curso)
-	lista_alumnos=sorted(lista_alumnos,key=lambda d: normalize(d.Nombre))
+	lista_alumnos=sorted(lista_alumnos,key=lambda d: d.Nombre)
 	data={'alumnos':lista_alumnos,'curso':Cursos.objects.get(id=curso),'cont':range(0,30)}
 	# Render html content through html template with context
 	return imprimir("pdf_faltas.html",data,"faltas.pdf")
@@ -47,7 +48,7 @@ def imprimir_faltas(request,curso):
 @user_passes_test(group_check_je,login_url='/')
 def imprimir_telefonos(request,curso):
 	lista_alumnos = Alumnos.objects.filter(Unidad__id=curso)
-	lista_alumnos=sorted(lista_alumnos,key=lambda d: normalize(d.Nombre))
+	lista_alumnos=sorted(lista_alumnos,key=lambda d: d.Nombre)
 	lista=zip(range(1,len(lista_alumnos)+1),lista_alumnos)
 	data={'alumnos':lista,'curso':Cursos.objects.get(id=curso),'fecha':datetime.now()}
 	# Render html content through html template with context
@@ -124,7 +125,7 @@ def carta_amonestacion(request,mes,ano,dia,todos):
 		info2["amonestacion"]=a
 		info2["num_amon"]=len(Amonestaciones.objects.filter(IdAlumno_id=a.IdAlumno.id))
 		template = get_template("pdf_contenido_carta_amonestacion.html")
-		contenido=contenido+ template.render(Context(info2))
+		contenido=contenido+ template.render(Context(info2).flatten())
 		if a.IdAlumno.id!=info["amonestaciones"][-1].id:
 			contenido=contenido+"<pdf:nextpage>"
 	info["contenido"]=contenido
@@ -150,7 +151,7 @@ def send_amonestacion(request,mes,ano,dia):
 		info2["amonestacion"]=i
 		info2["num_amon"]=len(Amonestaciones.objects.filter(IdAlumno_id=i.IdAlumno.id))
 		template = get_template("pdf_contenido_carta_amonestacion.html")
-		contenido=template.render(Context(info2))
+		contenido=template.render(Context(info2).flatten())
 		asunto="IES Gonzalo Nazareno. Amonestación: "+i.IdAlumno.Nombre.encode("utf-8")+ " - Hora:"+i.Hora.encode("utf-8")
 		# 8/4/2021
 		correos=Correos.objects.filter(Fecha=fecha2).filter(Asunto=asunto)
@@ -180,7 +181,6 @@ def send_amonestacion(request,mes,ano,dia):
 			info["yaenviados"].append({'Nombre':i.IdAlumno.Nombre,'email':i.IdAlumno.email})
 		elif len(i.IdAlumno.email)==0:
 			info["noemail"].append({'Nombre':i.IdAlumno.Nombre,'email':i.IdAlumno.email})
-	print info
 	context={"info":info,"url":"/convivencia/show/amonestacion/"+str(mes)+"/"+str(ano)+"/"+str(dia)}
 	return render(request,"send_amonestacion.html",context)
 
@@ -193,7 +193,7 @@ def carta_sancion(request,identificador):
 	info2["sancion"]=Sanciones.objects.get(id=identificador)
 	info={}
 	template = get_template("pdf_contenido_carta_sancion.html")
-	info["contenido"]=template.render(Context(info2))	
+	info["contenido"]=template.render(Context(info2).flatten())	
 	return imprimir("pdf_carta.html",info,"carta_sancion"+".pdf")	
 
 
@@ -234,15 +234,15 @@ def imprimir_registro(request,tipo,curso):
 
 def imprimir(temp,data,tittle):
 	template = get_template(temp)
-	pdf_data = template.render(Context(data))
-	# Write PDF to file
+	pdf_data = template.render(Context(data).flatten())
 	
-	pdf = StringIO()
-	try:
-		pisa.CreatePDF(StringIO(pdf_data.encode('utf-8')), pdf)
-	except:
-		return HttpResponse('Errors')
-	pdf.reset()
+	# Write PDF to file
+	pdf = BytesIO()
+	
 	response = HttpResponse(pdf.read(),content_type='application/pdf')
 	response['Content-Disposition'] = 'attachment; filename="'+tittle+'"'
+	try:
+		pisa.CreatePDF(pdf_data, dest=response)
+	except:
+		return HttpResponse('Errors')
 	return response

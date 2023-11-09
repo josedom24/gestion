@@ -1,7 +1,7 @@
-from django.conf.urls import url
+from django.urls import re_path
 from . import views
 
 urlpatterns = [
-	url(r'^(?P<tipo>[\w-])$', views.registro),
-	url(r'^add/(?P<tipo>[\w-])$', views.add),
+	re_path(r'^(?P<tipo>[\w-])$', views.registro),
+	re_path(r'^add/(?P<tipo>[\w-])$', views.add),
 ]

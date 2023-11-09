@@ -1,4 +1,3 @@
-from __future__ import unicode_literals
 from centro.models import Profesores
 from django.db import models
 
@@ -10,7 +9,7 @@ class Correos(models.Model):
 	Destinatarios=models.ManyToManyField(Profesores, verbose_name="Destinatarios", blank=True)
 	Contenido=models.TextField(blank=True)
 
-	def __unicode__(self):
+	def __str__(self):
 		return str(self.Fecha)+self.Asunto
 
 	class Meta:

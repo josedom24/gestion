@@ -1,7 +1,3 @@
-
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.db import models
 
 # Create your models here.
@@ -10,7 +6,7 @@ class Departamentos(models.Model):
 	Abr = models.CharField(max_length=4)
 	Nombre = models.CharField(max_length=30)
 
-	def __unicode__(self):
+	def __str__(self):
 		return self.Nombre
 
 	class Meta:
@@ -21,14 +17,14 @@ class Departamentos(models.Model):
 class Areas(models.Model):
 	   
 	Nombre = models.CharField(max_length=30)
-        Departamentos=models.ManyToManyField(Departamentos,blank=True)
+	Departamentos=models.ManyToManyField(Departamentos,blank=True)
 
-	def __unicode__(self):
+	def __str__(self):
 		return self.Nombre
 
 	class Meta:
 		verbose_name="Área"
-                verbose_name_plural="Áreas"
+		verbose_name_plural="Áreas"
 
 
 
@@ -47,7 +43,7 @@ class Profesores(models.Model):
 	
 	
 
-	def __unicode__(self):
+	def __str__(self):
 		return self.Apellidos+" "+self.Nombre
 
 	class Meta:
@@ -61,8 +57,9 @@ class Cursos(models.Model):
 	Curso = models.CharField(max_length=30)
 	Tutor = models.ForeignKey(Profesores, related_name='Tutor_de',blank=True,null=True,on_delete=models.SET_NULL)
 	EquipoEducativo=models.ManyToManyField(Profesores, verbose_name="Equipo Educativo",blank=True)
+	Abe=models.CharField(max_length=10,blank=True,null=True)
 
-	def __unicode__(self):
+	def __str__(self):
 		return self.Curso
 
 	class Meta:
@@ -86,7 +83,7 @@ class Alumnos(models.Model):
 	email = models.EmailField(max_length=70,blank=True)
 	Obs=models.TextField(blank=True,verbose_name="Observaciones")
 
-	def __unicode__(self):
+	def __str__(self):
 		return self.DNI+" - "+self.Nombre 
 
 	class Meta:
