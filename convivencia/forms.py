@@ -13,6 +13,7 @@ class AmonestacionForm(forms.ModelForm):
 	class Meta:
 		model = Amonestaciones
 		fields = "__all__"
+		exclude = ('Enviado',)
 		widgets = {
 			'IdAlumno':HiddenInput(),
 			'Fecha':SelectDateWidget(years=(datetime.date.today().year,datetime.date.today().year-1)),

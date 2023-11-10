@@ -44,12 +44,7 @@ def parte(request,tipo,alum_id):
 				
 				template = get_template("correo_amonestacion.html")
 				contenido = template.render(Context({'amon':amon}).flatten())
-				new_correo=Correos(Fecha=time.strftime("%Y-%m-%d"),Asunto="Nueva amonestación",Contenido=contenido)
-				new_correo.save()
-				for dest in destinatarios:
-					if dest!=None:
-						new_correo.Destinatarios.add(dest)
-				new_correo.save()
+	
 
 				# Comunica la amonestación a la familia
 				correo_familia = amon.IdAlumno.email
@@ -66,17 +61,14 @@ def parte(request,tipo,alum_id):
 
 			if tipo=="sancion":
 				sanc=form.instance
-				destinatarios=sanc.IdAlumno.Unidad.EquipoEducativo
+				destinatarios=list(sanc.IdAlumno.Unidad.EquipoEducativo.all())
+				destinatarios.append(sanc.IdAlumno.Unidad.Tutor)
 				template = get_template("correo_sancion.html")
 				contenido = template.render(Context({'sanc':sanc}).flatten())
-				new_correo=Correos(Fecha=time.strftime("%Y-%m-%d"),Asunto="Nueva sanción",Contenido=contenido)
-				new_correo.save()
-				for dest in destinatarios.all():
-					new_correo.Destinatarios.add(dest)
-				new_correo.Destinatarios.add(sanc.IdAlumno.Unidad.Tutor)
-				new_correo.save()
+				
+				
 			correos=[]
-			for prof in new_correo.Destinatarios.all():
+			for prof in destinatarios:
 				correo = Profesores.objects.get(id=prof.id).Email
 				if correo!="":
 					correos.append(correo)
@@ -98,7 +90,6 @@ def parte(request,tipo,alum_id):
 			titulo="Sanciones"
 		else:
 			return redirect("/")
-		error=False
 	context={'alum':alum,'form':form,'titulo':titulo,'tipo':tipo,'menu_alumnos':True}
 	return render(request, 'parte.html',context)
 
