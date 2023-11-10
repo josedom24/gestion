@@ -6,7 +6,6 @@ from centro.views import group_check_je,group_check_prof
 from convivencia.models import Amonestaciones,Sanciones,TiposAmonestaciones
 from centro.models import Cursos
 from django.contrib.auth.decorators import login_required,user_passes_test
-from correo.models import Correos
 import time,calendar
 from datetime import datetime
 from operator import itemgetter

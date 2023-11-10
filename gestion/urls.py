@@ -23,8 +23,6 @@ urlpatterns = [
     re_path(r'^centro/', include('centro.urls')),
     re_path(r'^convivencia/', include('convivencia.urls')),
     re_path(r'^pdf/', include('pdf.urls')),
-    re_path(r'^registro/', include('registro.urls')),
-    re_path(r'^correo/', include('correo.urls')),
     re_path(r'^$',index),
     re_path(r'^logout/$',salir),
 

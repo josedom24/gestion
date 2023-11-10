@@ -2,17 +2,13 @@ import datetime
 from django.http import HttpResponse
 from django.template import Context
 from django.template.loader import get_template
-
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required,user_passes_test
-
 from xhtml2pdf import pisa
 from io import BytesIO
 from centro.models import Alumnos,Cursos,Profesores
 from convivencia.models import Amonestaciones,Sanciones
-from registro.models import Registro 
-from correo.models import Correos
-from centro.views import ContarFaltas,group_check_je,group_check_sec
+from centro.views import ContarFaltas,group_check_je
 from datetime import datetime
 from django.core.mail import EmailMultiAlternatives
 
@@ -212,16 +208,6 @@ def imprimir_profesores(request,curso=None):
 		data={'texto':texto,'profesores':lista_profesores,'fecha':datetime.now(),"resto":len(lista_profesores) % 3}
 	# Render html content through html template with context
 	return imprimir("pdf_"+request.path.split("/")[2]+".html",data,request.path.split("/")[2]+".pdf")
-
-@login_required(login_url='/')
-@user_passes_test(group_check_sec,login_url='/')
-def imprimir_registro(request,tipo,curso):
-	
-	dict={'Tipo':tipo,'Curso':curso}
-
-	reg=Registro.objects.filter(**dict).order_by("-N")
-	data={'reg':reg,'tipo':tipo,'curso':curso}
-	return imprimir("pdf_registro.html",data,"registro_"+tipo+"_"+curso+".pdf")
 
 
 

@@ -4,7 +4,6 @@ import django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "gestion.settings")
 django.setup()
 from centro.models import *
-from registro.models import *
 from convivencia.models import *
 
 import csv

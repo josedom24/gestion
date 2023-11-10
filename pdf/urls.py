@@ -15,7 +15,6 @@ urlpatterns = [
     re_path(r'^claustro$', views.imprimir_profesores),
     re_path(r'^claustro/(?P<curso>[0-9]+)$', views.imprimir_profesores),
     re_path(r'^semana$', views.imprimir_profesores),
-    re_path(r'^registro/(?P<tipo>[\w-])/(?P<curso>\d{4}-\d{4})$', views.imprimir_registro),
     re_path(r'^sanciones/hoy$', views.imprimir_sanciones_hoy),
         
 ]

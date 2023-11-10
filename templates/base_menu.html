@@ -55,32 +55,11 @@
                         <a class="btn btn-default btn-secundary" href="/pdf/claustro">Imprimir asistencia al claustro</a>
                         <a class="btn btn-default btn-secundary" href="/pdf/semana">Imprimir asistencia por semana</a>
                     {% endif%}
-                    <a class="btn btn-default btn-primary" href="/correo/list" role="button">Correos</a>
-	                {% if menu_correos %}
-                        <a class="btn btn-default btn-secundary" href="/correo/new" role="button">Enviar correo</a>
-                    {% endif %}
+                    
+	
                     
                 {%endif%}
                 
-                {% if user.groups.first.name == "secretaria" or user.groups.last.name == "secretaria" %}
-                    <a class="btn btn-default btn-primary" href="/registro/e" role="button">Secretaría</a>
-                    {% if menu_registro%}
-                        <a class="btn btn-default btn-secundary" href="/registro/e" role="button">Registro de entrada</a>
-                        <a class="btn btn-default btn-secundary" href="/registro/s" role="button">Registro de salida</a>
-                        {% if tipo == "e" %}
-                            <a class="btn btn-default btn-secundary" href="/registro/add/{{tipo}}" role="button">Nuevo registro de entrada</a>
-                            <a class="btn btn-default btn-secundary" href="/pdf/registro/{{tipo}}/{{curso}}" role="button">Imprimir registro entrada({{curso}})</a>
-                        {% endif%}
-                        {% if tipo == "s" %}
-                            <a class="btn btn-default btn-secundary" href="/registro/add/{{tipo}}" role="button">Nuevo registro de salida</a>
-                             <a class="btn btn-default btn-secundary" href="/pdf/registro/{{tipo}}/{{curso}}" role="button">Imprimir registro salida({{curso}})</a>
-                        {% endif%}
-                    
-                       
-                    {%endif%}            
-                    
-                
-            {%endif%}
             {% if user.groups.first.name == "jefatura de estudios" or user.groups.last.name == "jefatura de estudios" %}
                     <a class="btn btn-default btn-primary" href="/admin" role="button">Administración</a>
                 {%endif%}        
