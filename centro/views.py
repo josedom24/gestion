@@ -5,14 +5,8 @@ from convivencia.models import Amonestaciones,Sanciones
 from centro.forms import UnidadForm,DepartamentosForm
 from datetime import datetime
 
-
-
-
-
 def group_check_je(user):
     return user.groups.filter(name__in=['jefatura de estudios'])
-def group_check_sec(user):
-    return user.groups.filter(name__in=['secretaria'])
 def group_check_prof(user):
     return user.groups.filter(name__in=['jefatura de estudios']) or (user.groups.filter(name__in=['profesor']))#) and user.username=="tutor2asir")
 
@@ -20,7 +14,6 @@ def group_check_prof(user):
 @login_required(login_url='/')
 @user_passes_test(group_check_je,login_url='/')
 def alumnos(request):
-        
     if request.method == 'POST':
         primer_id=request.POST.get("Unidad")
     else:
@@ -36,7 +29,6 @@ def alumnos(request):
     ids=[{"id":elem.id} for elem in lista_alumnos]
 
     form = UnidadForm({'Unidad':primer_id})
-    #lista=zip(lista_alumnos,funciones.ContarFaltas(lista_alumnos.values("id")),funciones.ContarAmonestacionesAcumuladas(lista_alumnos.values("id")),range(1,len(lista_alumnos)+1))
     lista=zip(lista_alumnos,ContarFaltas(ids),EstaSancionado(ids))
     try:
         context={'alumnos':lista,'form':form,'curso':Cursos.objects.get(id=primer_id),'menu_alumnos':True}
@@ -58,9 +50,6 @@ def misalumnos(request):
     lista_alumnos = Alumnos.objects.filter(Unidad__id=primer_id)
     lista_alumnos=sorted(lista_alumnos,key=lambda d: d.Nombre)
     ids=[{"id":elem.id} for elem in lista_alumnos]
-
-    #form = UnidadForm({'Unidad':primer_id})
-    #lista=zip(lista_alumnos,funciones.ContarFaltas(lista_alumnos.values("id")),funciones.ContarAmonestacionesAcumuladas(lista_alumnos.values("id")),range(1,len(lista_alumnos)+1))
     lista=zip(lista_alumnos,ContarFaltas(ids),EstaSancionado(ids))
     try:
         context={'alumnos':lista,'curso':Cursos.objects.get(id=primer_id)}
@@ -72,7 +61,6 @@ def misalumnos(request):
 @login_required(login_url='/')
 @user_passes_test(group_check_je,login_url='/')
 def alumnos(request):
-        
     if request.method == 'POST':
         primer_id=request.POST.get("Unidad")
     else:
@@ -88,7 +76,6 @@ def alumnos(request):
     ids=[{"id":elem.id} for elem in lista_alumnos]
 
     form = UnidadForm({'Unidad':primer_id})
-    #lista=zip(lista_alumnos,funciones.ContarFaltas(lista_alumnos.values("id")),funciones.ContarAmonestacionesAcumuladas(lista_alumnos.values("id")),range(1,len(lista_alumnos)+1))
     lista=zip(lista_alumnos,ContarFaltas(ids),EstaSancionado(ids))
     try:
         context={'alumnos':lista,'form':form,'curso':Cursos.objects.get(id=primer_id),'menu_alumnos':True}
@@ -129,8 +116,6 @@ def profesores(request):
         departamento=Departamentos.objects.get(id=dep_id).Nombre
     
     cursos=Tutorias(lista_profesores.values("id"))
-    
-    #lista=zip(lista_alumnos,funciones.ContarFaltas(lista_alumnos.values("id")),funciones.ContarAmonestacionesAcumuladas(lista_alumnos.values("id")),range(1,len(lista_alumnos)+1))
     lista=zip(lista_profesores,cursos)
     context={'profesores':lista,'form':form,"departamento":departamento,'menu_profesor':True}
     return render(request, 'profesor.html',context)
@@ -138,7 +123,6 @@ def profesores(request):
 @login_required(login_url='/')
 @user_passes_test(group_check_je,login_url='/')
 def profesores_change(request,campo,codigo,operacion):
-    
     dato={}
     dato[campo]=True if operacion=="on" else False
     Profesores.objects.filter(id=codigo).update(**dato)
@@ -188,10 +172,6 @@ def EstaSancionado(lista_id):
 @login_required(login_url='/')
 @user_passes_test(group_check_je,login_url='/')
 def cursos(request):
-    
     lista_cursos = Cursos.objects.all().order_by("Curso")
-    
-    
-    
     context={'cursos':lista_cursos,'menu_cursos':True}
     return render(request, 'cursos.html',context)
