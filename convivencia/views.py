@@ -56,13 +56,13 @@ def parte(request,tipo,alum_id):
 				if correo_familia:
 					template = get_template("correo_amonestacion.html")
 					contenido = template.render(Context({'amon': amon}).flatten())
-					send_mail(
-						'Nueva amonestación',
-						contenido,
-						'41011038.jestudios.edu@juntadeandalucia.es',
-						(correo_familia,),
-						fail_silently=False
-					)
+					#send_mail(
+					#	'Nueva amonestación',
+					#	contenido,
+					#	'41011038.jestudios.edu@juntadeandalucia.es',
+					#	(correo_familia,),
+					#	fail_silently=False
+					#)
 
 			if tipo=="sancion":
 				sanc=form.instance
@@ -80,13 +80,13 @@ def parte(request,tipo,alum_id):
 				correo = Profesores.objects.get(id=prof.id).Email
 				if correo!="":
 					correos.append(correo)
-			send_mail(
-                new_correo.Asunto,
-                new_correo.Contenido,
-                '41011038.jestudios.edu@juntadeandalucia.es',
-                correos,
-                fail_silently=False,
-               )
+			#send_mail(
+            #    new_correo.Asunto,
+            #    new_correo.Contenido,
+            #    '41011038.jestudios.edu@juntadeandalucia.es',
+            #    correos,
+            #    fail_silently=False,
+            #   )
 			return redirect('/centro/alumnos')
 	else:
 		if tipo=="amonestacion":

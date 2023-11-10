@@ -32,7 +32,7 @@ class Amonestaciones(models.Model):
 	Comentario=models.TextField(blank=True)
 	Profesor = models.ForeignKey(Profesores,null=True,on_delete=models.SET_NULL)
 	Tipo = models.ForeignKey(TiposAmonestaciones, related_name='Tipo_de',blank=True,null=True,on_delete=models.SET_NULL)
-	
+	Enviado = models.BooleanField(default=False,verbose_name="Enviado por correo electrónico")	
 
 	def __str__(self):
 		return self.IdAlumno.Nombre 

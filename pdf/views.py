@@ -102,7 +102,6 @@ def carta_amonestacion(request,mes,ano,dia,todos):
 	contenido=""
 	fecha2=datetime(int(ano),int(mes),int(dia))
 	info["fecha"]="%s/%s/%s"%(dia,mes,ano)
-	#lista_alumnos=set(Amonestaciones.objects.filter(Fecha=fecha2).values_list("IdAlumno"))
 	lista_amonestaciones = Amonestaciones.objects.filter(Fecha=fecha2)
 	info["amonestaciones"]=[]
 	for amonestacion in lista_amonestaciones:
@@ -130,8 +129,6 @@ def send_amonestacion(request,mes,ano,dia):
 	contenido=""
 	fecha2=datetime(int(ano),int(mes),int(dia))
 	info["fecha"]="%s/%s/%s"%(dia,mes,ano)
-	lista_alumnos=set(Amonestaciones.objects.filter(Fecha=fecha2).values_list("IdAlumno"))
-	
 	info["amonestaciones"]=Amonestaciones.objects.filter(Fecha=fecha2)
 	
 	info["enviados"]=[]
@@ -143,11 +140,10 @@ def send_amonestacion(request,mes,ano,dia):
 		info2["num_amon"]=len(Amonestaciones.objects.filter(IdAlumno_id=i.IdAlumno.id))
 		template = get_template("pdf_contenido_carta_amonestacion.html")
 		contenido=template.render(Context(info2).flatten())
-		asunto="IES Gonzalo Nazareno. Amonestación: "+i.IdAlumno.Nombre.encode("utf-8")+ " - Hora:"+i.Hora.encode("utf-8")
-		# 8/4/2021
-		correos=Correos.objects.filter(Fecha=fecha2).filter(Asunto=asunto)
+		asunto="IES Gonzalo Nazareno. Amonestación: "+i.IdAlumno.Nombre+ " - Hora:"+i.Hora
+
 		# Se envía el correo 
-		if len(i.IdAlumno.email)>0 and len(correos)==0:
+		if len(i.IdAlumno.email)>0 and not i.Enviado:
 			try:
 				msg=""
 				msg = EmailMultiAlternatives(
@@ -158,17 +154,16 @@ def send_amonestacion(request,mes,ano,dia):
 					   )
 
 				msg.attach_alternative(contenido, "text/html")
-				msg.send(fail_silently=False)
+				#msg.send(fail_silently=False)
 			# 8/4/2021
-				f=datetime.strptime(info["fecha"], '%d/%m/%Y')
-				new_correo=Correos(Fecha=f.strftime("%Y-%m-%d"),Asunto=asunto,Contenido=contenido)
-				new_correo.save()
+				i.Enviado=True
+				i.save()
 				info["enviados"].append({'Nombre':i.IdAlumno.Nombre,'email':i.IdAlumno.email})
 			
 			except:
 				pass
 		# Ya se ha enviado
-		elif len(i.IdAlumno.email)>0 and len(correos)>0:
+		elif len(i.IdAlumno.email)>0 and i.Enviado:
 			info["yaenviados"].append({'Nombre':i.IdAlumno.Nombre,'email':i.IdAlumno.email})
 		elif len(i.IdAlumno.email)==0:
 			info["noemail"].append({'Nombre':i.IdAlumno.Nombre,'email':i.IdAlumno.email})
