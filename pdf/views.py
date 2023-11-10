@@ -23,7 +23,6 @@ def imprimir_partes(request,curso):
 	ids=[{"id":elem.id} for elem in lista_alumnos]
 	lista=zip(range(1,len(lista_alumnos)+1),lista_alumnos,ContarFaltas(ids))
 	data={'alumnos':lista,'curso':Cursos.objects.get(id=curso),'fecha':datetime.now()}
-	# Render html content through html template with context
 	return imprimir("pdf_partes.html",data,"partes.pdf")
 
 @login_required(login_url='/')
@@ -32,7 +31,6 @@ def imprimir_faltas(request,curso):
 	lista_alumnos = Alumnos.objects.filter(Unidad__id=curso)
 	lista_alumnos=sorted(lista_alumnos,key=lambda d: d.Nombre)
 	data={'alumnos':lista_alumnos,'curso':Cursos.objects.get(id=curso),'cont':range(0,30)}
-	# Render html content through html template with context
 	return imprimir("pdf_faltas.html",data,"faltas.pdf")
 
 @login_required(login_url='/')
@@ -42,7 +40,6 @@ def imprimir_telefonos(request,curso):
 	lista_alumnos=sorted(lista_alumnos,key=lambda d: d.Nombre)
 	lista=zip(range(1,len(lista_alumnos)+1),lista_alumnos)
 	data={'alumnos':lista,'curso':Cursos.objects.get(id=curso),'fecha':datetime.now()}
-	# Render html content through html template with context
 	return imprimir("pdf_telefonos.html",data,"telefonos.pdf")
 @login_required(login_url='/')
 @user_passes_test(group_check_je,login_url='/')
@@ -201,7 +198,6 @@ def imprimir_profesores(request,curso=None):
 		data={'texto':texto,'profesores':lista_profesores,'fecha':datetime.now(),"resto":len(lista_profesores) % 3}
 	else:
 		data={'texto':texto,'profesores':lista_profesores,'fecha':datetime.now(),"resto":len(lista_profesores) % 3}
-	# Render html content through html template with context
 	return imprimir("pdf_"+request.path.split("/")[2]+".html",data,request.path.split("/")[2]+".pdf")
 
 
