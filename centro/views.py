@@ -126,7 +126,7 @@ def profesores_change(request,codigo,operacion):
     dato={}
     dato["Baja"]=True if operacion=="on" else False
     Profesores.objects.filter(id=codigo).update(**dato)
-    
+   
     return redirect("/centro/profesores")
 
 
