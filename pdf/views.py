@@ -167,7 +167,7 @@ def carta_sancion(request,identificador):
 	info={}
 	template = get_template("pdf_contenido_carta_sancion.html")
 	info["contenido"]=template.render(Context(info2).flatten())	
-	return imprimir("pdf_carta.html",info,"carta_sancion"+".pdf")	
+	return imprimir("pdf_carta.html",info,"carta_sancion.pdf")	
 
 
 @login_required(login_url='/')
