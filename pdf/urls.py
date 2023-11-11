@@ -4,7 +4,6 @@ from . import views
 
 urlpatterns = [
     re_path(r'^partes/(?P<curso>[0-9]+)$', views.imprimir_partes),
-    re_path(r'^faltas/(?P<curso>[0-9]+)$', views.imprimir_faltas),
     re_path(r'^telefono/(?P<curso>[0-9]+)$', views.imprimir_telefonos),
     re_path(r'^historial/(?P<alum_id>[0-9]+)/(?P<prof>[a-z]*)$', views.imprimir_historial),
     re_path(r'^show/(?P<tipo>[a-z]+)/(?P<mes>[0-9]+)/(?P<ano>[0-9]+)/(?P<dia>[0-9]+)$', views.imprimir_show),

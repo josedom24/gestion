@@ -27,14 +27,6 @@ def imprimir_partes(request,curso):
 
 @login_required(login_url='/')
 @user_passes_test(group_check_je,login_url='/')
-def imprimir_faltas(request,curso):
-	lista_alumnos = Alumnos.objects.filter(Unidad__id=curso)
-	lista_alumnos=sorted(lista_alumnos,key=lambda d: d.Nombre)
-	data={'alumnos':lista_alumnos,'curso':Cursos.objects.get(id=curso),'cont':range(0,30)}
-	return imprimir("pdf_faltas.html",data,"faltas.pdf")
-
-@login_required(login_url='/')
-@user_passes_test(group_check_je,login_url='/')
 def imprimir_telefonos(request,curso):
 	lista_alumnos = Alumnos.objects.filter(Unidad__id=curso)
 	lista_alumnos=sorted(lista_alumnos,key=lambda d: d.Nombre)
