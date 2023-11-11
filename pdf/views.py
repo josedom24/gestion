@@ -172,17 +172,12 @@ def carta_sancion(request,identificador):
 
 @login_required(login_url='/')
 @user_passes_test(group_check_je,login_url='/')
-def imprimir_profesores(request,curso=None):
+def imprimir_profesores(request):
 	lista_profesores = Profesores.objects.all().exclude(Apellidos="-").order_by("Apellidos")
 	texto="Listado de profesores"
 	if request.path.split("/")[2]=="claustro":
-		if curso==None:
-			lista_profesores=lista_profesores.exclude(Baja=True)
-			texto='Asistencia a claustro'
-		else:
-			c=Cursos.objects.get(id=curso)
-			lista_profesores=c.EquipoEducativo.all()
-			texto='Asistencia a Equipo Educativo de '+c.Curso
+		lista_profesores=lista_profesores.exclude(Baja=True)
+		texto='Asistencia a claustro'
 		data={'texto':texto,'profesores':lista_profesores,'fecha':datetime.now(),"resto":len(lista_profesores) % 3}
 	elif request.path.split("/")[2]=="semana":
 		lista_profesores=lista_profesores.exclude(Baja=True)
@@ -191,7 +186,6 @@ def imprimir_profesores(request,curso=None):
 	else:
 		data={'texto':texto,'profesores':lista_profesores,'fecha':datetime.now(),"resto":len(lista_profesores) % 3}
 	return imprimir("pdf_"+request.path.split("/")[2]+".html",data,request.path.split("/")[2]+".pdf")
-
 
 
 def imprimir(temp,data,title):

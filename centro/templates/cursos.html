@@ -5,7 +5,7 @@
 <h2>Cursos</h2>
  
 <table class="table table-bordered">
-    <tr><td>Curso</td><td>Tutor</td><td>Equipo Educativo</td><td>Control Asistencia</td></tr>
+    <tr><td>Curso</td><td>Tutor</td><td>Equipo Educativo</td></tr>
     
     {% for curso in cursos%}
     
@@ -30,7 +30,7 @@
         </div>
       </div>
       </td>
-      <td><a href="/pdf/claustro/{{curso.id}}">Control Asistencia</a></td>
+      
       
     </tr>
     {% endfor %}

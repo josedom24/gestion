@@ -12,7 +12,6 @@ urlpatterns = [
     re_path(r'^carta_sancion/(?P<identificador>[0-9]+)$', views.carta_sancion),
     re_path(r'^profesores$', views.imprimir_profesores),
     re_path(r'^claustro$', views.imprimir_profesores),
-    re_path(r'^claustro/(?P<curso>[0-9]+)$', views.imprimir_profesores),
     re_path(r'^semana$', views.imprimir_profesores),
     re_path(r'^sanciones/hoy$', views.imprimir_sanciones_hoy),
         
