@@ -18,13 +18,11 @@
 	</div>
     </form>
     <hr/>
-    <!--<a href="/usuarios/add"><button type="submit" class="btn btn-primary">Nuevo usuario</button></a>
-	/a href="/usuarios/tipo"><button type="submit" class="btn btn-primary">Asignar Tipo</button></a>-->
 <br/>
 <h2>Gestión de profesores {{departamento}}</h2>
 
 <table class="table table-bordered">
-    <tr><td class="text-center">N.</td><td>Nombre</td><td>Teléfonos</td><td>Email</td><td class="text-center">Baja</td><td class="text-center">CE</td><td class="text-center">ETCP</td><td class="text-center">Bil</td></tr>
+    <tr><td class="text-center">N.</td><td>Nombre</td><td>Teléfonos</td><td>Email</td><td class="text-center">Baja</td></tr>
     
     {%for prof,curso in profesores %}
     
@@ -41,24 +39,7 @@
       {% else %}
         <td class="text-center"><a href="/centro/profesores/change/Baja/{{prof.id}}/on"><span class="glyphicon glyphicon-ok-sign" style="color:green" aria-hidden="true"></span></a></td>
       {% endif %}
-
-
-      {% if prof.Ce %}
-        <td class="text-center"><a href="/centro/profesores/change/Ce/{{prof.id}}/off"><span class="glyphicon glyphicon-user" style="color:green" aria-hidden="true"></span></a></td>
-      {% else %}
-        <td class="text-center"><a href="/centro/profesores/change/Ce/{{prof.id}}/on"><span class="glyphicon glyphicon-user" style="color:red" aria-hidden="true"></span></a></td>
-      {% endif %}
-      {% if prof.Etcp %}
-        <td class="text-center"><a href="/centro/profesores/change/Etcp/{{prof.id}}/off"><span class="glyphicon glyphicon-user" style="color:green" aria-hidden="true"></span></a></td>
-      {% else %}
-        <td class="text-center"><a href="/centro/profesores/change/Etcp/{{prof.id}}/on"><span class="glyphicon glyphicon-user" style="color:red" aria-hidden="true"></span></a></td>
-      {% endif %}
-      {% if prof.Bil %}
-        <td class="text-center"><a href="/centro/profesores/change/Bil/{{prof.id}}/off"><span class="glyphicon glyphicon-user" style="color:green" aria-hidden="true"></span></a></td>
-      {% else %}
-        <td class="text-center"><a href="/centro/profesores/change/Bil/{{prof.id}}/on"><span class="glyphicon glyphicon-user" style="color:red" aria-hidden="true"></span></a></td>
-      {% endif %}
-         {% endfor %}
+      {% endfor %}
       
 
       

@@ -36,10 +36,6 @@ class Profesores(models.Model):
 	Email = models.EmailField()
 	Departamento = models.ForeignKey(Departamentos,blank=True,null=True,on_delete=models.SET_NULL)
 	Baja = models.BooleanField(default=False)
-	Ce = models.BooleanField(default=False,verbose_name="Consejo Escolar")
-	Etcp = models.BooleanField(default=False)
-	Tic = models.BooleanField(default=False)
-	Bil = models.BooleanField(default=False,verbose_name="Bilingüe")
 	
 	
 

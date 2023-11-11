@@ -5,7 +5,7 @@ from . import views
 urlpatterns = [
         re_path(r'^alumnos$', views.alumnos),
         re_path(r'^alumnos/(?P<curso>[0-9]+)$', views.alumnos_curso),
-        re_path(r'^profesores/change/(?P<campo>[A-Za-z]+)/(?P<codigo>[0-9]+)/(?P<operacion>[a-z]+)$', views.profesores_change),
+        re_path(r'^profesores/change/Baja/(?P<codigo>[0-9]+)/(?P<operacion>[a-z]+)$', views.profesores_change),
         re_path(r'^profesores$', views.profesores),
         re_path(r'^cursos$', views.cursos),
         re_path(r'^misalumnos$', views.misalumnos),

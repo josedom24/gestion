@@ -122,9 +122,9 @@ def profesores(request):
 
 @login_required(login_url='/')
 @user_passes_test(group_check_je,login_url='/')
-def profesores_change(request,campo,codigo,operacion):
+def profesores_change(request,codigo,operacion):
     dato={}
-    dato[campo]=True if operacion=="on" else False
+    dato["Baja"]=True if operacion=="on" else False
     Profesores.objects.filter(id=codigo).update(**dato)
     
     return redirect("/centro/profesores")
